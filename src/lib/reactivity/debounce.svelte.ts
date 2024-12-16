@@ -2,7 +2,8 @@ type DebouncedStateOptions = {
 	debounce?: number;
 };
 
-const DEFAULT_DEBOUNCE = 1000;
+/** @internal Exported for testing. */
+export const DEFAULT_DEBOUNCE = 1000;
 
 export function debouncedState<T>(initial: T, options?: DebouncedStateOptions) {
 	const debounce = options?.debounce ?? DEFAULT_DEBOUNCE;
