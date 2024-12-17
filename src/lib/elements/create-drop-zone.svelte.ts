@@ -1,11 +1,11 @@
 import { onMount } from 'svelte';
 
 type CreateDropZoneOptions = {
-	/** An callback for when something is being dragged over the drop zone. */
+	/** A callback for when something is being dragged over the drop zone. */
 	onDragOver?: (event: DragEvent) => void;
-	/** An callback for when nothing is being dragged over the drop zone. */
+	/** A callback for when nothing is being dragged over the drop zone. */
 	onDragLeave?: (event: DragEvent) => void;
-	/** An callback for when files are dropped in the drop zone. */
+	/** A callback for when files are dropped in the drop zone. */
 	onDrop?: (event: DragEvent) => void;
 };
 
