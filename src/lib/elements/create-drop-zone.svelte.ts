@@ -87,7 +87,7 @@ export function createDropZone<T extends HTMLElement>(
 ): CreateDropZoneReturn<T>;
 
 export function createDropZone<T extends HTMLElement>(
-	element?: T,
+	elementOrOptions?: T | CreateDropZoneOptions,
 	options?: CreateDropZoneOptions
 ): CreateDropZoneReturn<T> {
 	const DEFAULT_ON_DRAG_OVER = (event: DragEvent) => {
@@ -109,6 +109,13 @@ export function createDropZone<T extends HTMLElement>(
 	const onDragOver = options?.onDragOver ?? DEFAULT_ON_DRAG_OVER;
 	const onDragLeave = options?.onDragLeave ?? DEFAULT_ON_DRAG_LEAVE;
 	const onDrop = options?.onDrop ?? DEFAULT_ON_DROP;
+
+	let element: T | undefined;
+	if (elementOrOptions instanceof HTMLElement) {
+		element = elementOrOptions;
+	} else if (typeof elementOrOptions === 'object') {
+		options = elementOrOptions;
+	}
 
 	let _current = $state<T | undefined>(element);
 	let _isOver = $state(false);
