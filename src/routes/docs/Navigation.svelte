@@ -24,6 +24,12 @@
 				label: 'sessionState',
 				href: '/docs/storage/session'
 			}
+		],
+		Elements: [
+			{
+				label: 'dropZone',
+				href: '/docs/elements/dropZone'
+			}
 		]
 	};
 </script>
