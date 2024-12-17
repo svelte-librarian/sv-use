@@ -27,8 +27,12 @@
 		],
 		Elements: [
 			{
-				label: 'dropZone',
+				label: 'createDropZone',
 				href: '/docs/elements/dropZone'
+			},
+			{
+				label: 'createDraggable',
+				href: '/docs/elements/draggable'
 			}
 		]
 	};
