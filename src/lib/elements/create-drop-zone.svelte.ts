@@ -15,7 +15,7 @@ type CreateDropZoneReturn<T> = {
 	/** Clears the files that are held in the drop zone. */
 	clearFiles: () => void;
 	/** Whether the drop zone is being dragged over or not. */
-	readonly isOver: boolean;
+	isOver: boolean;
 	/** The files that are held in the drop zone. */
 	readonly files: File[];
 };
@@ -135,6 +135,9 @@ export function createDropZone<T extends HTMLElement>(
 		},
 		get isOver() {
 			return _isOver;
+		},
+		set isOver(v: boolean) {
+			_isOver = v;
 		},
 		get files() {
 			return _files;
