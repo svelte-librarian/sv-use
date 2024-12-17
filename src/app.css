@@ -1,0 +1,14 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+* {
+	font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+	position: relative;
+	width: 100%;
+	height: 100dvh;
+}
