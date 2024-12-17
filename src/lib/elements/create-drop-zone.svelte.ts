@@ -20,16 +20,20 @@ type CreateDropZoneReturn<T> = {
 	readonly files: File[];
 };
 
+/**
+ * Creates a new drop zone.
+ * @example
+ * ```svelte
+ * <script lang="ts">
+ *     const dropZone = createDropZone<HTMLDivElement>();
+ * </script>
+ *
+ * <div bind:this={dropZone.current}>
+ *     ...
+ * </div>
+ * ```
+ */
 export function createDropZone<T extends HTMLElement>(): CreateDropZoneReturn<T>;
-export function createDropZone<T extends HTMLElement>(element: T): CreateDropZoneReturn<T>;
-export function createDropZone<T extends HTMLElement>(
-	options: CreateDropZoneOptions
-): CreateDropZoneReturn<T>;
-export function createDropZone<T extends HTMLElement>(
-	element: T,
-	options: CreateDropZoneOptions
-): CreateDropZoneReturn<T>;
-
 /**
  * Creates a new drop zone.
  * @param element The element that acts as the drop zone.
@@ -44,6 +48,44 @@ export function createDropZone<T extends HTMLElement>(
  * </div>
  * ```
  */
+export function createDropZone<T extends HTMLElement>(element: T): CreateDropZoneReturn<T>;
+/**
+ * Creates a new drop zone.
+ * @param options Additional options to customize the behavior.
+ * @example
+ * ```svelte
+ * <script lang="ts">
+ *     const dropZone = createDropZone<HTMLDivElement>();
+ * </script>
+ *
+ * <div bind:this={dropZone.current}>
+ *     ...
+ * </div>
+ * ```
+ */
+export function createDropZone<T extends HTMLElement>(
+	options: CreateDropZoneOptions
+): CreateDropZoneReturn<T>;
+/**
+ * Creates a new drop zone.
+ * @param element The element that acts as the drop zone.
+ * @param options Additional options to customize the behavior.
+ * @example
+ * ```svelte
+ * <script lang="ts">
+ *     const dropZone = createDropZone<HTMLDivElement>();
+ * </script>
+ *
+ * <div bind:this={dropZone.current}>
+ *     ...
+ * </div>
+ * ```
+ */
+export function createDropZone<T extends HTMLElement>(
+	element: T,
+	options: CreateDropZoneOptions
+): CreateDropZoneReturn<T>;
+
 export function createDropZone<T extends HTMLElement>(
 	element?: T,
 	options?: CreateDropZoneOptions
