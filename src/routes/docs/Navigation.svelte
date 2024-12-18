@@ -39,6 +39,10 @@
 			{
 				label: 'getMouse',
 				href: '/docs/sensors/mouse'
+			},
+			{
+				label: 'getBattery',
+				href: '/docs/sensors/battery'
 			}
 		]
 	};
