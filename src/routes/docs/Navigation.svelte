@@ -34,6 +34,12 @@
 				label: 'createDraggable',
 				href: '/docs/elements/draggable'
 			}
+		],
+		Sensors: [
+			{
+				label: 'getMouse',
+				href: '/docs/sensors/mouse'
+			}
 		]
 	};
 </script>
