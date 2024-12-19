@@ -4,9 +4,9 @@
 	let { children } = $props();
 </script>
 
-<div class="relative w-full h-full flex divide-x divide-zinc-300">
+<div class="relative flex h-full w-full flex-col divide-y divide-zinc-300 lg:flex-row lg:divide-x">
 	<Navigation />
-	<div class="relative w-full h-full p-5">
+	<div class="relative h-full w-full p-5">
 		{@render children()}
 	</div>
 </div>
