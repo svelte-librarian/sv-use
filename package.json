@@ -58,6 +58,7 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
+		"@tabler/icons-svelte": "^3.26.0",
 		"@types/node": "^22.10.2"
 	}
 }
