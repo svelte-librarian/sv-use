@@ -1,5 +1,5 @@
-import { debouncedState, DEFAULT_DEBOUNCE } from '$lib/reactivity/debounce.svelte.js';
 import { describe, expect, it } from 'vitest';
+import { debouncedState, DEFAULT_DEBOUNCE } from './debounce.svelte.js';
 
 describe('Debounce works properly', () => {
 	it('Changes state correctly after the default debounce', async () => {
