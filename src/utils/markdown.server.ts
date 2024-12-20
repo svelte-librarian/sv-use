@@ -42,10 +42,10 @@ async function convertMarkdownContentToHTML(content: string): Promise<string> {
 	return html;
 }
 
-export async function convertMarkdownFileToHTML(filePath: string) {
+export async function convertMarkdownFileToHTML<T extends Attributes>(filePath: string) {
 	const content = await fs.readFile(filePath, 'utf-8');
 
-	const { attributes, body } = extractDataFromMarkdown(content);
+	const { attributes, body } = extractDataFromMarkdown<T>(content);
 	const html = await convertMarkdownContentToHTML(body);
 
 	return { attributes, html };

@@ -1,53 +1,13 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
+	import { toTitleCase } from '$utils/to-title-case.js';
+	import type { UtilityAttributes } from '$types/markdown.js';
 
-	type Link = {
-		href: string;
-		label: string;
-	};
+	interface Props {
+		utilityGroups: Record<string, UtilityAttributes[]>;
+	}
 
-	const linkGroups: Record<string, Link[]> = {
-		Reactivity: [
-			{
-				label: 'debouncedState',
-				href: '/docs/reactivity/debounce'
-			},
-			{
-				label: 'historyState',
-				href: '/docs/reactivity/history'
-			}
-		],
-		Storage: [
-			{
-				label: 'localState',
-				href: '/docs/storage/local'
-			},
-			{
-				label: 'sessionState',
-				href: '/docs/storage/session'
-			}
-		],
-		Elements: [
-			{
-				label: 'createDropZone',
-				href: '/docs/elements/dropZone'
-			},
-			{
-				label: 'createDraggable',
-				href: '/docs/elements/draggable'
-			}
-		],
-		Sensors: [
-			{
-				label: 'getMouse',
-				href: '/docs/sensors/mouse'
-			},
-			{
-				label: 'getBattery',
-				href: '/docs/sensors/battery'
-			}
-		]
-	};
+	let { utilityGroups }: Props = $props();
 
 	let showSidebar = $state(false);
 </script>
@@ -75,16 +35,18 @@
 				transition:fly={{ x: -200 }}
 				class="fixed left-0 top-0 z-20 flex h-full w-4/5 flex-col gap-5 bg-zinc-50 p-5"
 			>
-				{#each Object.entries(linkGroups) as [title, links]}
+				{#each Object.entries(utilityGroups) as [category, utilities]}
 					<div class="relative flex w-full flex-col gap-5">
-						<h3 class="text-sm font-semibold text-zinc-900">{title}</h3>
+						<h3 class="text-sm font-semibold text-zinc-900">{toTitleCase(category)}</h3>
 						<div class="relatve flex w-full flex-col">
-							{#each links as { label, href }}
+							{#each utilities as { slug, title }}
 								<a
-									{href}
+									href="/docs/{category}/{slug}"
 									onclick={() => (showSidebar = false)}
-									class="text-sm font-medium text-zinc-500">{label}</a
+									class="text-sm font-medium text-zinc-500"
 								>
+									{title}
+								</a>
 							{/each}
 						</div>
 					</div>
@@ -97,12 +59,12 @@
 <!-- DESKTOP -->
 
 <nav class="relative hidden h-full flex-col items-center justify-start gap-5 px-16 py-8 lg:flex">
-	{#each Object.entries(linkGroups) as [title, links]}
+	{#each Object.entries(utilityGroups) as [category, utilities]}
 		<div class="relative flex w-full flex-col gap-5">
-			<h3 class="font-semibold">{title}</h3>
+			<h3 class="font-semibold">{toTitleCase(category)}</h3>
 			<div class="relatve flex w-full flex-col">
-				{#each links as { label, href }}
-					<a {href} class="text-zinc-500">{label}</a>
+				{#each utilities as { slug, title }}
+					<a href="/docs/{category}/{slug}" class="text-zinc-500">{title}</a>
 				{/each}
 			</div>
 		</div>
