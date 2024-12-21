@@ -1,4 +1,4 @@
-import { BROWSER } from 'esm-env';
+import { onMount } from 'svelte';
 
 type SessionStateOptions<T> = {
 	/** Defaults to `JSON.stringify`. */
@@ -9,10 +9,6 @@ type SessionStateOptions<T> = {
 	overrideDefault?: boolean;
 };
 
-const DEFAULT_SERIALIZE = JSON.stringify;
-const DEFAULT_DESERIALIZE = JSON.parse;
-const DEFAULT_OVERRIDE_DEFAULT = false;
-
 /**
  * A state that is synced with session storage.
  * @param key The key to use in session storage.
@@ -20,20 +16,18 @@ const DEFAULT_OVERRIDE_DEFAULT = false;
  * @param options Additional options to customize the behavior.
  * @returns A reactive `current` property.
  */
-export function sessionState<T>(key: string, value: T, options?: SessionStateOptions<T>) {
-	const serialize = options?.serialize ?? DEFAULT_SERIALIZE;
-	const deserialize = options?.deserialize ?? DEFAULT_DESERIALIZE;
-	const overrideDefault = options?.overrideDefault ?? DEFAULT_OVERRIDE_DEFAULT;
+export function sessionState<T>(key: string, value: T, options: SessionStateOptions<T> = {}) {
+	const { serialize = JSON.stringify, deserialize = JSON.parse, overrideDefault = false } = options;
 
 	let _current = $state<T>(value);
 
-	if (BROWSER) {
+	onMount(() => {
 		if (!overrideDefault) {
 			_current = deserialize(sessionStorage.getItem(key) ?? serialize(value));
 		} else {
 			sessionStorage.setItem(key, serialize(value));
 		}
-	}
+	});
 
 	return {
 		get current() {
