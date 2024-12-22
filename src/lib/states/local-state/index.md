@@ -2,7 +2,7 @@
 slug: 'local-state'
 title: 'localState'
 description: 'A state that is synced with local storage.'
-category: 'reactivity'
+category: 'states'
 ---
 
 ## Usage

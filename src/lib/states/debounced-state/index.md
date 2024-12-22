@@ -2,7 +2,7 @@
 slug: 'debounced-state'
 title: 'debouncedState'
 description: "Debounce the execution of a state's value."
-category: 'reactivity'
+category: 'states'
 ---
 
 ## Usage

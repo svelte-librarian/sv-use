@@ -2,7 +2,7 @@
 slug: 'session-state'
 title: 'sessionState'
 description: 'A state that is synced with session storage.'
-category: 'reactivity'
+category: 'states'
 ---
 
 ## Usage

@@ -2,7 +2,7 @@
 slug: 'async-state'
 title: 'asyncState'
 description: 'A reactive state that handles the loading and error states of a promise.'
-category: 'reactivity'
+category: 'states'
 ---
 
 ## Usage

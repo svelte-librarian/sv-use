@@ -2,7 +2,7 @@
 slug: 'history-state'
 title: 'historyState'
 description: 'Tracks the change history of a given value. Provides undo and redo capabilities'
-category: 'reactivity'
+category: 'states'
 ---
 
 ## Usage
