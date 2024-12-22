@@ -1,7 +1,18 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { toTitleCase } from '$utils/to-title-case.js';
+	import type { Component } from 'svelte';
 
 	let { data } = $props();
+
+	async function getDemoComponent() {
+		try {
+			return (await import(`$lib/${$page.params.category}/${$page.params.utility}/Demo.svelte`))
+				.default as Component;
+		} catch (error) {
+			return undefined;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -19,7 +30,15 @@
 	{#each data.attributes.description.split('\\n') as line}
 		<p>{line}</p>
 	{/each}
-	<div id="#content" class="contents">
+	{#await getDemoComponent() then DemoComponent}
+		{#if DemoComponent}
+			<h2 class="py-5 text-2xl font-semibold">Demo</h2>
+			<div class="relative overflow-auto rounded-lg bg-[#eff1f5] p-5 dark:bg-[#282c34]">
+				<DemoComponent />
+			</div>
+		{/if}
+	{/await}
+	<div id="content" class="contents">
 		{@html data.html}
 	</div>
 </main>
