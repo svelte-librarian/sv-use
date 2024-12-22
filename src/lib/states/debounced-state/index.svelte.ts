@@ -1,12 +1,15 @@
 type DebouncedStateOptions = {
-	debounce?: number;
+	/** The delay in milliseconds before updating the state. */
+	delay?: number;
 };
 
-/** @internal Exported for testing. */
-export const DEFAULT_DEBOUNCE = 1000;
-
-export function debouncedState<T>(initial: T, options?: DebouncedStateOptions) {
-	const debounce = options?.debounce ?? DEFAULT_DEBOUNCE;
+/**
+ * Creates a reactive state that updates the state after a delay.
+ * @param initial The initial value of the state.
+ * @param options Additional options to customize the behavior.
+ */
+export function debouncedState<T>(initial: T, options: DebouncedStateOptions = {}) {
+	const { delay = 1000 } = options;
 
 	let timeout: NodeJS.Timeout;
 	let _current = $state<T>(initial);
@@ -22,7 +25,7 @@ export function debouncedState<T>(initial: T, options?: DebouncedStateOptions) {
 
 			timeout = setTimeout(() => {
 				_current = v;
-			}, debounce);
+			}, delay);
 		}
 	};
 }

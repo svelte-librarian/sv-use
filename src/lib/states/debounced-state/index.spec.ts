@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { debouncedState, DEFAULT_DEBOUNCE } from './index.svelte.js';
+import { debouncedState } from './index.svelte.js';
+
+const DEFAULT_DEBOUNCE = 1000;
 
 describe('Debounce works properly', () => {
 	it('Changes state correctly after the default debounce', async () => {
@@ -16,15 +18,15 @@ describe('Debounce works properly', () => {
 	});
 
 	it('Changes state correctly after a custom debounce', async () => {
-		const debounce = 500;
-		const search = debouncedState('', { debounce });
+		const delay = 500;
+		const search = debouncedState('', { delay });
 
 		expect(search.current).toBe('');
 
 		search.current = 'test';
 		expect(search.current).toBe('');
 
-		await new Promise((resolve) => setTimeout(resolve, debounce + 100));
+		await new Promise((resolve) => setTimeout(resolve, delay + 100));
 
 		expect(search.current).toBe('test');
 	});
@@ -46,8 +48,8 @@ describe('Debounce works properly', () => {
 	});
 
 	it('Changes state correctly after multiple assignments with a custom debounce', async () => {
-		const debounce = 500;
-		const search = debouncedState('', { debounce });
+		const delay = 500;
+		const search = debouncedState('', { delay });
 
 		expect(search.current).toBe('');
 
@@ -57,7 +59,7 @@ describe('Debounce works properly', () => {
 
 		expect(search.current).toBe('');
 
-		await new Promise((resolve) => setTimeout(resolve, debounce + 100));
+		await new Promise((resolve) => setTimeout(resolve, delay + 100));
 
 		expect(search.current).toBe('test3');
 	});
