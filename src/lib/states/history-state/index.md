@@ -17,5 +17,7 @@ category: 'states'
 
 <span>counter : {counter.current}</span>
 <input bind:this={incrementValue} type="number" />
-<button onclick={() => (counter.current += incrementValue)}>Apply counter change</button>
+<button onclick={() => (counter.current += incrementValue)}>
+    Apply counter change
+</button>
 ```

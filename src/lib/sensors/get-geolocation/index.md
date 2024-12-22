@@ -11,6 +11,12 @@ category: 'sensors'
 <script lang="ts">
 	import { getGeolocation } from '@svelte-use/core';
 
-	const { coords, timestamp, error, resume, pause } = getGeolocation();
+	const {
+        coords,
+        timestamp,
+        error,
+        resume,
+        pause
+    } = getGeolocation();
 </script>
 ```

@@ -11,6 +11,11 @@ category: 'sensors'
 <script lang="ts">
 	import { getDeviceMotion } from '@svelte-use/core';
 
-	const { acceleration, accelerationIncludingGravity, rotationRate, interval } = getDeviceMotion();
+	const {
+        acceleration,
+        accelerationIncludingGravity,
+        rotationRate,
+        interval
+    } = getDeviceMotion();
 </script>
 ```
