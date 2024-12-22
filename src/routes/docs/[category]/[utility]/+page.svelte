@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { toTitleCase } from '$utils/to-title-case.js';
+
 	let { data } = $props();
 </script>
 
 <svelte:head>
 	<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cascadia-code" />
-	<title>{data.attributes.title} - {data.attributes.category} | SvelteUse</title>
+	<title>{data.attributes.title} - {toTitleCase(data.attributes.category)} | SvelteUse</title>
 	<meta name="description" content={data.attributes.description} />
 </svelte:head>
 
