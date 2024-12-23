@@ -21,6 +21,7 @@ export type ExtendedPermissionDescriptor = PermissionDescriptor | { name: Extend
 type GetPermissionReturn = {
 	readonly isSupported: boolean;
 	readonly current: PermissionState;
+	query: () => Promise<PermissionStatus>;
 };
 
 export function getPermission(name: ExtendedPermissionName): GetPermissionReturn;
@@ -39,13 +40,17 @@ export function getPermission(nameOrDesc: ExtendedPermissionName | ExtendedPermi
 	onMount(async () => {
 		if (!('permissions' in navigator)) return;
 
-		_isSupported = true;
-		const status = await query();
-		_current = status.state;
+		try {
+			const status = await query();
+			_isSupported = true;
+			_current = status.state;
 
-		status.onchange = async () => {
-			_current = (await query()).state;
-		};
+			status.onchange = async () => {
+				_current = (await query()).state;
+			};
+		} catch {
+			/* empty */
+		}
 	});
 
 	return {
@@ -54,6 +59,7 @@ export function getPermission(nameOrDesc: ExtendedPermissionName | ExtendedPermi
 		},
 		get current() {
 			return _current;
-		}
+		},
+		query
 	};
 }
