@@ -9,7 +9,7 @@ category: 'states'
 
 ```svelte
 <script>
-	import { sessionState } from '@svelte-use/core';
+	import { sessionState } from '@sv-use/core';
 
 	const counter = sessionState('counter', 0);
 </script>

@@ -9,7 +9,7 @@ category: 'states'
 
 ```svelte
 <script lang="ts">
-	import { historyState } from '@svelte-use/core';
+	import { historyState } from '@sv-use/core';
 
 	const incrementValue = $state(0);
 	const counter = historyState(0);

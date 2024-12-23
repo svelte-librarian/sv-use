@@ -9,7 +9,7 @@ category: 'sensors'
 
 ```svelte
 <script lang="ts">
-	import { getDeviceOrientation } from '@svelte-use/core';
+	import { getDeviceOrientation } from '@sv-use/core';
 
 	const deviceOrientation = getDeviceOrientation();
 </script>

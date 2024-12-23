@@ -9,7 +9,7 @@ category: "sensors"
 
 ```svelte
 <script lang="ts">
-    import { getFps } from "@svelte-use/core";
+    import { getFps } from "@sv-use/core";
 
     const fps = getFps();
 </script>

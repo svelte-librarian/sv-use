@@ -9,7 +9,7 @@ category: "sensors"
 
 ```svelte
 <script lang="ts">
-	import { getNetwork } from '@svelte-use/core';
+	import { getNetwork } from '@sv-use/core';
 
 	const network = getNetwork();
 </script>
