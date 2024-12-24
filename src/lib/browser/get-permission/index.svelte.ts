@@ -18,17 +18,34 @@ type ExtendedPermissionName =
 
 export type ExtendedPermissionDescriptor = PermissionDescriptor | { name: ExtendedPermissionName };
 
-type GetPermissionReturn = {
+type GetPermissionOptions<ExposeControls extends boolean> = {
+	exposeControls?: ExposeControls;
+};
+
+type GetPermissionReturn = Readonly<PermissionState>;
+
+type GetPermissionReturnWithControls = {
 	readonly isSupported: boolean;
 	readonly current: PermissionState;
 	query: () => Promise<PermissionStatus>;
 };
 
-export function getPermission(name: ExtendedPermissionName): GetPermissionReturn;
-export function getPermission(desc: ExtendedPermissionDescriptor): GetPermissionReturn;
+export function getPermission(
+	nameOrDesc: ExtendedPermissionName | ExtendedPermissionDescriptor
+): GetPermissionReturn;
+
+export function getPermission<ExposeControls extends boolean = false>(
+	nameOrDesc: ExtendedPermissionName | ExtendedPermissionDescriptor,
+	options: GetPermissionOptions<ExposeControls>
+): ExposeControls extends true ? GetPermissionReturnWithControls : GetPermissionReturn;
 
 /** Retrieves the status of a given permission. */
-export function getPermission(nameOrDesc: ExtendedPermissionName | ExtendedPermissionDescriptor) {
+export function getPermission<ExposeControls extends boolean>(
+	nameOrDesc: ExtendedPermissionName | ExtendedPermissionDescriptor,
+	options: GetPermissionOptions<ExposeControls> = {}
+): GetPermissionReturn | GetPermissionReturnWithControls {
+	const { exposeControls = false } = options;
+
 	const _descriptor = typeof nameOrDesc === 'string' ? { name: nameOrDesc } : nameOrDesc;
 	let _current = $state<PermissionState>('prompt');
 	let _isSupported = $state<boolean>(false);
@@ -53,13 +70,17 @@ export function getPermission(nameOrDesc: ExtendedPermissionName | ExtendedPermi
 		}
 	});
 
-	return {
-		get isSupported() {
-			return _isSupported;
-		},
-		get current() {
-			return _current;
-		},
-		query
-	};
+	if (exposeControls) {
+		return {
+			get isSupported() {
+				return _isSupported;
+			},
+			get current() {
+				return _current;
+			},
+			query
+		};
+	} else {
+		return _current;
+	}
 }
