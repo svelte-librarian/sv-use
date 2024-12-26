@@ -1,6 +1,7 @@
 {
-	"name": "svelte-use",
+	"name": "sv-use",
 	"version": "0.18.0",
+	"license": "./LICENSE",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
