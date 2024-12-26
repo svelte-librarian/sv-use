@@ -1,9 +1,0 @@
-<script lang="ts">
-	import { getDeviceMotion } from './index.svelte.js';
-
-	const deviceMotion = getDeviceMotion();
-</script>
-
-<div class="relative flex w-full flex-col gap-2">
-	<pre>{JSON.stringify(deviceMotion, null, 2)}</pre>
-</div>

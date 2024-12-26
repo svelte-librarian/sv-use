@@ -7,9 +7,9 @@ A collection of Svelte 5 utilities.
 
 ## Features
 
--   Complete documentation and demos
--   Strongly-typed with Typescript
--   Supports Svelte and SvelteKit (even with SSR enabled)
+* Complete documentation and demos
+* Strongly-typed with Typescript
+* Supports Svelte and SvelteKit (even with SSR enabled)
 
 ## Installation
 
@@ -21,5 +21,5 @@ npm install @sv-use/core
 
 Though it's not a 1:1 port, I greatly took inspiration from these libraries to adapt the library for the Svelte ecosystem.
 
--   [vueuse/vueuse](https://github.com/vueuse/vueuse)
--   [streamich/react-use](https://github.com/streamich/react-use)
+* [vueuse/vueuse](https://github.com/vueuse/vueuse)
+* [streamich/react-use](https://github.com/streamich/react-use)
