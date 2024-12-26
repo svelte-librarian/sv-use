@@ -79,7 +79,7 @@ export function handleEventListener<
 		autoMountAndCleanup: boolean;
 
 	if (typeof elementOrEvent === 'string' || Array.isArray(elementOrEvent)) {
-		element = window;
+		element = typeof window === 'undefined' ? ({} as Window) : window;
 		events = (Array.isArray(elementOrEvent) ? elementOrEvent : [elementOrEvent]) as
 			| Array<keyof WindowEventMap>
 			| Array<keyof DocumentEventMap>
@@ -125,6 +125,11 @@ export function handleEventListener<
 		});
 	} else {
 		onMount(() => {
+			// Is window
+			if (typeof element === 'object' && Object.keys(element).length === 0) {
+				element = window;
+			}
+
 			events.forEach((evt) => {
 				listeners.forEach((listener) => element.addEventListener(evt, listener, options));
 			});
