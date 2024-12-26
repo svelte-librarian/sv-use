@@ -3,6 +3,7 @@
 	import { handleEventListener } from '$lib/browser/handle-event-listener/index.svelte.js';
 	import { toTitleCase } from '$utils/to-title-case.js';
 	import type { UtilityAttributes } from '$types/markdown.js';
+	import { page } from '$app/stores';
 
 	interface Props {
 		utilityGroups: Record<string, UtilityAttributes[]>;
@@ -100,7 +101,9 @@
 								<a
 									href="/docs/{category}/{slug}"
 									onclick={() => (showSidebar = false)}
-									class="text-sm font-medium text-zinc-500"
+									class="text-sm font-medium {$page.url.pathname === `/docs/${category}/${slug}`
+										? 'text-svelte'
+										: 'text-zinc-500'}"
 								>
 									{title}
 								</a>
@@ -137,7 +140,12 @@
 			<h3 class="font-semibold">{toTitleCase(category)}</h3>
 			<div class="relatve flex w-full flex-col">
 				{#each utilities as { slug, title }}
-					<a href="/docs/{category}/{slug}" class="text-zinc-500">{title}</a>
+					<a
+						href="/docs/{category}/{slug}"
+						class={$page.url.pathname === `/docs/${category}/${slug}`
+							? 'text-svelte'
+							: 'text-zinc-500'}>{title}</a
+					>
 				{/each}
 			</div>
 		</div>
