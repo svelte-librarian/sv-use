@@ -32,7 +32,7 @@
 	{/each}
 	{#await getDemoComponent() then DemoComponent}
 		{#if DemoComponent}
-			<h2 class="py-5 text-2xl font-semibold">Demo</h2>
+			<h2 id="demo" class="scroll-mt-12 py-5 text-2xl font-semibold">Demo</h2>
 			<div class="relative overflow-auto rounded-lg bg-[#eff1f5] p-5 dark:bg-[#282c34]">
 				<DemoComponent />
 			</div>
@@ -76,6 +76,7 @@
 		font-weight: 600;
 		padding-top: 1.25rem;
 		padding-bottom: 1.25rem;
+		scroll-margin-top: 3rem;
 	}
 
 	:global(#content h3) {

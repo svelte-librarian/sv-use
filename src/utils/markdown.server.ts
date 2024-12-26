@@ -42,11 +42,22 @@ async function convertMarkdownContentToHTML(content: string): Promise<string> {
 	return html;
 }
 
+function addSlugToH2s(html: string): string {
+	return html.replace(
+		/<h2>(.*?)<\/h2>/g,
+		(match, p1: string) =>
+			`<h2 id="${p1
+				.toLowerCase()
+				.replace(/[^a-zA-Z0-9]/g, '')
+				.replace(' ', '-')}">${p1}</h2>`
+	);
+}
+
 export async function convertMarkdownFileToHTML<T extends Attributes>(filePath: string) {
 	const content = await fs.readFile(filePath, 'utf-8');
 
 	const { attributes, body } = extractDataFromMarkdown<T>(content);
 	const html = await convertMarkdownContentToHTML(body);
 
-	return { attributes, html };
+	return { attributes, html: addSlugToH2s(html) };
 }
