@@ -2,7 +2,7 @@
 	"name": "@sv-use/website",
 	"description": "The website for @sv-use/core utilities.",
 	"type": "module",
-	"version": "0.19.0",
+	"version": "0.20.0",
 	"private": true,
 	"license": "MIT",
 	"author": "Sajidur Rahman",
