@@ -11,7 +11,7 @@ type DebouncedStateOptions = {
 export function debouncedState<T>(initial: T, options: DebouncedStateOptions = {}) {
 	const { delay = 1000 } = options;
 
-	let timeout: NodeJS.Timeout;
+	let timeout: number;
 	let _current = $state<T>(initial);
 
 	return {
