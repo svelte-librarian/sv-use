@@ -6,3 +6,17 @@ export type UtilityAttributes = {
 	description: string;
 	category: Category;
 };
+
+export type MarkdownHeading = {
+	depth: number;
+	value: string;
+	data: {
+		id: string;
+	};
+};
+
+export type MarkdownReturn<T> = {
+	attributes: T;
+	html: string;
+	headings: MarkdownHeading[];
+};

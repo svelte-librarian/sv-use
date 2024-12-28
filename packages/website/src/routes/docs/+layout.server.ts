@@ -40,17 +40,13 @@ export const load: LayoutServerLoad = async () => {
 		.filter((e) => e !== null)
 		.flat();
 
-	const utilityAttributes = await Promise.all(
+	const utilityDocs = await Promise.all(
 		utilityEntries.map(async (utilityEntry) => {
-			const { attributes } = await convertMarkdownFileToHTML<UtilityAttributes>(
+			return await convertMarkdownFileToHTML<UtilityAttributes>(
 				`${utilityEntry.parentPath}/${utilityEntry.name}`
 			);
-
-			return attributes;
 		})
 	);
 
-	const utilityGroups = Object.groupBy(utilityAttributes, (attribute) => attribute.category);
-
-	return { utilityGroups };
+	return { utilityDocs };
 };

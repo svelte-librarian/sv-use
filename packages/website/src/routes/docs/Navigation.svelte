@@ -3,13 +3,15 @@
 	import { fade, fly } from 'svelte/transition';
 	import { toTitleCase } from '$utils/to-title-case.js';
 	import { page } from '$app/stores';
-	import type { UtilityAttributes } from '$types/markdown.js';
+	import type { MarkdownReturn, UtilityAttributes } from '$types/markdown.js';
 
 	interface Props {
-		utilityGroups: Record<string, UtilityAttributes[]>;
+		utilityDocs: MarkdownReturn<UtilityAttributes>[];
 	}
 
-	let { utilityGroups }: Props = $props();
+	let { utilityDocs }: Props = $props();
+
+	let utilityGroups = Object.groupBy(utilityDocs, (docs) => docs.attributes.category);
 
 	let navNode = $state<HTMLElement>();
 	let onThisPageMenuNode = $state<HTMLMenuElement>();
@@ -97,11 +99,11 @@
 				transition:fly={{ x: -200 }}
 				class="fixed left-0 top-0 z-20 flex h-full w-4/5 flex-col gap-5 bg-zinc-50 p-5 shadow-[4px_0_8px_8px_rgba(0,0,0,0.1)]"
 			>
-				{#each Object.entries(utilityGroups) as [category, utilities]}
+				{#each Object.entries(utilityGroups) as [category, docs]}
 					<div class="relative flex w-full flex-col gap-5">
 						<h3 class="text-sm font-semibold text-zinc-900">{toTitleCase(category)}</h3>
 						<div class="relatve flex w-full flex-col">
-							{#each utilities as { slug, title }}
+							{#each docs as { attributes: { slug, title } }}
 								<a
 									href="/docs/{category}/{slug}"
 									onclick={() => (showSidebar = false)}
@@ -125,12 +127,18 @@
 			style="top: {navNode.getBoundingClientRect().height}px"
 			class="absolute z-20 flex w-full flex-col items-start gap-3 bg-[#fafafa] p-5 shadow-md"
 		>
-			<button onclick={() => window.scrollTo(0, 0)} class="font-medium text-svelte">
+			<button onclick={() => window.scrollTo(0, 0)} class="text-svelte font-medium">
 				Return to top
 			</button>
 			<hr class="w-full text-zinc-400" />
-			{#each document.getElementsByTagName('h2') as heading}
-				<a href="#{heading.id}" class="font-medium text-zinc-500">{heading.innerText}</a>
+			{#each utilityDocs.find((doc) => doc.attributes.slug === $page.params.utility)!.headings as heading}
+				<a
+					href="#{heading.data.id}"
+					style="padding-left: {(heading.depth - 2) * 20}px"
+					class="relative font-medium text-zinc-500"
+				>
+					{heading.value}
+				</a>
 			{/each}
 		</menu>
 	{/if}
@@ -139,11 +147,11 @@
 <!-- DESKTOP -->
 
 <nav class="relative hidden h-full flex-col items-center justify-start gap-5 px-16 py-8 lg:flex">
-	{#each Object.entries(utilityGroups) as [category, utilities]}
+	{#each Object.entries(utilityGroups) as [category, docs]}
 		<div class="relative flex w-full flex-col gap-5">
 			<h3 class="font-semibold">{toTitleCase(category)}</h3>
 			<div class="relatve flex w-full flex-col">
-				{#each utilities as { slug, title }}
+				{#each docs as { attributes: { slug, title } }}
 					<a
 						href="/docs/{category}/{slug}"
 						class={$page.url.pathname === `/docs/${category}/${slug}`

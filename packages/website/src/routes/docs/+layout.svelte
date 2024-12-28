@@ -5,7 +5,7 @@
 </script>
 
 <div class="relative flex h-full w-full flex-col lg:flex-row">
-	<Navigation utilityGroups={data.utilityGroups} />
+	<Navigation utilityDocs={data.utilityDocs} />
 	<div class="relative h-full w-full">
 		<div class="relative mx-auto w-full max-w-[720px] p-5">
 			{@render children()}
