@@ -4,6 +4,10 @@
 	let { children, data } = $props();
 </script>
 
+<svelte:head>
+	<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cascadia-code" />
+</svelte:head>
+
 <div class="relative flex w-full flex-col lg:flex-row">
 	<Navigation utilityDocs={data.utilityDocs} />
 	<div class="relative w-full">

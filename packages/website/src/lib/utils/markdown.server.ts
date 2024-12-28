@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import frontmatter, { type FrontMatterResult } from 'front-matter';
+import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHeadingId from 'remark-heading-id';
@@ -21,10 +21,9 @@ type ExtractDataFromMarkdownReturn<T extends Attributes> = {
 function extractDataFromMarkdown<T extends Attributes>(
 	content: string
 ): ExtractDataFromMarkdownReturn<T> {
-	// @ts-expect-error Types are not resolved properly but it works.
-	const { attributes, body } = frontmatter<T>(content) as FrontMatterResult<T>;
+	const { data, content: body } = matter(content);
 
-	return { attributes, body };
+	return { attributes: data as T, body };
 }
 
 async function convertMarkdownContentToHTML(

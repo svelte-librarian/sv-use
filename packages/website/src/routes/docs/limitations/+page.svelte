@@ -17,7 +17,7 @@
 <main class="relative flex w-full flex-col">
 	<h1 class="mb-5 text-2xl font-semibold">{data.attributes.title}</h1>
 	{#each data.attributes.description.split('\\n') as line}
-		<p class="mb-5">{line}</p>
+		<p>{line}</p>
 	{/each}
 	<div id="content" class="contents">
 		{@html data.html}

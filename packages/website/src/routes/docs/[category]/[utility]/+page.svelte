@@ -1,11 +1,21 @@
 <script lang="ts">
+	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
 	import { toTitleCase } from '$utils/to-title-case.js';
 
 	let { data } = $props();
+
+	$effect(() => {
+		const headings = data.headings;
+
+		if (data.Component) {
+			headings.unshift({ depth: 2, value: 'Demo', data: { id: 'demo' } });
+		}
+
+		onThisPageHeadings.current = headings;
+	});
 </script>
 
 <svelte:head>
-	<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cascadia-code" />
 	<title>{data.attributes.title} - {toTitleCase(data.attributes.category)} | SvelteUse</title>
 	<meta name="description" content={data.attributes.description} />
 </svelte:head>

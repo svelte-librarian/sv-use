@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { toTitleCase } from '$utils/to-title-case.js';
 	import { page } from '$app/stores';
+	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
+	import { toTitleCase } from '$utils/to-title-case.js';
 	import type { MarkdownReturn, UtilityAttributes } from '$types/markdown.js';
 
 	interface Props {
@@ -99,10 +100,33 @@
 				transition:fly={{ x: -200 }}
 				class="fixed left-0 top-0 z-20 flex h-full w-4/5 flex-col gap-5 bg-zinc-50 p-5 shadow-[4px_0_8px_8px_rgba(0,0,0,0.1)]"
 			>
+				<div class="relative flex w-full flex-col gap-5">
+					<h3 class="text-sm font-semibold text-zinc-900">Getting Started</h3>
+					<div class="relative flex w-full flex-col">
+						<a
+							href="/docs"
+							onclick={() => (showSidebar = false)}
+							class="text-sm font-medium {$page.url.pathname === `/docs`
+								? 'text-svelte'
+								: 'text-zinc-500'}"
+						>
+							Introduction
+						</a>
+						<a
+							href="/docs/limitations"
+							onclick={() => (showSidebar = false)}
+							class="text-sm font-medium {$page.url.pathname === `/docs/limitations`
+								? 'text-svelte'
+								: 'text-zinc-500'}"
+						>
+							Limitations
+						</a>
+					</div>
+				</div>
 				{#each Object.entries(utilityGroups) as [category, docs]}
 					<div class="relative flex w-full flex-col gap-5">
 						<h3 class="text-sm font-semibold text-zinc-900">{toTitleCase(category)}</h3>
-						<div class="relatve flex w-full flex-col">
+						<div class="relative flex w-full flex-col">
 							{#each docs as { attributes: { slug, title } }}
 								<a
 									href="/docs/{category}/{slug}"
@@ -130,9 +154,9 @@
 			<button onclick={() => window.scrollTo(0, 0)} class="text-svelte font-medium">
 				Return to top
 			</button>
-			<hr class="w-full text-zinc-400" />
-			{#if utilityDocs.find((doc) => doc.attributes.slug === $page.params.utility)}
-				{#each utilityDocs.find((doc) => doc.attributes.slug === $page.params.utility)!.headings as heading}
+			{#if onThisPageHeadings.current.length > 0}
+				<hr class="w-full text-zinc-400" />
+				{#each onThisPageHeadings.current as heading}
 					<a
 						href="#{heading.data.id}"
 						style="padding-left: {(heading.depth - 2) * 20}px"
