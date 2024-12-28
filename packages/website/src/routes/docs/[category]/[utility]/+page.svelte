@@ -44,34 +44,7 @@
 	</div>
 </main>
 
-<style>
-	:global(#content code) {
-		padding: 20px 0;
-		counter-reset: line;
-	}
-
-	:global(#content code *) {
-		font-family: 'Cascadia Code', sans-serif;
-	}
-
-	:global(#content span[data-highlighted-line]) {
-		background-color: rgba(200, 200, 255, 0.1);
-	}
-
-	:global(#content code > [data-line]) {
-		padding: 2px 20px;
-	}
-
-	:global(#content code[data-line-numbers] > [data-line]::before) {
-		counter-increment: line;
-		content: counter(line);
-		display: inline-block;
-		width: 1rem;
-		margin-right: 2rem;
-		text-align: right;
-		color: gray;
-	}
-
+<style lang="postcss">
 	:global(#content h2) {
 		font-size: 1.5rem;
 		font-weight: 600;
@@ -93,14 +66,9 @@
 		margin-bottom: 1.25rem;
 	}
 
-	:global(#content a span, #content a svg) {
-		color: #4f46e5;
-		font-weight: 600;
-	}
-
-	:global(html.dark #content a span, html.dark #content a svg) {
-		color: #38bdf8;
-		font-weight: 600;
+	:global(#content a) {
+		@apply text-svelte;
+		text-decoration: underline;
 	}
 
 	:global(#content p) {
@@ -121,17 +89,48 @@
 	:global(#content figure pre code) {
 		overflow: auto;
 		border-radius: 0.5rem;
+		padding: 20px 0;
+		counter-reset: line;
 	}
 
-	:global(#content code),
-	:global(#content code span) {
+	:global(#content figure pre code *) {
+		font-family: 'Cascadia Code', sans-serif;
+	}
+
+	:global(#content figure pre code span[data-highlighted-line]) {
+		background-color: rgba(200, 200, 255, 0.1);
+	}
+
+	:global(#content figure pre code > [data-line]) {
+		padding: 2px 20px;
+	}
+
+	:global(#content figure pre code[data-line-numbers] > [data-line]::before) {
+		counter-increment: line;
+		content: counter(line);
+		display: inline-block;
+		width: 1rem;
+		margin-right: 2rem;
+		text-align: right;
+		color: gray;
+	}
+
+	:global(#content figure pre code),
+	:global(#content figure pre code span) {
 		color: var(--shiki-light);
 		background-color: var(--shiki-light-bg);
 	}
 
-	:global(html.dark #content code),
-	:global(html.dark #content code span) {
+	:global(html.dark #content figure pre code),
+	:global(html.dark #content figure pre code span) {
 		color: var(--shiki-dark);
 		background-color: var(--shiki-dark-bg);
+	}
+
+	:global(#content *:not(figure) code) {
+		@apply bg-svelte;
+		color: #fafafa;
+		padding: 2px 4px;
+		border-radius: 4px;
 	}
 </style>

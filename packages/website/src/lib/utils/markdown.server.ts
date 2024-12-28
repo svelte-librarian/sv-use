@@ -6,7 +6,7 @@ import remarkHeadingId from 'remark-heading-id';
 import remarkHeadings from '@vcarl/remark-headings';
 import { remarkAlert } from 'remark-github-blockquote-alert';
 import remarkRehype from 'remark-rehype';
-import htmlify from 'rehype-stringify';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeStringify from 'rehype-stringify';
 import type { MarkdownHeading, MarkdownReturn } from '$types/markdown.js';
@@ -39,7 +39,9 @@ async function convertMarkdownContentToHTML(
 		.use(remarkHeadings)
 		.use(remarkAlert)
 		.use(remarkRehype)
-		.use(htmlify)
+		.use(rehypeExternalLinks, {
+			target: '_blank'
+		})
 		.use(rehypePrettyCode, {
 			theme: {
 				light: 'catppuccin-latte',
