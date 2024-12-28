@@ -4,6 +4,7 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHeadingId from 'remark-heading-id';
 import remarkHeadings from '@vcarl/remark-headings';
+import { remarkAlert } from 'remark-github-blockquote-alert';
 import remarkRehype from 'remark-rehype';
 import htmlify from 'rehype-stringify';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -36,6 +37,7 @@ async function convertMarkdownContentToHTML(
 			uniqueDefaults: true
 		})
 		.use(remarkHeadings)
+		.use(remarkAlert)
 		.use(remarkRehype)
 		.use(htmlify)
 		.use(rehypePrettyCode, {
