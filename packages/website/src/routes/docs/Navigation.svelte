@@ -131,15 +131,17 @@
 				Return to top
 			</button>
 			<hr class="w-full text-zinc-400" />
-			{#each utilityDocs.find((doc) => doc.attributes.slug === $page.params.utility)!.headings as heading}
-				<a
-					href="#{heading.data.id}"
-					style="padding-left: {(heading.depth - 2) * 20}px"
-					class="relative font-medium text-zinc-500"
-				>
-					{heading.value}
-				</a>
-			{/each}
+			{#if utilityDocs.find((doc) => doc.attributes.slug === $page.params.utility)}
+				{#each utilityDocs.find((doc) => doc.attributes.slug === $page.params.utility)!.headings as heading}
+					<a
+						href="#{heading.data.id}"
+						style="padding-left: {(heading.depth - 2) * 20}px"
+						class="relative font-medium text-zinc-500"
+					>
+						{heading.value}
+					</a>
+				{/each}
+			{/if}
 		</menu>
 	{/if}
 </div>
