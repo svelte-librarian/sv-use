@@ -11,12 +11,6 @@ category: 'sensors'
 <script lang="ts">
 	import { getGeolocation } from '@sv-use/core';
 
-	const {
-        coords,
-        timestamp,
-        error,
-        resume,
-        pause
-    } = getGeolocation();
+	const geolocation = getGeolocation();
 </script>
 ```

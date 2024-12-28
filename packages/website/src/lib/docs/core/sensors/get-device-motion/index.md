@@ -11,11 +11,6 @@ category: 'sensors'
 <script lang="ts">
 	import { getDeviceMotion } from '@sv-use/core';
 
-	const {
-        acceleration,
-        accelerationIncludingGravity,
-        rotationRate,
-        interval
-    } = getDeviceMotion();
+	const deviceMotion = getDeviceMotion();
 </script>
 ```

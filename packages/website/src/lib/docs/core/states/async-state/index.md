@@ -11,9 +11,8 @@ category: 'states'
 <script lang="ts">
 	import { asyncState } from '@sv-use/core';
 
-	const { current, isReady, error } = asyncState(
-		fetch(`https://dummyjson.com/recipes/1`)
-            .then((res) => res.json()),
+	const recipe = asyncState(
+		fetch(`https://dummyjson.com/recipes/1`).then((res) => res.json()),
 		null
 	);
 </script>
@@ -28,8 +27,7 @@ A basic example where you wait for the value to be resolved.
 	import { asyncState } from '@sv-use/core';
 
 	const recipe = asyncState(
-		fetch(`https://dummyjson.com/recipes/1`)
-            .then((res) => res.json()),
+		fetch(`https://dummyjson.com/recipes/1`).then((res) => res.json()),
 		null
 	);
 </script>
@@ -52,9 +50,8 @@ Note that you have to set `immediate` to `false` if you are using a function tha
 	let id = $state(1);
 	const recipe = asyncState(
 		(id: number) => {
-            return fetch(`https://dummyjson.com/recipes/${id}`)
-                .then((res) => res.json())
-        },
+			return fetch(`https://dummyjson.com/recipes/${id}`).then((res) => res.json());
+		},
 		null,
 		{
 			immediate: false
