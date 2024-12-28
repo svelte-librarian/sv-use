@@ -58,6 +58,7 @@
 		font-weight: 600;
 		padding-top: 1.25rem;
 		padding-bottom: 1.25rem;
+		scroll-margin-top: 3rem;
 	}
 
 	:global(#content ul) {
