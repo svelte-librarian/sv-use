@@ -1,19 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { toTitleCase } from '$utils/to-title-case.js';
-	import type { Component } from 'svelte';
 
 	let { data } = $props();
-
-	async function getDemoComponent() {
-		try {
-			return (
-				await import(`$lib/docs/core/${$page.params.category}/${$page.params.utility}/Demo.svelte`)
-			).default as Component;
-		} catch (error) {
-			return undefined;
-		}
-	}
 </script>
 
 <svelte:head>
@@ -22,7 +10,7 @@
 	<meta name="description" content={data.attributes.description} />
 </svelte:head>
 
-<main id="content" class="relative flex w-full flex-col">
+<main class="relative flex w-full flex-col">
 	<h1 class="mb-5 text-2xl font-semibold">{data.attributes.title}</h1>
 	<div class="relative mb-5 grid w-full grid-cols-[100px_auto] gap-5">
 		<span>Category</span>
@@ -31,14 +19,13 @@
 	{#each data.attributes.description.split('\\n') as line}
 		<p>{line}</p>
 	{/each}
-	{#await getDemoComponent() then DemoComponent}
-		{#if DemoComponent}
-			<h2 id="demo" class="scroll-mt-12 py-5 text-2xl font-semibold">Demo</h2>
-			<div class="relative overflow-auto rounded-lg bg-[#eff1f5] p-5 dark:bg-[#282c34]">
-				<DemoComponent />
-			</div>
-		{/if}
-	{/await}
+	{#if data.Component}
+		{@const DemoComponent = data.Component}
+		<h2 id="demo" class="scroll-mt-12 py-5 text-2xl font-semibold">Demo</h2>
+		<div class="relative overflow-auto rounded-lg bg-[#eff1f5] p-5 dark:bg-[#282c34]">
+			<DemoComponent />
+		</div>
+	{/if}
 	<div id="content" class="contents">
 		{@html data.html}
 	</div>
