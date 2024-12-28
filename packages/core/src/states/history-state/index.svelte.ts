@@ -6,10 +6,6 @@ export function historyState<T>(initial: T) {
 
 	let _current = $state<T>(initial);
 
-	$effect(() => {
-		$inspect(_history);
-	});
-
 	return {
 		get current() {
 			return _current;
