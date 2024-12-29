@@ -7,31 +7,19 @@ export function autoResetState<T>(defaultValue: T, delay: number = 3000) {
 	let timeout: number;
 	let _current = $state<T>(defaultValue);
 
-	$effect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-		_current;
-
-		if (timeout) {
-			clearTimeout(timeout);
-		}
-
-		timeout = setTimeout(() => {
-			_current = defaultValue;
-		}, delay) as unknown as number;
-
-		return () => {
-			if (timeout) {
-				clearTimeout(timeout);
-			}
-		};
-	});
-
 	return {
 		get current() {
 			return _current;
 		},
 		set current(v: T) {
+			if (timeout) {
+				clearTimeout(timeout);
+			}
+
 			_current = v;
+			timeout = setTimeout(() => {
+				_current = defaultValue;
+			}, delay) as unknown as number;
 		}
 	};
 }
