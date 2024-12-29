@@ -8,24 +8,37 @@ type DebouncedStateOptions = {
  * @param initial The initial value of the state.
  * @param options Additional options to customize the behavior.
  */
-export function debouncedState<T>(initial: T, options: DebouncedStateOptions = {}) {
+export function debouncedState<T>(initial: T, options: DebouncedStateOptions = {}): { current: T } {
 	const { delay = 1000 } = options;
 
 	let timeout: number;
-	let _current = $state<T>(initial);
+	const _state = $state({ current: initial });
 
-	return {
-		get current() {
-			return _current;
+	const handler: ProxyHandler<{ current: T }> = {
+		get(target: Record<string, unknown>, key: string) {
+			if (
+				target &&
+				typeof target === 'object' &&
+				typeof target[key] === 'object' &&
+				target[key] !== null
+			) {
+				return new Proxy(target[key], handler);
+			} else {
+				return target[key];
+			}
 		},
-		set current(v: T) {
+		set(target: Record<string, unknown>, key: string, value: unknown) {
 			if (timeout) {
 				clearTimeout(timeout);
 			}
 
 			timeout = setTimeout(() => {
-				_current = v;
-			}, delay);
+				target[key] = value;
+			}, delay) as unknown as number;
+
+			return true;
 		}
 	};
+
+	return new Proxy(_state, handler);
 }
