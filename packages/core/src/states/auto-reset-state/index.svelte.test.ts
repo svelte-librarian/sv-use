@@ -40,6 +40,36 @@ describe('Works with primitives', () => {
 		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER);
 		expect(message.current).toBe('');
 	});
+
+	it('Resets properly after the default delay after multiple changes', () => {
+		const message = autoResetState('');
+
+		message.current = 'test';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toBe('test');
+
+		message.current = 'test2';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toBe('test2');
+
+		vi.advanceTimersByTime(DEFAULT_CHECK_AFTER);
+		expect(message.current).toBe('');
+	});
+
+	it('Resets properly after a custom delay after multiple changes', () => {
+		const message = autoResetState('', CUSTOM_DELAY);
+
+		message.current = 'test';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toBe('test');
+
+		message.current = 'test2';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toBe('test2');
+
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER);
+		expect(message.current).toBe('');
+	});
 });
 
 describe('Works with objects', () => {
@@ -76,6 +106,36 @@ describe('Works with objects', () => {
 		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER);
 		expect(message.current).toStrictEqual({ value: '' });
 	});
+
+	it('Resets properly after the default delay after multiple changes', () => {
+		const message = autoResetState({ value: '' });
+
+		message.current = { value: 'test' };
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		message.current = { value: 'test2' };
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test2' });
+
+		vi.advanceTimersByTime(DEFAULT_CHECK_AFTER);
+		expect(message.current).toStrictEqual({ value: '' });
+	});
+
+	it('Resets properly after a custom delay after multiple changes', () => {
+		const message = autoResetState({ value: '' }, CUSTOM_DELAY);
+
+		message.current = { value: 'test' };
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		message.current = { value: 'test2' };
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test2' });
+
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER);
+		expect(message.current).toStrictEqual({ value: '' });
+	});
 });
 
 describe('Works with property assignment on objects', () => {
@@ -108,6 +168,36 @@ describe('Works with property assignment on objects', () => {
 
 		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
 		expect(message.current).toStrictEqual({ value: 'test' });
+
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER);
+		expect(message.current).toStrictEqual({ value: '' });
+	});
+
+	it('Resets properly after the default delay after multiple changes', () => {
+		const message = autoResetState({ value: '' });
+
+		message.current.value = 'test';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		message.current.value = 'test2';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test2' });
+
+		vi.advanceTimersByTime(DEFAULT_CHECK_AFTER);
+		expect(message.current).toStrictEqual({ value: '' });
+	});
+
+	it('Resets properly after a custom delay after multiple changes', () => {
+		const message = autoResetState({ value: '' }, CUSTOM_DELAY);
+
+		message.current.value = 'test';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		message.current.value = 'test2';
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test2' });
 
 		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER);
 		expect(message.current).toStrictEqual({ value: '' });
