@@ -77,3 +77,39 @@ describe('Works with objects', () => {
 		expect(message.current).toStrictEqual({ value: '' });
 	});
 });
+
+describe('Works with property assignment on objects', () => {
+	beforeEach(() => {
+		vi.useFakeTimers();
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
+	it('Resets properly after the default delay', () => {
+		const message = autoResetState({ value: '' });
+
+		message.current.value = 'test';
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		vi.advanceTimersByTime(DEFAULT_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		vi.advanceTimersByTime(DEFAULT_CHECK_AFTER);
+		expect(message.current).toStrictEqual({ value: '' });
+	});
+
+	it('Resets properly after a custom delay', () => {
+		const message = autoResetState({ value: '' }, CUSTOM_DELAY);
+
+		message.current.value = 'test';
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER / 2);
+		expect(message.current).toStrictEqual({ value: 'test' });
+
+		vi.advanceTimersByTime(CUSTOM_CHECK_AFTER);
+		expect(message.current).toStrictEqual({ value: '' });
+	});
+});

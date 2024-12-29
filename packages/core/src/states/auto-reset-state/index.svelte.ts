@@ -5,21 +5,35 @@
  */
 export function autoResetState<T>(defaultValue: T, delay: number = 3000) {
 	let timeout: number;
-	let _current = $state<T>(defaultValue);
+	const _state = $state({ current: defaultValue });
 
-	return {
-		get current() {
-			return _current;
+	const handler: ProxyHandler<{ current: T }> = {
+		get(target: Record<string, unknown>, key: string) {
+			if (
+				target &&
+				typeof target === 'object' &&
+				typeof target[key] === 'object' &&
+				target[key] !== null
+			) {
+				return new Proxy(target[key], handler);
+			} else {
+				return target[key];
+			}
 		},
-		set current(v: T) {
+		set(target: Record<string, unknown>, key: string, value: unknown) {
 			if (timeout) {
 				clearTimeout(timeout);
 			}
 
-			_current = v;
+			target[key] = value;
+
 			timeout = setTimeout(() => {
-				_current = defaultValue;
+				_state.current = defaultValue;
 			}, delay) as unknown as number;
+
+			return true;
 		}
 	};
+
+	return new Proxy(_state, handler);
 }
