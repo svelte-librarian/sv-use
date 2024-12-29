@@ -1,7 +1,7 @@
 ---
 slug: 'history-state'
 title: 'historyState'
-description: 'Tracks the change history of a given value. Provides undo and redo capabilities'
+description: 'A reactive state that allows for undo and redo operations by tracking the change history.'
 category: 'states'
 ---
 
@@ -11,13 +11,21 @@ category: 'states'
 <script lang="ts">
 	import { historyState } from '@sv-use/core';
 
-	const incrementValue = $state(0);
+	const counter = historyState(0);
+</script>
+```
+
+## Examples
+
+```svelte
+<script lang="ts">
+	import { historyState } from '@sv-use/core';
+
 	const counter = historyState(0);
 </script>
 
 <span>counter : {counter.current}</span>
-<input bind:this={incrementValue} type="number" />
-<button onclick={() => (counter.current += incrementValue)}>
-    Apply counter change
-</button>
+<span>change history : {JSON.stringify(counter.history, null, 2)}</span>
+<button onclick={() => counter.current++}> Increment </button>
+<button onclick={() => counter.current--}> Decrement </button>
 ```
