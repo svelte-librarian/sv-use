@@ -1,4 +1,3 @@
-import { flushSync } from 'svelte';
 import { debouncedState } from './index.svelte.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -12,83 +11,63 @@ describe('Works with primitives', () => {
 	});
 
 	it('Changes state correctly after the default debounce', () => {
-		const cleanup = $effect.root(() => {
-			const search = debouncedState('');
+		const search = debouncedState('');
 
-			expect(search.current).toBe('');
+		expect(search.current).toBe('');
 
-			search.current = 'test';
-			expect(search.current).toBe('');
+		search.current = 'test';
+		expect(search.current).toBe('');
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toBe('test');
-		});
-
-		cleanup();
+		expect(search.current).toBe('test');
 	});
 
 	it('Changes state correctly after a custom debounce', () => {
-		const cleanup = $effect.root(() => {
-			const delay = 500;
-			const search = debouncedState('', { delay });
+		const delay = 500;
+		const search = debouncedState('', { delay });
 
-			expect(search.current).toBe('');
+		expect(search.current).toBe('');
 
-			search.current = 'test';
-			expect(search.current).toBe('');
+		search.current = 'test';
+		expect(search.current).toBe('');
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toBe('test');
-		});
-
-		cleanup();
+		expect(search.current).toBe('test');
 	});
 
 	it('Changes state correctly after multiple assignments with the default debounce', () => {
-		const cleanup = $effect.root(() => {
-			const search = debouncedState('');
+		const search = debouncedState('');
 
-			expect(search.current).toBe('');
+		expect(search.current).toBe('');
 
-			search.current = 'test';
-			search.current = 'test2';
-			search.current = 'test3';
+		search.current = 'test';
+		search.current = 'test2';
+		search.current = 'test3';
 
-			expect(search.current).toBe('');
+		expect(search.current).toBe('');
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toBe('test3');
-		});
-
-		cleanup();
+		expect(search.current).toBe('test3');
 	});
 
 	it('Changes state correctly after multiple assignments with a custom debounce', () => {
-		const cleanup = $effect.root(() => {
-			const delay = 500;
-			const search = debouncedState('', { delay });
+		const delay = 500;
+		const search = debouncedState('', { delay });
 
-			expect(search.current).toBe('');
+		expect(search.current).toBe('');
 
-			search.current = 'test';
-			search.current = 'test2';
-			search.current = 'test3';
+		search.current = 'test';
+		search.current = 'test2';
+		search.current = 'test3';
 
-			expect(search.current).toBe('');
+		expect(search.current).toBe('');
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toBe('test3');
-		});
-
-		cleanup();
+		expect(search.current).toBe('test3');
 	});
 });
 
@@ -102,83 +81,63 @@ describe('Works with reassigned objects', () => {
 	});
 
 	it('Changes state correctly after the default debounce', () => {
-		const cleanup = $effect.root(() => {
-			const search = debouncedState({ value: 'hello' });
+		const search = debouncedState({ value: 'hello' });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current = { value: 'test' };
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		search.current = { value: 'test' };
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test' });
 	});
 
 	it('Changes state correctly after a custom debounce', () => {
-		const cleanup = $effect.root(() => {
-			const delay = 500;
-			const search = debouncedState({ value: 'hello' }, { delay });
+		const delay = 500;
+		const search = debouncedState({ value: 'hello' }, { delay });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current = { value: 'test' };
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		search.current = { value: 'test' };
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test' });
 	});
 
 	it('Changes state correctly after multiple assignments with the default debounce', () => {
-		const cleanup = $effect.root(() => {
-			const search = debouncedState({ value: 'hello' });
+		const search = debouncedState({ value: 'hello' });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current = { value: 'test' };
-			search.current = { value: 'test2' };
-			search.current = { value: 'test3' };
+		search.current = { value: 'test' };
+		search.current = { value: 'test2' };
+		search.current = { value: 'test3' };
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test3' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test3' });
 	});
 
 	it('Changes state correctly after multiple assignments with a custom debounce', () => {
-		const cleanup = $effect.root(() => {
-			const delay = 500;
-			const search = debouncedState({ value: 'hello' }, { delay });
+		const delay = 500;
+		const search = debouncedState({ value: 'hello' }, { delay });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current = { value: 'test' };
-			search.current = { value: 'test2' };
-			search.current = { value: 'test3' };
+		search.current = { value: 'test' };
+		search.current = { value: 'test2' };
+		search.current = { value: 'test3' };
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test3' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test3' });
 	});
 });
 
@@ -192,82 +151,62 @@ describe('Works with property assignment on objects', () => {
 	});
 
 	it('Changes state correctly after the default debounce', () => {
-		const cleanup = $effect.root(() => {
-			const search = debouncedState({ value: 'hello' });
+		const search = debouncedState({ value: 'hello' });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current.value = 'test';
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		search.current.value = 'test';
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test' });
 	});
 
 	it('Changes state correctly after a custom debounce', () => {
-		const cleanup = $effect.root(() => {
-			const delay = 500;
-			const search = debouncedState({ value: 'hello' }, { delay });
+		const delay = 500;
+		const search = debouncedState({ value: 'hello' }, { delay });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current.value = 'test';
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		search.current.value = 'test';
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test' });
 	});
 
 	it('Changes state correctly after multiple assignments with the default debounce', () => {
-		const cleanup = $effect.root(() => {
-			const search = debouncedState({ value: 'hello' });
+		const search = debouncedState({ value: 'hello' });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current.value = 'test';
-			search.current.value = 'test2';
-			search.current.value = 'test3';
+		search.current.value = 'test';
+		search.current.value = 'test2';
+		search.current.value = 'test3';
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test3' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test3' });
 	});
 
 	it('Changes state correctly after multiple assignments with a custom debounce', () => {
-		const cleanup = $effect.root(() => {
-			const delay = 500;
-			const search = debouncedState({ value: 'hello' }, { delay });
+		const delay = 500;
+		const search = debouncedState({ value: 'hello' }, { delay });
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			search.current.value = 'test';
-			search.current.value = 'test2';
-			search.current.value = 'test3';
+		search.current.value = 'test';
+		search.current.value = 'test2';
+		search.current.value = 'test3';
 
-			expect(search.current).toStrictEqual({ value: 'hello' });
+		expect(search.current).toStrictEqual({ value: 'hello' });
 
-			flushSync();
-			vi.runAllTimers();
+		vi.runAllTimers();
 
-			expect(search.current).toStrictEqual({ value: 'test3' });
-		});
-
-		cleanup();
+		expect(search.current).toStrictEqual({ value: 'test3' });
 	});
 });
