@@ -1,12 +1,12 @@
 {
 	"name": "@sv-use/core",
-	"version": "0.25.4",
+	"version": "0.25.5",
 	"license": "MIT",
 	"description": "A collection of Svelte 5 utilities.",
 	"main": "./dist/index.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sv-use/sv-use.git"
+		"url": "git+https://github.com/svelte-librarian/sv-use.git"
 	},
 	"keywords": [
 		"svelte",
@@ -14,9 +14,9 @@
 	],
 	"author": "Sajidur Rahman",
 	"bugs": {
-		"url": "https://github.com/sv-use/sv-use/issues"
+		"url": "https://github.com/svelte-librarian/sv-use/issues"
 	},
-	"homepage": "https://github.com/sv-use/sv-use#readme",
+	"homepage": "https://github.com/svelte-librarian/sv-use#readme",
 	"scripts": {
 		"package": "svelte-kit sync && svelte-package && publint",
 		"prepublishOnly": "npm run package",
