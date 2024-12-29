@@ -17,7 +17,7 @@ export function autoResetState<T>(defaultValue: T, delay: number = 3000) {
 
 		timeout = setTimeout(() => {
 			_current = defaultValue;
-		}, delay);
+		}, delay) as unknown as number;
 
 		return () => {
 			if (timeout) {
