@@ -1,7 +1,7 @@
 ---
 slug: 'debounced-state'
 title: 'debouncedState'
-description: "Debounce the execution of a state's value."
+description: 'A reactive state that updates its value after a delay.'
 category: 'states'
 ---
 
@@ -9,9 +9,8 @@ category: 'states'
 
 ```svelte
 <script lang="ts">
-	import { debouncedState } from 'svelte-use/reactivity';
+	import { debouncedState } from '@sv-use/core';
 
-	const search = $state('');
-	const debouncedState = debouncedState(search);
+	const search = debouncedState('', { delay: 1000 });
 </script>
 ```

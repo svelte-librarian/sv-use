@@ -4,7 +4,7 @@ type DebouncedStateOptions = {
 };
 
 /**
- * Creates a reactive state that updates the state after a delay.
+ * A reactive state that updates its value after a delay.
  * @param initial The initial value of the state.
  * @param options Additional options to customize the behavior.
  */
