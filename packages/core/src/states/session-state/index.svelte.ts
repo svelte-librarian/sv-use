@@ -1,4 +1,4 @@
-import { onMount } from 'svelte';
+import { BROWSER } from 'esm-env';
 
 type SessionStateOptions<T> = {
 	/** Defaults to `JSON.stringify`. */
@@ -19,23 +19,37 @@ type SessionStateOptions<T> = {
 export function sessionState<T>(key: string, value: T, options: SessionStateOptions<T> = {}) {
 	const { serialize = JSON.stringify, deserialize = JSON.parse, overrideDefault = false } = options;
 
-	let _current = $state<T>(value);
+	const _state = $state({ current: value });
 
-	onMount(() => {
-		if (!overrideDefault) {
-			_current = deserialize(sessionStorage.getItem(key) ?? serialize(value));
+	if (BROWSER) {
+		if (sessionStorage.getItem(key) && !overrideDefault) {
+			_state.current = deserialize(sessionStorage.getItem(key)!);
 		} else {
 			sessionStorage.setItem(key, serialize(value));
 		}
-	});
+	}
 
-	return {
-		get current() {
-			return _current;
+	const handler: ProxyHandler<{ current: T }> = {
+		get(target: Record<string, unknown>, key: string) {
+			if (
+				target &&
+				typeof target === 'object' &&
+				typeof target[key] === 'object' &&
+				target[key] !== null
+			) {
+				return new Proxy(target[key], handler);
+			} else {
+				return target[key];
+			}
 		},
-		set current(v: T) {
-			_current = v;
-			sessionStorage.setItem(key, serialize(v));
+		set(target: Record<string, unknown>, proxyKey: string, proxyValue: unknown) {
+			target[proxyKey] = proxyValue;
+
+			sessionStorage.setItem(key, serialize(_state.current));
+
+			return true;
 		}
 	};
+
+	return new Proxy(_state, handler);
 }
