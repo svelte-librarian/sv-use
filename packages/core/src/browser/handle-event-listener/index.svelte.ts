@@ -2,6 +2,13 @@ import { onMount } from 'svelte';
 
 type Arrayable<T> = T | T[];
 
+interface InferEventTarget<Events> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	addEventListener: (event: Events, fn?: any, options?: any) => any;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	removeEventListener: (event: Events, fn?: any, options?: any) => any;
+}
+
 type GeneralEventListener<EventType extends Event = Event> = (evt: EventType) => void;
 type HandleEventListenerOptions = AddEventListenerOptions & {
 	/**
@@ -45,8 +52,22 @@ export function handleEventListener<
 	options?: HandleEventListenerOptions
 ): CleanupFunction;
 
+export function handleEventListener<Name extends string, EventType extends Event = Event>(
+	element: InferEventTarget<Name>,
+	event: Arrayable<Name>,
+	listener: Arrayable<GeneralEventListener<EventType>>,
+	options?: HandleEventListenerOptions
+): CleanupFunction;
+
+export function handleEventListener<EventType extends Event = Event>(
+	element: EventTarget,
+	event: Arrayable<string>,
+	listener: Arrayable<GeneralEventListener<EventType>>,
+	options?: HandleEventListenerOptions
+): CleanupFunction;
+
 /**
- * Handles the mounting (and, optionally, unmounting via the {@link HandleEventListenerOptions.autoMountAndCleanup} option) of an event listener.
+ * Handles the mounting (and, optionally, unmounting via the {@link HandleEventListenerOptions.autoMountAndCleanup | `autoMountAndCleanup`} option) of an event listener.
  * @returns A cleanup function that can be used to remove the event listener.
  */
 export function handleEventListener<
@@ -54,15 +75,21 @@ export function handleEventListener<
 		| Window
 		| Document
 		| HTMLElement
+		| InferEventTarget<string>
 		| Arrayable<keyof WindowEventMap>
 		| Arrayable<keyof DocumentEventMap>
-		| Arrayable<keyof HTMLElementEventMap>,
+		| Arrayable<keyof HTMLElementEventMap>
+		| Arrayable<string>,
 	EventOrListener extends
 		| Arrayable<keyof WindowEventMap>
 		| Arrayable<keyof DocumentEventMap>
 		| Arrayable<keyof HTMLElementEventMap>
+		| Arrayable<string>
 		| Arrayable<GeneralEventListener>,
-	ListenerOrOptions extends Arrayable<GeneralEventListener> | HandleEventListenerOptions,
+	ListenerOrOptions extends
+		| Arrayable<string>
+		| Arrayable<GeneralEventListener>
+		| HandleEventListenerOptions,
 	OptionsOrNever extends HandleEventListenerOptions | never
 >(
 	elementOrEvent: ElementOrEvent,
