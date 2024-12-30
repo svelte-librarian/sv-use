@@ -1,4 +1,4 @@
-import { onMount } from 'svelte';
+import { BROWSER } from 'esm-env';
 
 type LocalStateOptions<T> = {
 	/** Defaults to `JSON.stringify`. */
@@ -19,23 +19,37 @@ type LocalStateOptions<T> = {
 export function localState<T>(key: string, value: T, options: LocalStateOptions<T> = {}) {
 	const { serialize = JSON.stringify, deserialize = JSON.parse, overrideDefault = false } = options;
 
-	let _current = $state<T>(value);
+	const _state = $state({ current: value });
 
-	onMount(() => {
-		if (!overrideDefault) {
-			_current = deserialize(localStorage.getItem(key) ?? serialize(value));
+	if (BROWSER) {
+		if (localStorage.getItem(key) && !overrideDefault) {
+			_state.current = deserialize(localStorage.getItem(key)!);
 		} else {
 			localStorage.setItem(key, serialize(value));
 		}
-	});
+	}
 
-	return {
-		get current() {
-			return _current;
+	const handler: ProxyHandler<{ current: T }> = {
+		get(target: Record<string, unknown>, key: string) {
+			if (
+				target &&
+				typeof target === 'object' &&
+				typeof target[key] === 'object' &&
+				target[key] !== null
+			) {
+				return new Proxy(target[key], handler);
+			} else {
+				return target[key];
+			}
 		},
-		set current(v: T) {
-			_current = v;
-			localStorage.setItem(key, serialize(v));
+		set(target: Record<string, unknown>, proxyKey: string, proxyValue: unknown) {
+			target[proxyKey] = proxyValue;
+
+			localStorage.setItem(key, serialize(_state.current));
+
+			return true;
 		}
 	};
+
+	return new Proxy(_state, handler);
 }
