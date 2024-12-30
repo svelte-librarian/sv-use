@@ -3,21 +3,44 @@ type AsyncStateOptions<Data = unknown> = {
 	 * Whether to run the promise immediately or not.
 	 *
 	 * Set this to `false` if your promise is a function that depends on arguments.
+	 * @default true
 	 */
 	immediate?: boolean;
-	/** Whether to reset the state to the initial value when the promise is executed. */
+	/**
+	 * Whether to reset the state to the initial value when the promise is executed.
+	 * @default false
+	 */
 	resetOnExecute?: boolean;
-	/** A callback for when the promise resolves successfully. */
+	/**
+	 * A callback for when the promise resolves successfully.
+	 * @param data The data returned by the promise.
+	 * @default () => {}
+	 */
 	onSuccess?: (data: Data) => void;
-	/** A callback for when the promise rejects. */
+	/**
+	 * A callback for when the promise rejects.
+	 * @param error The error returned by the promise.
+	 * @default () => {}
+	 */
 	onError?: (error: unknown) => void;
 };
 
 type AsyncStateReturn<Data = unknown, Parameters extends unknown[] = unknown[]> = {
+	/** Whether the state is ready or not. */
 	readonly isReady: boolean;
+	/** Whether the state is loading or not. */
 	readonly isLoading: boolean;
+	/** The current value of the state. */
 	current: Data;
+	/** The error of the state if any. */
 	error: unknown | null;
+	/**
+	 * Executes the promise programatically.
+	 *
+	 * Useful when
+	 *  * the promise is a function that depends on arguments.
+	 *  * you want to poll data at intervals.
+	 */
 	execute: (...args: Parameters) => Promise<void>;
 };
 
@@ -25,6 +48,7 @@ type AsyncStateReturn<Data = unknown, Parameters extends unknown[] = unknown[]> 
  * A reactive state that handles the loading and error states of a promise.
  * @param promise The promise to handle.
  * @param initial The initial value of the state.
+ * @param options Additional options to customize the behavior.
  */
 export function asyncState<Data = unknown, Parameters extends unknown[] = unknown[]>(
 	promise: Promise<Data> | ((...args: Parameters) => Promise<Data>),
