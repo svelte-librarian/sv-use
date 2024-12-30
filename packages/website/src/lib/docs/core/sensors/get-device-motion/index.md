@@ -9,7 +9,7 @@ category: 'sensors'
 
 ```svelte
 <script lang="ts">
-	import { getDeviceMotion } from '@sv-use/core';
+	import { getDeviceMotion } from '@svelte-librarian/sv-use';
 
 	const deviceMotion = getDeviceMotion();
 </script>

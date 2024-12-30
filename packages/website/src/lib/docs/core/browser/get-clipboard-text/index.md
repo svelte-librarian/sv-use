@@ -1,8 +1,8 @@
 ---
-slug: "get-clipboard-text"
-title: "getClipboardText"
-description: "Provides write (and optionally read) access to the text clipboard."
-category: "browser"
+slug: 'get-clipboard-text'
+title: 'getClipboardText'
+description: 'Provides write (and optionally read) access to the text clipboard.'
+category: 'browser'
 ---
 
 ## Usage
@@ -11,7 +11,7 @@ Set `options.legacyCopy: true` to keep the ability to copy if the [Clipboard API
 
 ```svelte
 <script lang="ts">
-	import { getClipboardText } from '@sv-use/core';
+	import { getClipboardText } from '@svelte-librarian/sv-use';
 
 	let inputValue = $state('');
 	const clipboard = getClipboardText({ allowRead: true, legacyCopy: true });

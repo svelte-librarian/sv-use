@@ -9,7 +9,7 @@ category: 'browser'
 
 ```svelte
 <script lang="ts">
-	import { createFileDialog } from '@sv-use/core';
+	import { createFileDialog } from '@svelte-librarian/sv-use';
 
 	const dialog = createFileDialog();
 </script>
@@ -17,7 +17,7 @@ category: 'browser'
 
 ```svelte
 <script lang="ts">
-	import { createFileDialog } from '@sv-use/core';
+	import { createFileDialog } from '@svelte-librarian/sv-use';
 
 	const dialog = createFileDialog({
 		accept: 'image/*',

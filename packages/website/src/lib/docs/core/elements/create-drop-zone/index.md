@@ -9,7 +9,7 @@ category: 'elements'
 
 ```svelte
 <script lang="ts">
-	import { createDropZone } from '@sv-use/core';
+	import { createDropZone } from '@svelte-librarian/sv-use';
 
 	const dropZone = createDropZone();
 </script>

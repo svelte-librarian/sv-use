@@ -1,6 +1,6 @@
 {
 	"name": "@sv-use/website",
-	"description": "The website for @sv-use/core utilities.",
+	"description": "The website for @svelte-librarian/sv-use utilities.",
 	"type": "module",
 	"version": "1.0.0",
 	"private": true,

@@ -9,7 +9,7 @@ category: 'sensors'
 
 ```svelte
 <script lang="ts">
-	import { getDeviceOrientation } from '@sv-use/core';
+	import { getDeviceOrientation } from '@svelte-librarian/sv-use';
 
 	const deviceOrientation = getDeviceOrientation();
 </script>
@@ -20,9 +20,6 @@ category: 'sensors'
 	<span>beta : {deviceOrientation.beta}</span>
 	<span>gamma : {deviceOrientation.gamma}</span>
 {:else}
-	<p>
-        Your browser doesn't support the `DeviceOrientationEvent`
-        event :(
-    </p>
+	<p>Your browser doesn't support the `DeviceOrientationEvent` event :(</p>
 {/if}
 ```

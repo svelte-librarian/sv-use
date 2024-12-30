@@ -9,7 +9,7 @@ category: 'sensors'
 
 ```svelte
 <script lang="ts">
-	import { getGeolocation } from '@sv-use/core';
+	import { getGeolocation } from '@svelte-librarian/sv-use';
 
 	const geolocation = getGeolocation();
 </script>

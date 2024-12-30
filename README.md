@@ -14,7 +14,7 @@ A collection of Svelte 5 utilities.
 ## Installation
 
 ```bash
-npm install @sv-use/core
+npm install @svelte-librarian/sv-use
 ```
 
 ## Acknowledgements
