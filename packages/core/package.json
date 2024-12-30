@@ -1,6 +1,6 @@
 {
 	"name": "@svelte-librarian/sv-use",
-	"version": "0.27.2",
+	"version": "0.28.0",
 	"license": "MIT",
 	"description": "A collection of Svelte 5 utilities.",
 	"main": "./dist/index.js",
