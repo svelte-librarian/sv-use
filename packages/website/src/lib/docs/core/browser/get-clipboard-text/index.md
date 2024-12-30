@@ -11,7 +11,7 @@ Set `options.legacyCopy: true` to keep the ability to copy if the [Clipboard API
 
 ```svelte
 <script lang="ts">
-	import { getClipboardText } from '@svelte-librarian/sv-use';
+	import { getClipboardText } from '@sv-use/core';
 
 	let inputValue = $state('');
 	const clipboard = getClipboardText({ allowRead: true, legacyCopy: true });

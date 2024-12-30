@@ -9,7 +9,7 @@ category: 'browser'
 
 ```svelte
 <script lang="ts">
-	import { handleEventListener } from '@svelte-librarian/sv-use';
+	import { handleEventListener } from '@sv-use/core';
 
 	handleEventListener('click', () => console.log('clicked'), { autoMountAndCleanup: true });
 </script>
@@ -18,7 +18,7 @@ category: 'browser'
 ```svelte
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { handleEventListener } from '@svelte-librarian/sv-use';
+	import { handleEventListener } from '@sv-use/core';
 
 	onMount(() => {
 		const cleanup = handleEventListener('click', () => console.log('clicked'));

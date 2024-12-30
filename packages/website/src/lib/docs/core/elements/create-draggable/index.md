@@ -9,7 +9,7 @@ category: 'elements'
 
 ```svelte
 <script lang="ts">
-	import { createDraggable } from '@svelte-librarian/sv-use';
+	import { createDraggable } from '@sv-use/core';
 
 	const draggable = createDraggable();
 </script>

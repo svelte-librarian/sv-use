@@ -9,7 +9,7 @@ category: 'utilities'
 
 ```svelte
 <script lang="ts">
-	import { isSupported } from '@svelte-librarian/sv-use';
+	import { isSupported } from '@sv-use/core';
 
 	const isSupported = isSupported(() => {
 		return navigator && 'geolocation' in navigator;

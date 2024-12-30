@@ -9,7 +9,7 @@ category: 'states'
 
 ```svelte
 <script lang="ts">
-	import { debouncedState } from '@svelte-librarian/sv-use';
+	import { debouncedState } from '@sv-use/core';
 
 	const search = debouncedState('', { delay: 1000 });
 </script>

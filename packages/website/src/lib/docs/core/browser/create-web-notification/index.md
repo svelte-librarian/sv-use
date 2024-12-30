@@ -9,7 +9,7 @@ category: 'browser'
 
 ```svelte
 <script lang="ts">
-	import { createWebNotification } from '@svelte-librarian/sv-use';
+	import { createWebNotification } from '@sv-use/core';
 
 	const notification = createWebNotification();
 </script>

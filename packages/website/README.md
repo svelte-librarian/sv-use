@@ -1,3 +1,3 @@
 # Website
 
-The website behind the documentation for `@svelte-librarian/sv-use`.
+The website behind the documentation for `@sv-use/core`.

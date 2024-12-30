@@ -13,7 +13,7 @@ So, instead of doing this :
 
 ```svelte
 <script lang="ts">
-	import { localState } from '@svelte-librarian/sv-use';
+	import { localState } from '@sv-use/core';
 
 	const { current } = localState('counter', 0);
 </script>
@@ -25,7 +25,7 @@ Do this :
 
 ```svelte
 <script lang="ts">
-	import { localState } from '@svelte-librarian/sv-use';
+	import { localState } from '@sv-use/core';
 
 	const counter = localState('counter', 0);
 </script>

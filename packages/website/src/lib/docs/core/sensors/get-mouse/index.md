@@ -9,7 +9,7 @@ category: 'sensors'
 
 ```svelte
 <script lang="ts">
-	import { getMouse } from '@svelte-librarian/sv-use';
+	import { getMouse } from '@sv-use/core';
 
 	const mouse = getMouse();
 </script>

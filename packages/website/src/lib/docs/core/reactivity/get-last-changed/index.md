@@ -9,7 +9,7 @@ category: 'reactivity'
 
 ```svelte
 <script lang="ts">
-	import { getLastChanged } from '@svelte-librarian/sv-use';
+	import { getLastChanged } from '@sv-use/core';
 
 	let value = $state(0);
 	const lastChanged = getLastChanged(() => value);

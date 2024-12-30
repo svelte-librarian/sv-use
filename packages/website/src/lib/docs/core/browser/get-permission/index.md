@@ -9,7 +9,7 @@ category: 'browser'
 
 ```svelte
 <script lang="ts">
-	import { getPermission } from '@svelte-librarian/sv-use';
+	import { getPermission } from '@sv-use/core';
 
 	const permission = getPermission('camera');
 </script>

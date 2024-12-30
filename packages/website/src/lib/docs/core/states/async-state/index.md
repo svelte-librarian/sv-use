@@ -9,7 +9,7 @@ category: 'states'
 
 ```svelte
 <script lang="ts">
-	import { asyncState } from '@svelte-librarian/sv-use';
+	import { asyncState } from '@sv-use/core';
 
 	const recipe = asyncState(
 		fetch(`https://dummyjson.com/recipes/1`).then((res) => res.json()),
@@ -24,7 +24,7 @@ A basic example where you wait for the value to be resolved.
 
 ```svelte
 <script lang="ts">
-	import { asyncState } from '@svelte-librarian/sv-use';
+	import { asyncState } from '@sv-use/core';
 
 	const recipe = asyncState(
 		fetch(`https://dummyjson.com/recipes/1`).then((res) => res.json()),
@@ -45,7 +45,7 @@ Note that you have to set `immediate` to `false` if you are using a function tha
 
 ```svelte
 <script lang="ts">
-	import { asyncState } from '@svelte-librarian/sv-use';
+	import { asyncState } from '@sv-use/core';
 
 	let id = $state(1);
 	const recipe = asyncState(

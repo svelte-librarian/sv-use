@@ -9,7 +9,7 @@ category: 'states'
 
 ```svelte
 <script>
-	import { localState } from '@svelte-librarian/sv-use';
+	import { localState } from '@sv-use/core';
 
 	const counter = localState('counter', 0);
 </script>
