@@ -10,12 +10,12 @@
 
 <svelte:head>
 	<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cascadia-code" />
-	<title>{data.attributes.title} | SvelteUse</title>
+	<title>{data.attributes.title} - Docs | SvelteUse</title>
 	<meta name="description" content={data.attributes.description} />
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
-	<h1 class="mb-5 text-2xl font-semibold">{data.attributes.title}</h1>
+	<h1 class="mb-5 text-3xl font-semibold">{data.attributes.title}</h1>
 	{#each data.attributes.description.split('\\n') as line}
 		<p class="mb-5">{line}</p>
 	{/each}

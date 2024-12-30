@@ -1,15 +1,16 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import '../app.css';
+	import Navigation from './Navigation.svelte';
 
 	let { children } = $props();
+
+	let pathname = $derived($page.url.pathname);
 </script>
 
-<div class="relative flex h-full w-full flex-col divide-y divide-zinc-300">
-	<nav class="relative flex w-full items-center justify-center gap-5 p-5">
-		<a href="/">Home</a>
-		<a href="/docs">Docs</a>
-	</nav>
-	<div class="relative h-full w-full">
+<div class="relative flex w-full flex-col {pathname === '/' ? 'h-full' : ''}">
+	<Navigation />
+	<div class="relative w-full {pathname === '/' ? 'h-full' : ''}">
 		{@render children()}
 	</div>
 </div>

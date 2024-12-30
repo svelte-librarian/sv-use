@@ -172,20 +172,47 @@
 
 <!-- DESKTOP -->
 
-<nav class="relative hidden h-full flex-col items-center justify-start gap-5 px-16 py-8 lg:flex">
-	{#each Object.entries(utilityGroups) as [category, docs]}
-		<div class="relative flex w-full flex-col gap-5">
-			<h3 class="font-semibold">{toTitleCase(category)}</h3>
-			<div class="relatve flex w-full flex-col">
-				{#each docs as { attributes: { slug, title } }}
-					<a
-						href="/docs/{category}/{slug}"
-						class={$page.url.pathname === `/docs/${category}/${slug}`
-							? 'text-svelte'
-							: 'text-zinc-500'}>{title}</a
-					>
-				{/each}
+<nav
+	class="sticky left-0 top-[65px] hidden h-[calc(100dvh-65px)] flex-1 flex-col items-center justify-start gap-5 overflow-scroll bg-zinc-100 p-8 lg:flex"
+>
+	<div class="relative flex flex-col items-start gap-5">
+		<div class="relative flex flex-col gap-5">
+			<h3 class="font-semibold text-zinc-900">Getting Started</h3>
+			<div class="relative flex w-full flex-col gap-1">
+				<a
+					href="/docs"
+					onclick={() => (showSidebar = false)}
+					class="font-medium {$page.url.pathname === `/docs` ? 'text-svelte' : 'text-zinc-500'}"
+				>
+					Introduction
+				</a>
+				<a
+					href="/docs/limitations"
+					onclick={() => (showSidebar = false)}
+					class="font-medium {$page.url.pathname === `/docs/limitations`
+						? 'text-svelte'
+						: 'text-zinc-500'}"
+				>
+					Limitations
+				</a>
 			</div>
 		</div>
-	{/each}
+		{#each Object.entries(utilityGroups) as [category, docs]}
+			<div class="relative flex flex-col gap-5">
+				<h3 class="font-semibold">{toTitleCase(category)}</h3>
+				<div class="relatve flex w-full flex-col gap-1">
+					{#each docs as { attributes: { slug, title } }}
+						<a
+							href="/docs/{category}/{slug}"
+							class="font-medium {$page.url.pathname === `/docs/${category}/${slug}`
+								? 'text-svelte'
+								: 'text-zinc-500'}"
+						>
+							{title}
+						</a>
+					{/each}
+				</div>
+			</div>
+		{/each}
+	</div>
 </nav>

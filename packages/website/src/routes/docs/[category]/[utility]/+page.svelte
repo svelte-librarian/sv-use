@@ -21,7 +21,7 @@
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
-	<h1 class="mb-5 text-2xl font-semibold">{data.attributes.title}</h1>
+	<h1 class="mb-5 text-3xl font-semibold">{data.attributes.title}</h1>
 	<div class="relative mb-5 grid w-full grid-cols-[100px_auto] gap-5">
 		<span>Category</span>
 		<span>{data.attributes.category}</span>
@@ -31,7 +31,7 @@
 	{/each}
 	{#if data.Component}
 		{@const DemoComponent = data.Component}
-		<h2 id="demo" class="scroll-mt-12 py-5 text-2xl font-semibold">Demo</h2>
+		<h2 id="demo" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">Demo</h2>
 		<div class="relative overflow-auto rounded-lg bg-[#eff1f5] p-5 dark:bg-[#282c34]">
 			<DemoComponent />
 		</div>
@@ -43,19 +43,19 @@
 
 <style lang="postcss">
 	:global(#content h2) {
+		@apply scroll-mt-12 lg:scroll-mt-16;
 		font-size: 1.5rem;
 		font-weight: 600;
 		padding-top: 1.25rem;
 		padding-bottom: 1.25rem;
-		scroll-margin-top: 3rem;
 	}
 
 	:global(#content h3) {
+		@apply scroll-mt-12 lg:scroll-mt-16;
 		font-size: 1.25rem;
 		font-weight: 600;
 		padding-top: 1.25rem;
 		padding-bottom: 1.25rem;
-		scroll-margin-top: 3rem;
 	}
 
 	:global(#content ul) {
