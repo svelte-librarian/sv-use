@@ -98,11 +98,11 @@
 			></div>
 			<menu
 				transition:fly={{ x: -200 }}
-				class="fixed left-0 top-0 z-20 flex h-full w-4/5 flex-col gap-5 bg-zinc-50 p-5 shadow-[4px_0_8px_8px_rgba(0,0,0,0.1)]"
+				class="fixed left-0 top-0 z-20 flex h-full w-4/5 flex-col gap-5 overflow-auto bg-zinc-50 p-5 shadow-[4px_0_8px_8px_rgba(0,0,0,0.1)]"
 			>
 				<div class="relative flex w-full flex-col gap-5">
 					<h3 class="text-sm font-semibold text-zinc-900">Getting Started</h3>
-					<div class="relative flex w-full flex-col">
+					<div class="relative flex w-full flex-col gap-1">
 						<a
 							href="/docs"
 							onclick={() => (showSidebar = false)}
@@ -126,7 +126,7 @@
 				{#each Object.entries(utilityGroups) as [category, docs]}
 					<div class="relative flex w-full flex-col gap-5">
 						<h3 class="text-sm font-semibold text-zinc-900">{toTitleCase(category)}</h3>
-						<div class="relative flex w-full flex-col">
+						<div class="relative flex w-full flex-col gap-1">
 							{#each docs as { attributes: { slug, title } }}
 								<a
 									href="/docs/{category}/{slug}"
