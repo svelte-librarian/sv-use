@@ -1,5 +1,5 @@
-import { handleEventListener, isSupported } from '../../index.js';
 import { BROWSER } from 'esm-env';
+import { isSupported } from '../../index.js';
 
 type GetDevicePixelRatioReturn = {
 	/** Whether the {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio | devicePixelRatio property} is supported or not. */
@@ -14,7 +14,7 @@ export function getDevicePixelRatio(): GetDevicePixelRatioReturn {
 	let devicePixelRatio = $state(1);
 
 	if (_isSupported.current && BROWSER) {
-		let cleanup: () => void;
+		let media: MediaQueryList;
 
 		updatePixelRatio();
 
@@ -22,8 +22,12 @@ export function getDevicePixelRatio(): GetDevicePixelRatioReturn {
 			devicePixelRatio = window.devicePixelRatio;
 			cleanup();
 
-			const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-			cleanup = handleEventListener(media, 'change', updatePixelRatio, { once: true });
+			media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+			media.addEventListener('change', updatePixelRatio, { once: true });
+		}
+
+		function cleanup() {
+			media?.removeEventListener('change', updatePixelRatio);
 		}
 	}
 
