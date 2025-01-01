@@ -13,18 +13,19 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
     steps:
       - uses: actions/checkout@v4
-      - name: Build the 'core' package
+      - name: Sets up Node ${{ matrix.node-version }}
         uses: actions/setup-node@v4
-        working-directory: ./packages/core
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: |
+      - name: Building the 'core' package
+        working-directory: ./packages/core
+        run: |
           npm ci
           npx svelte-package
-      - name: Build and deploy the website
+      - name: Build the website
         working-directory: ./packages/website
-      - run: |
+        run: |
           npm ci
           npm run build
       - name: Upload static files as artifact
