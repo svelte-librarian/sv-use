@@ -3,6 +3,8 @@ interface GetGeolocationOptions extends Partial<PositionOptions> {
 }
 
 type GetGeolocationReturn = {
+	/** Whether the Geolocation API is supported or not. */
+	readonly isSupported: boolean;
 	/** The position and altitude of the device on Earth, as well as the accuracy with which these properties are calculated. */
 	readonly coords: Omit<GeolocationCoordinates, 'toJSON'>;
 	readonly timestamp: number;
@@ -29,7 +31,8 @@ export function getGeolocation(options: GetGeolocationOptions = {}): GetGeolocat
 		startImmediately = true
 	} = options;
 
-	let watcherId = $state<number>();
+	const _isSupported = $derived.by(() => navigator && 'geolocation' in navigator);
+	let _watcherId = $state<number>();
 	let _coords = $state<Omit<GeolocationCoordinates, 'toJSON'>>({
 		accuracy: 0,
 		latitude: Number.POSITIVE_INFINITY,
@@ -43,25 +46,27 @@ export function getGeolocation(options: GetGeolocationOptions = {}): GetGeolocat
 	let _error = $state<GeolocationPositionError | null>(null);
 
 	function resume() {
-		watcherId = navigator.geolocation.watchPosition(
-			(position) => {
-				_coords = position.coords;
-				_timestamp = Date.now();
-			},
-			(error) => {
-				_error = error;
-			},
-			{
-				enableHighAccuracy: enableHighAccuracy,
-				maximumAge: maximumAge,
-				timeout: timeout
-			}
-		);
+		if (_isSupported) {
+			_watcherId = navigator.geolocation.watchPosition(
+				(position) => {
+					_coords = position.coords;
+					_timestamp = Date.now();
+				},
+				(error) => {
+					_error = error;
+				},
+				{
+					enableHighAccuracy: enableHighAccuracy,
+					maximumAge: maximumAge,
+					timeout: timeout
+				}
+			);
+		}
 	}
 
 	function pause() {
-		if (watcherId) {
-			navigator.geolocation.clearWatch(watcherId);
+		if (_isSupported && _watcherId) {
+			navigator.geolocation.clearWatch(_watcherId);
 		}
 	}
 
@@ -70,6 +75,9 @@ export function getGeolocation(options: GetGeolocationOptions = {}): GetGeolocat
 	}
 
 	return {
+		get isSupported() {
+			return _isSupported;
+		},
 		get coords() {
 			return _coords;
 		},
