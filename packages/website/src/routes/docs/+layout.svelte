@@ -20,6 +20,10 @@
 </div>
 
 <style>
+	/* :global(pre) {
+		font-family: 'Cascadia Code', monospace;
+	} */
+
 	/* remark-github-blockquote-alert css */
 
 	:global(.markdown-alert) {

@@ -1,6 +1,7 @@
 import { convertMarkdownFileToHTML } from '$lib/utils/markdown.server.js';
-import type { UtilityAttributes } from '$lib/types/markdown.js';
+import { getTypeDefinitions } from '$utils/type-definitions.server.js';
 import type { PageServerLoad } from './$types.js';
+import type { UtilityAttributes } from '$lib/types/markdown.js';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const data = await convertMarkdownFileToHTML<UtilityAttributes>(
@@ -8,6 +9,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	);
 
 	return {
-		...data
+		...data,
+		typeDefinitions: await getTypeDefinitions(params.category, params.utility)
 	};
 };

@@ -6,7 +6,8 @@ export const load: PageLoad = async ({ data, params }) => {
 		attributes: data.attributes,
 		html: data.html,
 		headings: data.headings,
-		Component: await getDemoComponent(params.category, params.utility)
+		Component: await getDemoComponent(params.category, params.utility),
+		typeDefinitions: data.typeDefinitions
 	};
 };
 

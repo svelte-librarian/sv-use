@@ -9,6 +9,8 @@
 
 		if (data.Component) {
 			headings.unshift({ depth: 2, value: 'Demo', data: { id: 'demo' } });
+			headings.push({ depth: 2, value: 'Type definitions', data: { id: 'type-definitions' } });
+			headings.push({ depth: 2, value: 'Sources', data: { id: 'sources' } });
 		}
 
 		onThisPageHeadings.current = headings;
@@ -38,6 +40,43 @@
 	{/if}
 	<div id="content" class="contents">
 		{@html data.html}
+	</div>
+	<details open={false} id="type-definitions-container" class="flex flex-col items-start gap-5">
+		<summary id="type-definitions" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">
+			Type definitions
+		</summary>
+		{@html data.typeDefinitions}
+	</details>
+	<h2 id="sources" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">Sources</h2>
+	<div>
+		<a
+			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/core/src/{data.attributes
+				.category}/{data.attributes.slug}/index.svelte.ts"
+			target="_blank"
+			class="text-svelte underline"
+		>
+			View Source Code
+		</a>
+		•
+		{#if data.Component}
+			<a
+				href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{data
+					.attributes.category}/{data.attributes.slug}/Demo.svelte"
+				target="_blank"
+				class="text-svelte underline"
+			>
+				Demo
+			</a>
+			•
+		{/if}
+		<a
+			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{data
+				.attributes.category}/{data.attributes.slug}/index.md"
+			target="_blank"
+			class="text-svelte underline"
+		>
+			Docs
+		</a>
 	</div>
 </main>
 
@@ -84,6 +123,20 @@
 		margin-bottom: 1.25rem;
 	}
 
+	:global(#type-definitions-container pre) {
+		position: relative;
+		width: 100%;
+		padding: 20px;
+		overflow: auto;
+		border-radius: 0.5rem;
+		counter-reset: line;
+	}
+
+	:global(#type-definitions-container pre code) {
+		overflow: auto;
+		counter-reset: line;
+	}
+
 	:global(#content figure pre code) {
 		overflow: auto;
 		border-radius: 0.5rem;
@@ -91,19 +144,28 @@
 		counter-reset: line;
 	}
 
-	:global(#content figure pre code *) {
+	:global(#content figure pre code *, #type-definitions-container pre code *) {
 		font-family: 'Cascadia Code', sans-serif;
 	}
 
-	:global(#content figure pre code span[data-highlighted-line]) {
+	:global(
+		#content figure pre code span[data-highlighted-line],
+		#type-definitions-container pre code span[data-highlighted-line]
+	) {
 		background-color: rgba(200, 200, 255, 0.1);
 	}
 
-	:global(#content figure pre code > [data-line]) {
+	:global(
+		#content figure pre code > [data-line],
+		#type-definitions-container pre code > [data-line]
+	) {
 		padding: 2px 20px;
 	}
 
-	:global(#content figure pre code[data-line-numbers] > [data-line]::before) {
+	:global(
+		#content figure pre code[data-line-numbers] > [data-line]::before,
+		#type-definitions-container pre code[data-line-numbers] > [data-line]::before
+	) {
 		counter-increment: line;
 		content: counter(line);
 		display: inline-block;
@@ -113,14 +175,17 @@
 		color: gray;
 	}
 
-	:global(#content figure pre code),
-	:global(#content figure pre code span) {
+	:global(#content figure pre code, #type-definitions-container pre code),
+	:global(#content figure pre code span, #type-definitions-container pre code span) {
 		color: var(--shiki-light);
 		background-color: var(--shiki-light-bg);
 	}
 
-	:global(html.dark #content figure pre code),
-	:global(html.dark #content figure pre code span) {
+	:global(html.dark #content figure pre code, html.dark #type-definitions-container pre code),
+	:global(
+		html.dark #content figure pre code span,
+		html.dark #type-definitions-container pre code span
+	) {
 		color: var(--shiki-dark);
 		background-color: var(--shiki-dark-bg);
 	}
