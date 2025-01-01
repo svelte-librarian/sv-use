@@ -1,48 +1,75 @@
-type HistorySnapshot<T> = { snapshot: T; timestamp: number };
+import {
+	trackHistory,
+	type TrackHistoryOptions,
+	type TrackHistoryReturn
+} from '../../reactivity/index.js';
 
-type HistoryStateReturn<T> = {
+type HistoryStateOptions = TrackHistoryOptions;
+type HistoryStateReturn<T> = TrackHistoryReturn<T> & {
 	current: T;
-	readonly history: HistorySnapshot<T>[];
-	undo(): void;
-	redo(): void;
 };
 
 /**
  * A reactive state that allows for undo and redo operations by tracking the change history.
  * @param initial The initial value of the state.
  */
-export function historyState<T>(initial: T): HistoryStateReturn<T> {
-	const _history = $state<HistorySnapshot<T>[]>([]);
-	const _undoHistory = $state<HistorySnapshot<T>[]>([]);
+export function historyState<T>(
+	initial: T,
+	options: HistoryStateOptions = {}
+): HistoryStateReturn<T> {
+	const { includeCurrent = false } = options;
 
-	let _current = $state<T>(initial);
+	const _state = $state({ current: initial });
+	const _history = trackHistory(
+		() => $state.snapshot(_state.current) as T,
+		(v) => (_state.current = v),
+		{ includeCurrent }
+	);
+
+	const handler: ProxyHandler<{ current: T }> = {
+		get(target: Record<string, unknown>, key: string) {
+			if (
+				target &&
+				typeof target === 'object' &&
+				typeof target[key] === 'object' &&
+				target[key] !== null
+			) {
+				return new Proxy(target[key], handler);
+			} else {
+				return target[key];
+			}
+		},
+		set(target: Record<string, unknown>, key: string, value: unknown) {
+			target[key] = value;
+
+			return true;
+		}
+	};
 
 	return {
 		get current() {
-			return _current;
+			return new Proxy(_state, handler).current;
 		},
 		set current(v: T) {
-			_history.push({ snapshot: _current, timestamp: Date.now() });
-			_current = v;
+			_state.current = v;
+		},
+		get canUndo() {
+			return _history.canUndo;
+		},
+		get canRedo() {
+			return _history.canRedo;
 		},
 		get history() {
-			return _history;
+			return _history.history;
+		},
+		get redoHistory() {
+			return _history.redoHistory;
 		},
 		undo() {
-			if (_history.length > 0) {
-				const snapshot = _history.pop()!;
-
-				_undoHistory.push({ snapshot: _current, timestamp: Date.now() });
-				_current = snapshot.snapshot;
-			}
+			return _history.undo();
 		},
 		redo() {
-			if (_undoHistory.length > 0) {
-				const snapshot = _undoHistory.pop()!;
-
-				_history.push({ snapshot: _current, timestamp: Date.now() });
-				_current = snapshot.snapshot;
-			}
+			return _history.redo();
 		}
 	};
 }

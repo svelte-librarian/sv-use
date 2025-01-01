@@ -1,11 +1,14 @@
 ---
 slug: 'history-state'
 title: 'historyState'
-description: 'A reactive state that allows for undo and redo operations by tracking the change history.'
+description: 'A reactive state that tracks its change history. Provides undo and redo capabilities as well as access to the histories.'
 category: 'states'
 ---
 
 ## Usage
+
+> [!TIP]
+> If you prefer to have them separate, check out [trackHistory](/docs/reactivity/track-history).
 
 ```svelte
 <script lang="ts">
