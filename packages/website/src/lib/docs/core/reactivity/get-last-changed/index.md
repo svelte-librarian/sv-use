@@ -1,7 +1,7 @@
 ---
 slug: 'get-last-changed'
 title: 'getLastChanged'
-description: ''
+description: 'Get the last time the reactive value changed. It is returned as a number in milliseconds.'
 category: 'reactivity'
 ---
 

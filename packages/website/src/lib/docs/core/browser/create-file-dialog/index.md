@@ -1,7 +1,7 @@
 ---
 slug: 'create-file-dialog'
 title: 'createFileDialog'
-description: ''
+description: 'Creates a file dialog to interact with programatically. Provides access to the files that are currently held.'
 category: 'browser'
 ---
 

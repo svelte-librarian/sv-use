@@ -19,7 +19,10 @@ export function watch<T, RunOnMounted extends boolean = true>(
 
 export function watch<T, RunOnMounted extends boolean = true>(
 	deps: Array<Getter<T>>,
-	fn: (values: Array<T>, previousValues: Array<T | undefined>) => void,
+	fn: (
+		values: Array<T>,
+		previousValues: RunOnMounted extends true ? Array<T | undefined> : Array<T>
+	) => void,
 	options?: WatchOptions<RunOnMounted>
 ): void;
 
