@@ -10,6 +10,9 @@ export default {
 			$types: './src/lib/types',
 			$utils: './src/lib/utils',
 			'$sv-use/core': '../core/src/index.ts'
+		},
+		paths: {
+			base: '/sv-use'
 		}
 	}
 };

@@ -8,7 +8,7 @@ category: 'states'
 ## Usage
 
 > [!TIP]
-> If you prefer to have them separate, check out [trackHistory](/docs/reactivity/track-history).
+> If you prefer to have them separate, check out [trackHistory](/sv-use/docs/reactivity/track-history).
 
 ```svelte
 <script lang="ts">

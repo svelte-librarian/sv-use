@@ -2,15 +2,17 @@
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
 	import { toTitleCase } from '$utils/to-title-case.js';
 	import type { MarkdownReturn, UtilityAttributes } from '$types/markdown.js';
 
 	interface Props {
+		gettingStartedDocs: MarkdownReturn<{ slug: string; title: string; description: string }>[];
 		utilityDocs: MarkdownReturn<UtilityAttributes>[];
 	}
 
-	let { utilityDocs }: Props = $props();
+	let { gettingStartedDocs, utilityDocs }: Props = $props();
 
 	let utilityGroups = Object.groupBy(utilityDocs, (docs) => docs.attributes.category);
 
@@ -103,24 +105,18 @@
 				<div class="relative flex w-full flex-col gap-5">
 					<h3 class="text-sm font-semibold text-zinc-900">Getting Started</h3>
 					<div class="relative flex w-full flex-col gap-1">
-						<a
-							href="/docs"
-							onclick={() => (showSidebar = false)}
-							class="text-sm font-medium {$page.url.pathname === `/docs`
-								? 'text-svelte'
-								: 'text-zinc-500'}"
-						>
-							Introduction
-						</a>
-						<a
-							href="/docs/limitations"
-							onclick={() => (showSidebar = false)}
-							class="text-sm font-medium {$page.url.pathname === `/docs/limitations`
-								? 'text-svelte'
-								: 'text-zinc-500'}"
-						>
-							Limitations
-						</a>
+						{#each gettingStartedDocs as doc}
+							<a
+								href="{base}/docs/getting-started/{doc.attributes.slug}"
+								onclick={() => (showSidebar = false)}
+								class="text-sm font-medium {$page.url.pathname ===
+								`${base}/docs/getting-started/${doc.attributes.slug}`
+									? 'text-svelte'
+									: 'text-zinc-500'}"
+							>
+								{doc.attributes.title}
+							</a>
+						{/each}
 					</div>
 				</div>
 				{#each Object.entries(utilityGroups) as [category, docs]}
@@ -129,9 +125,10 @@
 						<div class="relative flex w-full flex-col gap-1">
 							{#each docs as { attributes: { slug, title } }}
 								<a
-									href="/docs/{category}/{slug}"
+									href="{base}/docs/{category}/{slug}"
 									onclick={() => (showSidebar = false)}
-									class="text-sm font-medium {$page.url.pathname === `/docs/${category}/${slug}`
+									class="text-sm font-medium {$page.url.pathname ===
+									`${base}/docs/${category}/${slug}`
 										? 'text-svelte'
 										: 'text-zinc-500'}"
 								>
@@ -179,22 +176,18 @@
 		<div class="relative flex flex-col gap-5">
 			<h3 class="font-semibold text-zinc-900">Getting Started</h3>
 			<div class="relative flex w-full flex-col gap-1">
-				<a
-					href="/docs"
-					onclick={() => (showSidebar = false)}
-					class="font-medium {$page.url.pathname === `/docs` ? 'text-svelte' : 'text-zinc-500'}"
-				>
-					Introduction
-				</a>
-				<a
-					href="/docs/limitations"
-					onclick={() => (showSidebar = false)}
-					class="font-medium {$page.url.pathname === `/docs/limitations`
-						? 'text-svelte'
-						: 'text-zinc-500'}"
-				>
-					Limitations
-				</a>
+				{#each gettingStartedDocs as doc}
+					<a
+						href="{base}/docs/getting-started/{doc.attributes.slug}"
+						onclick={() => (showSidebar = false)}
+						class="font-medium {$page.url.pathname ===
+						`${base}/docs/getting-started/${doc.attributes.slug}`
+							? 'text-svelte'
+							: 'text-zinc-500'}"
+					>
+						{doc.attributes.title}
+					</a>
+				{/each}
 			</div>
 		</div>
 		{#each Object.entries(utilityGroups) as [category, docs]}
@@ -203,8 +196,8 @@
 				<div class="relatve flex w-full flex-col gap-1">
 					{#each docs as { attributes: { slug, title } }}
 						<a
-							href="/docs/{category}/{slug}"
-							class="font-medium {$page.url.pathname === `/docs/${category}/${slug}`
+							href="{base}/docs/{category}/{slug}"
+							class="font-medium {$page.url.pathname === `${base}/docs/${category}/${slug}`
 								? 'text-svelte'
 								: 'text-zinc-500'}"
 						>

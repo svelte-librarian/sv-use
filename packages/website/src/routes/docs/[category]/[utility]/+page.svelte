@@ -23,10 +23,15 @@
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
-	<h1 class="mb-5 text-3xl font-semibold">{data.attributes.title}</h1>
-	<div class="relative mb-5 grid w-full grid-cols-[100px_auto] gap-5">
+	<div class="mb-5 flex items-start gap-5">
+		<h1 class="text-3xl font-semibold">{data.attributes.title}</h1>
+		{#if data.attributes.unstable}
+			<button class="bg-svelte rounded-md px-3 py-1 text-white">Unstable</button>
+		{/if}
+	</div>
+	<div class="relative mb-10 mt-5 grid w-full grid-cols-[100px_auto] gap-5">
 		<span>Category</span>
-		<span>{data.attributes.category}</span>
+		<span>{toTitleCase(data.attributes.category)}</span>
 	</div>
 	{#each data.attributes.description.split('\\n') as line}
 		<p>{line}</p>

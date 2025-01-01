@@ -10,7 +10,7 @@
 
 <svelte:head>
 	<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cascadia-code" />
-	<title>{data.attributes.title} - Docs | SvelteUse</title>
+	<title>{data.attributes.title} - Getting Started | SvelteUse</title>
 	<meta name="description" content={data.attributes.description} />
 </svelte:head>
 

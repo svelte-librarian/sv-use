@@ -10,7 +10,7 @@
 </svelte:head>
 
 <div class="relative flex w-full flex-col lg:flex-row lg:justify-center lg:gap-10 2xl:gap-20">
-	<Navigation utilityDocs={data.utilityDocs} />
+	<Navigation gettingStartedDocs={data.gettingStartedDocs} utilityDocs={data.utilityDocs} />
 	<div class="relative w-full lg:w-auto">
 		<div class="relative mx-auto w-full max-w-[720px] p-5 lg:py-10">
 			{@render children()}

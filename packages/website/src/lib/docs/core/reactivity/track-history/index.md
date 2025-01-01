@@ -8,7 +8,7 @@ category: 'reactivity'
 ## Usage
 
 > [!TIP]
-> If you prefer to have them combined, check out [historyState](/docs/states/history-state).
+> If you prefer to have them combined, check out [historyState](/sv-use/docs/states/history-state).
 
 ```svelte
 <script lang="ts">

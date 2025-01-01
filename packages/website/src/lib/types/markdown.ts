@@ -5,6 +5,7 @@ export type UtilityAttributes = {
 	title: string;
 	description: string;
 	category: Category;
+	unstable?: boolean;
 };
 
 export type MarkdownHeading = {

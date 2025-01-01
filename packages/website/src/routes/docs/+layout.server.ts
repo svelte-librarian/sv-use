@@ -48,5 +48,17 @@ export const load: LayoutServerLoad = async () => {
 		})
 	);
 
-	return { utilityDocs };
+	return { utilityDocs, gettingStartedDocs: await getGettingStartedDocs() };
 };
+
+async function getGettingStartedDocs() {
+	const files = await fs.readdir('./src/lib/docs/getting-started', { withFileTypes: true });
+
+	return Promise.all(
+		files.map(async (entry) => {
+			return await convertMarkdownFileToHTML<{ slug: string; title: string; description: string }>(
+				`${entry.parentPath}/${entry.name}`
+			);
+		})
+	);
+}

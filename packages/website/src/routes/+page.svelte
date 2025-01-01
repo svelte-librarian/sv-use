@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { base } from '$app/paths';
+</script>
+
 <svelte:head>
 	<title>SvelteUse</title>
 </svelte:head>
@@ -7,7 +11,10 @@
 		<h1 class="text-svelte text-4xl font-bold">SvelteUse</h1>
 		<p>A collection of Svelte 5 utilities</p>
 		<div class="relative flex w-full flex-wrap items-center justify-center gap-5">
-			<a href="/docs" class="bg-svelte rounded-full px-5 py-2 text-sm text-white">Get Started</a>
+			<a
+				href="{base}/docs/getting-started/introduction"
+				class="bg-svelte rounded-full px-5 py-2 text-sm text-white">Get Started</a
+			>
 			<a
 				href="https://github.com/svelte-librarian/sv-use"
 				target="_blank"
