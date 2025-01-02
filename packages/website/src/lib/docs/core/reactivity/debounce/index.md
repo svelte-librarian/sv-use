@@ -8,7 +8,7 @@ category: "reactivity"
 ## Usage
 
 > [!TIP]
-> If you'd rather have them combined in one variable, check out [debouncedState](/sv-use/docs/states/debounced-state).
+> If you'd rather have them combined in one variable, check out [debouncedState](/sv-use/docs/core/states/debounced-state).
 
 ```svelte
 <script lang="ts">

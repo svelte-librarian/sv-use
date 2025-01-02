@@ -8,7 +8,7 @@ category: 'states'
 ## Usage
 
 > [!TIP]
-> If you'd rather have them separate, check out [debounce](/sv-use/docs/reactivity/debounce).
+> If you'd rather have them separate, check out [debounce](/sv-use/docs/core/reactivity/debounce).
 
 ```svelte
 <script lang="ts">
