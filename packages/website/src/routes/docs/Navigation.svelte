@@ -125,10 +125,10 @@
 						<div class="relative flex w-full flex-col gap-1">
 							{#each docs as { attributes: { slug, title } }}
 								<a
-									href="{base}/docs/{category}/{slug}"
+									href="{base}/docs/core/{category}/{slug}"
 									onclick={() => (showSidebar = false)}
 									class="text-sm font-medium {$page.url.pathname ===
-									`${base}/docs/${category}/${slug}`
+									`${base}/docs/core/${category}/${slug}`
 										? 'text-svelte'
 										: 'text-zinc-500'}"
 								>
@@ -196,8 +196,8 @@
 				<div class="relatve flex w-full flex-col gap-1">
 					{#each docs as { attributes: { slug, title } }}
 						<a
-							href="{base}/docs/{category}/{slug}"
-							class="font-medium {$page.url.pathname === `${base}/docs/${category}/${slug}`
+							href="{base}/docs/core/{category}/{slug}"
+							class="font-medium {$page.url.pathname === `${base}/docs/core/${category}/${slug}`
 								? 'text-svelte'
 								: 'text-zinc-500'}"
 						>
