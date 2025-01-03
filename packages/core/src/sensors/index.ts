@@ -6,3 +6,4 @@ export * from './get-fps/index.svelte.js';
 export * from './get-geolocation/index.svelte.js';
 export * from './get-mouse/index.svelte.js';
 export * from './get-network/index.svelte.js';
+export * from './has-left-page/index.svelte.js';
