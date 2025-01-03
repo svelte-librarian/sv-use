@@ -11,8 +11,8 @@
 
 <div class="relative flex w-full flex-col lg:flex-row lg:justify-center lg:gap-10 2xl:gap-20">
 	<Navigation gettingStartedDocs={data.gettingStartedDocs} utilityDocs={data.utilityDocs} />
-	<div class="relative w-full lg:w-auto">
-		<div class="relative mx-auto w-full max-w-[720px] p-5 lg:py-10">
+	<div class="relative w-full lg:w-auto lg:flex-[2_1_0%] xl:flex-none">
+		<div class="relative mx-auto w-full max-w-[720px] p-5 lg:py-10 xl:w-[720px]">
 			{@render children()}
 		</div>
 	</div>
