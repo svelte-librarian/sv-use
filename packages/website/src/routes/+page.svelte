@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+
+	let { data } = $props();
 </script>
 
 <svelte:head>
@@ -27,6 +29,12 @@
 	<section class="flex flex-col items-center gap-10">
 		<h2 class="text-svelte text-2xl font-semibold">Features</h2>
 		<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+			<div class="relative flex flex-col gap-[10px] rounded-lg bg-zinc-100 p-5">
+				<h2 class="font-semibold">Feature Rich</h2>
+				<p>
+					More than {data.totalUtilities} utilities to choose from. (Alright, it's not that much yet...)
+				</p>
+			</div>
 			<div class="relative flex flex-col gap-[10px] rounded-lg bg-zinc-100 p-5">
 				<h2 class="font-semibold">SSR Friendly</h2>
 				<p>Supports SSR out of the box.</p>
