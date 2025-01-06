@@ -5,6 +5,14 @@
 
 	let { data } = $props();
 
+	let showTypeDefinitions = $state(false);
+
+	$effect(() => {
+		$page.url.pathname;
+
+		showTypeDefinitions = false;
+	});
+
 	$effect(() => {
 		const headings = data.headings;
 
@@ -43,7 +51,11 @@
 	<div id="content" class="contents">
 		{@html data.html}
 	</div>
-	<details open={false} id="type-definitions-container" class="flex flex-col items-start gap-5">
+	<details
+		bind:open={showTypeDefinitions}
+		id="type-definitions-container"
+		class="flex flex-col items-start gap-5"
+	>
 		<summary id="type-definitions" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">
 			Type definitions
 		</summary>
