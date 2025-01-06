@@ -1,7 +1,7 @@
 # Introduction
 
-SvelteUse is a collection of Svelte 5 utilities based on runes. It is assumed
-that you are at least somewhat familiar with the runes system.
+SvelteUse is a collection of Svelte 5 utilities based on [runes](https://svelte.dev/docs/svelte/what-are-runes).
+It is assumed that you are at least somewhat familiar with the runes system.
 
 You can use it with SvelteKit and with Svelte-only apps as it doesn't rely on
 Sveltekit-specific features.
