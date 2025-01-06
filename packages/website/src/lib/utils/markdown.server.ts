@@ -50,7 +50,7 @@ async function convertMarkdownContentToHTML(
 		.use(rehypeStringify)
 		.process(content);
 
-	const html = value.toString().replaceAll('\r', ' ').replaceAll('\n', '');
+	const html = value.toString().replaceAll('\n', '');
 
 	const title = html.match(/<h1(.*?)>(.*?)<\/h1>/)?.at(2);
 
