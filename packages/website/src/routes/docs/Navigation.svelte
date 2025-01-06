@@ -118,11 +118,11 @@
 						{/each}
 					</div>
 				</div>
-				{#each Object.entries(docs) as [category, utilities]}
+				{#each docs as { category, utilities }}
 					<div class="relative flex w-full flex-col gap-5">
 						<h3 class="text-sm font-semibold text-zinc-900">{toTitleCase(category)}</h3>
 						<div class="relative flex w-full flex-col gap-1">
-							{#each Object.entries(utilities) as [slug, title]}
+							{#each utilities as { slug, label }}
 								{@const href = `${base}/docs/core/${category}/${slug}`}
 								<a
 									{href}
@@ -132,7 +132,7 @@
 										$page.url.pathname === href ? 'text-svelte' : 'text-zinc-500'
 									)}
 								>
-									{title}
+									{label}
 								</a>
 							{/each}
 						</div>
