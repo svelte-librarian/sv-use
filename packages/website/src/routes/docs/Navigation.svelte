@@ -4,17 +4,16 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
-	import { toTitleCase } from '$utils/to-title-case.js';
-	import type { MarkdownReturn, UtilityAttributes } from '$types/markdown.js';
+	import { toTitleCase } from '$utils/text-transform.js';
+	import type { Category } from '$types/markdown.js';
+	import { cn } from '$utils/cn.js';
 
 	interface Props {
-		gettingStartedDocs: MarkdownReturn<{ slug: string; title: string; description: string }>[];
-		utilityDocs: MarkdownReturn<UtilityAttributes>[];
+		gettingStartedDocs: { slug: string; label: string }[];
+		docs: Category[];
 	}
 
-	let { gettingStartedDocs, utilityDocs }: Props = $props();
-
-	let utilityGroups = Object.groupBy(utilityDocs, (docs) => docs.attributes.category);
+	let { gettingStartedDocs, docs }: Props = $props();
 
 	let navNode = $state<HTMLElement>();
 	let onThisPageMenuNode = $state<HTMLMenuElement>();
@@ -107,30 +106,31 @@
 					<div class="relative flex w-full flex-col gap-1">
 						{#each gettingStartedDocs as doc}
 							<a
-								href="{base}/docs/getting-started/{doc.attributes.slug}"
+								href="{base}/docs/getting-started/{doc.slug}"
 								onclick={() => (showSidebar = false)}
 								class="text-sm font-medium {$page.url.pathname ===
-								`${base}/docs/getting-started/${doc.attributes.slug}`
+								`${base}/docs/getting-started/${doc.slug}`
 									? 'text-svelte'
 									: 'text-zinc-500'}"
 							>
-								{doc.attributes.title}
+								{doc.label}
 							</a>
 						{/each}
 					</div>
 				</div>
-				{#each Object.entries(utilityGroups) as [category, docs]}
+				{#each Object.entries(docs) as [category, utilities]}
 					<div class="relative flex w-full flex-col gap-5">
 						<h3 class="text-sm font-semibold text-zinc-900">{toTitleCase(category)}</h3>
 						<div class="relative flex w-full flex-col gap-1">
-							{#each docs as { attributes: { slug, title } }}
+							{#each Object.entries(utilities) as [slug, title]}
+								{@const href = `${base}/docs/core/${category}/${slug}`}
 								<a
-									href="{base}/docs/core/{category}/{slug}"
+									{href}
 									onclick={() => (showSidebar = false)}
-									class="text-sm font-medium {$page.url.pathname ===
-									`${base}/docs/core/${category}/${slug}`
-										? 'text-svelte'
-										: 'text-zinc-500'}"
+									class={cn(
+										'text-sm font-medium',
+										$page.url.pathname === href ? 'text-svelte' : 'text-zinc-500'
+									)}
 								>
 									{title}
 								</a>
@@ -178,30 +178,31 @@
 			<div class="relative flex w-full flex-col gap-1">
 				{#each gettingStartedDocs as doc}
 					<a
-						href="{base}/docs/getting-started/{doc.attributes.slug}"
+						href="{base}/docs/getting-started/{doc.slug}"
 						onclick={() => (showSidebar = false)}
-						class="font-medium {$page.url.pathname ===
-						`${base}/docs/getting-started/${doc.attributes.slug}`
+						class="font-medium {$page.url.pathname === `${base}/docs/getting-started/${doc.slug}`
 							? 'text-svelte'
 							: 'text-zinc-500'}"
 					>
-						{doc.attributes.title}
+						{doc.label}
 					</a>
 				{/each}
 			</div>
 		</div>
-		{#each Object.entries(utilityGroups) as [category, docs]}
+		{#each docs as { category, utilities }}
 			<div class="relative flex flex-col gap-5">
 				<h3 class="font-semibold">{toTitleCase(category)}</h3>
 				<div class="relatve flex w-full flex-col gap-1">
-					{#each docs as { attributes: { slug, title } }}
+					{#each utilities as { slug, label }}
+						{@const href = `${base}/docs/core/${category}/${slug}`}
 						<a
-							href="{base}/docs/core/{category}/{slug}"
-							class="font-medium {$page.url.pathname === `${base}/docs/core/${category}/${slug}`
-								? 'text-svelte'
-								: 'text-zinc-500'}"
+							{href}
+							class={cn(
+								'font-medium',
+								$page.url.pathname === href ? 'text-svelte' : 'text-zinc-500'
+							)}
 						>
-							{title}
+							{label}
 						</a>
 					{/each}
 				</div>

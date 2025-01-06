@@ -5,6 +5,11 @@ description: 'Checks whether a browser feature is supported or not. Is false in 
 category: 'utilities'
 ---
 
+# isSupported
+
+Checks whether a browser feature is supported or not. Is false in non-browser
+environment.
+
 ## Usage
 
 ```svelte

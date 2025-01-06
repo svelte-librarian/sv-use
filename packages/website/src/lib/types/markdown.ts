@@ -1,13 +1,3 @@
-type Category = 'reactivity' | 'storage' | 'sensors' | 'elements';
-
-export type UtilityAttributes = {
-	slug: string;
-	title: string;
-	description: string;
-	category: Category;
-	unstable?: boolean;
-};
-
 export type MarkdownHeading = {
 	depth: number;
 	value: string;
@@ -16,8 +6,15 @@ export type MarkdownHeading = {
 	};
 };
 
-export type MarkdownReturn<T> = {
+export type MarkdownReturn<T extends Record<string, unknown> = Record<string, unknown>> = {
 	attributes: T;
+	title: string;
+	lede: string;
 	html: string;
 	headings: MarkdownHeading[];
+};
+
+export type Category = {
+	category: string;
+	utilities: { slug: string; label: string }[];
 };

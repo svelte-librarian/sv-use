@@ -1,9 +1,6 @@
----
-slug: 'auto-reset-state'
-title: 'autoResetState'
-description: 'A state that automatically resets to the default value after a delay.'
-category: 'states'
----
+# autoResetState
+
+A state that automatically resets to the default value after a delay.
 
 ## Usage
 

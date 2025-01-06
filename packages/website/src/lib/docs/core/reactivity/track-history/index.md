@@ -1,9 +1,7 @@
----
-slug: 'track-history'
-title: 'trackHistory'
-description: 'Tracks the change history of a reactive value. Provides undo and redo capabilities as well as access to the histories.'
-category: 'reactivity'
----
+# trackHistory
+
+Tracks the change history of a reactive value. Provides undo and redo
+capabilities as well as access to the histories.
 
 ## Usage
 

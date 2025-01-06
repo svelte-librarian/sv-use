@@ -1,9 +1,6 @@
----
-slug: 'create-web-notification'
-title: 'createWebNotification'
-description: 'Configure and display desktop notifications to the user.'
-category: 'browser'
----
+# createWebNotification
+
+Configure and display desktop notifications to the user.
 
 ## Usage
 

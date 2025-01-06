@@ -1,54 +1,16 @@
 import fs from 'node:fs/promises';
-import { convertMarkdownFileToHTML } from '$lib/utils/markdown.server.js';
+import path from 'node:path';
+import { toCamelCase, toTitleCase } from '$utils/text-transform.js';
 import type { LayoutServerLoad } from './$types.js';
-import type { UtilityAttributes } from '$lib/types/markdown.js';
+import type { Category } from '$types/markdown.js';
 
-const LIB_DIRECTORY = './src/lib/docs/core';
+const CORE_DIRECTORY = './src/lib/docs/core';
 
 export const load: LayoutServerLoad = async () => {
-	const categoryEntries = await fs.readdir(LIB_DIRECTORY, { withFileTypes: true });
-
-	const directoryEntries = (
-		await Promise.all(
-			categoryEntries.map(async (categoryEntry) => {
-				const path = `${categoryEntry.parentPath}/${categoryEntry.name}`;
-
-				const category = await fs.stat(path);
-				if (!category.isDirectory()) return null;
-
-				return await fs.readdir(path, { withFileTypes: true });
-			})
-		)
-	)
-		.filter((e) => e !== null)
-		.flat();
-
-	const utilityEntries = (
-		await Promise.all(
-			directoryEntries.map(async (directoryEntry) => {
-				const path = `${directoryEntry.parentPath}/${directoryEntry.name}`;
-
-				const directory = await fs.stat(path);
-				if (!directory.isDirectory()) return null;
-
-				const entries = await fs.readdir(path, { withFileTypes: true });
-
-				return entries.filter((entry) => entry.name === 'index.md');
-			})
-		)
-	)
-		.filter((e) => e !== null)
-		.flat();
-
-	const utilityDocs = await Promise.all(
-		utilityEntries.map(async (utilityEntry) => {
-			return await convertMarkdownFileToHTML<UtilityAttributes>(
-				`${utilityEntry.parentPath}/${utilityEntry.name}`
-			);
-		})
-	);
-
-	return { utilityDocs, gettingStartedDocs: await getGettingStartedDocs() };
+	return {
+		docs: await getPackageDocs(CORE_DIRECTORY),
+		gettingStartedDocs: await getGettingStartedDocs()
+	};
 };
 
 async function getGettingStartedDocs() {
@@ -56,9 +18,38 @@ async function getGettingStartedDocs() {
 
 	return Promise.all(
 		files.map(async (entry) => {
-			return await convertMarkdownFileToHTML<{ slug: string; title: string; description: string }>(
-				`${entry.parentPath}/${entry.name}`
-			);
+			const name = entry.name.split('.')[0];
+
+			return {
+				slug: name,
+				label: toTitleCase(name)
+			};
 		})
 	);
+}
+
+async function getPackageDocs(dirPath: string): Promise<Category[]> {
+	const categories: Category[] = [];
+
+	const categoryDirs = (await fs.readdir(dirPath, { withFileTypes: true }))
+		.filter((dirent) => dirent.isDirectory())
+		.map((dirent) => dirent.name);
+
+	for (const category of categoryDirs) {
+		const categoryPath = path.join(dirPath, category);
+		const utilityDirs = (await fs.readdir(categoryPath, { withFileTypes: true }))
+			.filter((dirent) => dirent.isDirectory())
+			.map((dirent) => dirent.name);
+
+		const utilities: { slug: string; label: string }[] = utilityDirs.map((slug) => {
+			return {
+				slug,
+				label: toCamelCase(slug)
+			};
+		});
+
+		categories.push({ category, utilities });
+	}
+
+	return categories;
 }

@@ -1,9 +1,6 @@
----
-slug: 'get-mouse'
-title: 'getMouse'
-description: 'Retrieves information about the mouse.'
-category: 'sensors'
----
+# getMouse
+
+Retrieves information about the mouse.
 
 ## Usage
 

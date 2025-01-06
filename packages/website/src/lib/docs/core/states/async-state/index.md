@@ -5,6 +5,10 @@ description: 'A reactive state that handles the loading and error states of a pr
 category: 'states'
 ---
 
+# asyncState
+
+A reactive state that handles the loading and error states of a promise.
+
 ## Usage
 
 ```svelte

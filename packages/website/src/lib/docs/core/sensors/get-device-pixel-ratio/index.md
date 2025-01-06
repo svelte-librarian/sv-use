@@ -1,9 +1,7 @@
----
-slug: 'get-device-pixel-ratio'
-title: 'getDevicePixelRatio'
-description: 'Returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device.'
-category: 'sensors'
----
+# getDevicePixelRatio
+
+Returns the ratio of the resolution in physical pixels to the resolution in CSS
+pixels for the current display device.
 
 ## Usage
 

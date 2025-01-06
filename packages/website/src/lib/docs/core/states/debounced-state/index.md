@@ -1,9 +1,6 @@
----
-slug: 'debounced-state'
-title: 'debouncedState'
-description: 'A reactive state that updates its value after a delay.'
-category: 'states'
----
+# debouncedState
+
+A reactive state that updates its value after a delay.
 
 ## Usage
 

@@ -1,9 +1,6 @@
----
-slug: 'get-last-changed'
-title: 'getLastChanged'
-description: 'Get the last time the reactive value changed. It is returned as a number in milliseconds.'
-category: 'reactivity'
----
+# getLastChanged
+
+Get the last time the reactive value changed. It is returned as a number in milliseconds.
 
 ## Usage
 

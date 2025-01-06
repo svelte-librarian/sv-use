@@ -1,9 +1,6 @@
----
-slug: "get-active-element"
-title: "getActiveElement"
-description: "Gets the current active element in the DOM."
-category: "elements"
----
+# getActiveElement
+
+Gets the current active element in the DOM.
 
 ## Usage
 

@@ -1,9 +1,6 @@
----
-slug: "debounce"
-title: "debounce"
-description: "Debounces the update of the value after a delay."
-category: "reactivity"
----
+# debounce
+
+Debounces the update of the value after a delay.
 
 ## Usage
 

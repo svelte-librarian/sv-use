@@ -1,9 +1,6 @@
----
-slug: 'handle-event-listener'
-title: 'handleEventListener'
-description: 'Handles the mounting (and, optionally, unmounting) of an event listener.'
-category: 'browser'
----
+# handleEventListener
+
+Handles the mounting (and, optionally, unmounting) of an event listener.
 
 ## Usage
 

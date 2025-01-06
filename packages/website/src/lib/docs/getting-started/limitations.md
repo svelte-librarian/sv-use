@@ -1,8 +1,6 @@
----
-slug: "limitations"
-title: Limitations
-description: 'SvelteUse has some limitations that are listed below.'
----
+# Limitations
+
+SvelteUse has some limitations that are listed below.
 
 ## Destructuring
 

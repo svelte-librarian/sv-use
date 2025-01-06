@@ -1,9 +1,7 @@
----
-slug: 'get-network'
-title: 'getNetwork'
-description: 'Provides information about the connection a device is using to communicate with the network.'
-category: 'sensors'
----
+# getNetwork
+
+Provides information about the connection a device is using to communicate with
+the network.
 
 ## Usage
 

@@ -5,6 +5,11 @@ description: 'A reactive state that tracks its change history. Provides undo and
 category: 'states'
 ---
 
+# historyState
+
+A reactive state that tracks its change history. Provides undo and redo
+capabilities as well as access to the histories.
+
 ## Usage
 
 > [!TIP]

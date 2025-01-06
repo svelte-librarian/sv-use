@@ -1,9 +1,6 @@
----
-slug: 'local-state'
-title: 'localState'
-description: 'A state that is synced with local storage.'
-category: 'states'
----
+# localState
+
+A state that is synced with local storage.
 
 ## Usage
 

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
-
-	let hash = $derived($page.url.hash);
+	import { cn } from '$utils/cn.js';
 </script>
 
 <aside
@@ -13,12 +12,14 @@
 			<span>On this page</span>
 			<div class="relative flex flex-col gap-[10px]">
 				{#each onThisPageHeadings.current as heading}
+					{@const hash = `#${heading.data.id}`}
 					<a
-						href="#{heading.data.id}"
+						href={hash}
 						style="padding-left: {(heading.depth - 2) * 20}px"
-						class="relative font-medium {hash === `#${heading.data.id}`
-							? 'text-svelte'
-							: 'text-zinc-500'}"
+						class={cn(
+							'relative font-medium',
+							$page.url.hash === hash ? 'text-svelte' : 'text-zinc-500'
+						)}
 					>
 						{heading.value}
 					</a>

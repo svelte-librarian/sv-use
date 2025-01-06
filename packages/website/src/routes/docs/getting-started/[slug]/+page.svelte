@@ -10,16 +10,13 @@
 
 <svelte:head>
 	<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cascadia-code" />
-	<title>{data.attributes.title} - Getting Started | SvelteUse</title>
-	<meta name="description" content={data.attributes.description} />
+	<title>{data.title} - Getting Started | SvelteUse</title>
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
-	<h1 class="mb-5 text-3xl font-semibold">{data.attributes.title}</h1>
-	{#each data.attributes.description.split('\\n') as line}
-		<p class="mb-5">{line}</p>
-	{/each}
+	<h1 class="mb-5 text-3xl font-semibold">{data.title}</h1>
 	<div id="content" class="contents">
+		{@html data.lede}
 		{@html data.html}
 	</div>
 </main>

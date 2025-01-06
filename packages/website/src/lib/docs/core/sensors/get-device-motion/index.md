@@ -1,9 +1,7 @@
----
-slug: 'get-device-motion'
-title: 'getDeviceMotion'
-description: "Provides information about the device's motion, including acceleration and rotation rate."
-category: 'sensors'
----
+# getDeviceMotion
+
+Provides information about the device's motion, including acceleration and
+rotation rate.
 
 ## Usage
 

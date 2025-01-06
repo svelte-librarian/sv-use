@@ -1,9 +1,6 @@
----
-slug: 'session-state'
-title: 'sessionState'
-description: 'A state that is synced with session storage.'
-category: 'states'
----
+# sessionState
+
+A state that is synced with session storage.
 
 ## Usage
 

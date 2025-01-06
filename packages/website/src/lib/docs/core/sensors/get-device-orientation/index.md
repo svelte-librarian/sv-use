@@ -1,9 +1,7 @@
----
-slug: 'get-device-orientation'
-title: 'getDeviceOrientation'
-description: 'Provides web developers with information from the physical orientation of the device running the web page.'
-category: 'sensors'
----
+# getDeviceOrientation
+
+Provides web developers with information from the physical orientation of the
+device running the web page.
 
 ## Usage
 

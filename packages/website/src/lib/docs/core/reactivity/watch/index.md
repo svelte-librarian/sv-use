@@ -1,9 +1,7 @@
----
-slug: 'watch'
-title: 'watch'
-description: Triggers a callback when a dependency changes. Provides the previous value(s) as well as the current one(s) as parameters in the callback.
-category: 'reactivity'
----
+# watch
+
+Triggers a callback when a dependency changes. Provides the previous value(s)
+as well as the current one(s) as parameters in the callback.
 
 ## Usage
 

@@ -1,9 +1,6 @@
----
-slug: 'get-permission'
-title: 'getPermission'
-description: 'Retrieves the status of a given permission.'
-category: 'browser'
----
+# getPermission
+
+Retrieves the status of a given permission.
 
 ## Usage
 

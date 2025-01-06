@@ -1,9 +1,6 @@
----
-slug: 'get-clipboard-text'
-title: 'getClipboardText'
-description: 'Provides write (and optionally read) access to the text clipboard.'
-category: 'browser'
----
+# getClipboardText
+
+Provides write (and optionally read) access to the text clipboard.
 
 ## Usage
 

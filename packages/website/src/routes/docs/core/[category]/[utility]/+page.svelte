@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
-	import { toTitleCase } from '$utils/to-title-case.js';
+	import { toTitleCase } from '$utils/text-transform.js';
 
 	let { data } = $props();
 
@@ -18,24 +19,20 @@
 </script>
 
 <svelte:head>
-	<title>{data.attributes.title} - {toTitleCase(data.attributes.category)} | SvelteUse</title>
-	<meta name="description" content={data.attributes.description} />
+	<title>{data.title} - {toTitleCase($page.params.category)} | SvelteUse</title>
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
 	<div class="mb-5 flex items-start gap-5">
-		<h1 class="text-3xl font-semibold">{data.attributes.title}</h1>
-		{#if data.attributes.unstable}
-			<button class="bg-svelte rounded-md px-3 py-1 text-white">Unstable</button>
-		{/if}
+		<h1 class="text-3xl font-semibold">{data.title}</h1>
 	</div>
 	<div class="relative mb-10 mt-5 grid w-full grid-cols-[100px_auto] gap-5">
 		<span>Category</span>
-		<span>{toTitleCase(data.attributes.category)}</span>
+		<span>{toTitleCase($page.params.category)}</span>
 	</div>
-	{#each data.attributes.description.split('\\n') as line}
-		<p>{line}</p>
-	{/each}
+	<div id="lede" class="contents">
+		{@html data.lede}
+	</div>
 	{#if data.Component}
 		{@const DemoComponent = data.Component}
 		<h2 id="demo" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">Demo</h2>
@@ -55,8 +52,8 @@
 	<h2 id="sources" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">Sources</h2>
 	<div>
 		<a
-			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/core/src/{data.attributes
-				.category}/{data.attributes.slug}/index.svelte.ts"
+			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/core/src/{$page.params
+				.category}/{$page.params.utility}/index.svelte.ts"
 			target="_blank"
 			class="text-svelte underline"
 		>
@@ -65,8 +62,8 @@
 		•
 		{#if data.Component}
 			<a
-				href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{data
-					.attributes.category}/{data.attributes.slug}/Demo.svelte"
+				href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{$page
+					.params.category}/{$page.params.utility}/Demo.svelte"
 				target="_blank"
 				class="text-svelte underline"
 			>
@@ -75,8 +72,8 @@
 			•
 		{/if}
 		<a
-			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{data
-				.attributes.category}/{data.attributes.slug}/index.md"
+			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{$page
+				.params.category}/{$page.params.utility}/index.md"
 			target="_blank"
 			class="text-svelte underline"
 		>
@@ -113,7 +110,7 @@
 		text-decoration: underline;
 	}
 
-	:global(#content p) {
+	:global(#lede p, #content p) {
 		margin-bottom: 1.25rem;
 	}
 

@@ -1,9 +1,6 @@
----
-slug: 'get-fps'
-title: 'getFps'
-description: 'Get the current frames per second of the device.'
-category: 'sensors'
----
+# getFps
+
+Get the current frames per second of the device.
 
 ## Usage
 

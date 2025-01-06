@@ -1,9 +1,7 @@
----
-slug: 'create-file-dialog'
-title: 'createFileDialog'
-description: 'Creates a file dialog to interact with programatically. Provides access to the files that are currently held.'
-category: 'browser'
----
+# createFileDialog
+
+Creates a file dialog to interact with programatically. Provides access to the
+files that are currently held.
 
 ## Usage
 
