@@ -1,7 +1,7 @@
 # SvelteUse
 
 > [!WARNING]
-> This is still an experimental library and not suited for production because breaking changes can happen at any time, hence the usage of pre-1.0 versioning.
+> This library is not suited for production because breaking changes can happen at any time, hence the usage of pre-1.0 versioning.
 
 A collection of Svelte 5 utilities.
 
