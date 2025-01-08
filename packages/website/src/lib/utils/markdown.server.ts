@@ -59,13 +59,8 @@ async function convertMarkdownContentToHTML(
 
 	let match;
 	const paragraphRegex = /<p>([\s\S]*?)<\/p>/g;
-	const headingRegex = /<h2(.*?)>/;
 
 	while (remainingHtml.startsWith('<p>') && (match = paragraphRegex.exec(remainingHtml)) !== null) {
-		if (headingRegex.test(remainingHtml.substring(0, match.index))) {
-			break;
-		}
-
 		paragraphs.push(match[0]);
 
 		remainingHtml = remainingHtml.substring(paragraphRegex.lastIndex);
