@@ -31,14 +31,12 @@
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
-	<div class="mb-5 flex items-start gap-5">
-		<h1 class="text-3xl font-semibold">{data.title}</h1>
-	</div>
+	<h1 class="mb-5 text-3xl font-semibold">{data.title}</h1>
 	<div class="relative mb-10 mt-5 grid w-full grid-cols-[100px_auto] gap-5">
 		<span>Category</span>
 		<span>{toTitleCase($page.params.category)}</span>
 	</div>
-	<div id="lede" class="contents">
+	<div class="content contents">
 		{@html data.lede}
 	</div>
 	{#if data.Component}
@@ -48,7 +46,7 @@
 			<DemoComponent />
 		</div>
 	{/if}
-	<div id="content" class="contents">
+	<div class="content contents">
 		{@html data.html}
 	</div>
 	<details
@@ -95,7 +93,7 @@
 </main>
 
 <style lang="postcss">
-	:global(#content h2) {
+	:global(.content h2) {
 		@apply scroll-mt-12 lg:scroll-mt-16;
 		font-size: 1.5rem;
 		font-weight: 600;
@@ -103,7 +101,7 @@
 		padding-bottom: 1.25rem;
 	}
 
-	:global(#content h3) {
+	:global(.content h3) {
 		@apply scroll-mt-12 lg:scroll-mt-16;
 		font-size: 1.25rem;
 		font-weight: 600;
@@ -111,26 +109,26 @@
 		padding-bottom: 1.25rem;
 	}
 
-	:global(#content ul) {
+	:global(.content ul) {
 		list-style-type: disc;
 		margin-left: 2.5rem;
 		margin-bottom: 1.25rem;
 	}
 
-	:global(#content a) {
+	:global(.content a) {
 		@apply text-svelte;
 		text-decoration: underline;
 	}
 
-	:global(#lede p, #content p) {
+	:global(#lede p, .content p) {
 		margin-bottom: 1.25rem;
 	}
 
-	:global(#content h2 > p) {
+	:global(.content h2 > p) {
 		margin-bottom: 0;
 	}
 
-	:global(#content figure) {
+	:global(.content figure) {
 		position: relative;
 		width: 100%;
 		color: #ffffff;
@@ -151,33 +149,33 @@
 		counter-reset: line;
 	}
 
-	:global(#content figure pre code) {
+	:global(.content figure pre code) {
 		overflow: auto;
 		border-radius: 0.5rem;
 		padding: 20px 0;
 		counter-reset: line;
 	}
 
-	:global(#content figure pre code *, #type-definitions-container pre code *) {
+	:global(.content figure pre code *, #type-definitions-container pre code *) {
 		font-family: 'Cascadia Code', sans-serif;
 	}
 
 	:global(
-		#content figure pre code span[data-highlighted-line],
+		.content figure pre code span[data-highlighted-line],
 		#type-definitions-container pre code span[data-highlighted-line]
 	) {
 		background-color: rgba(200, 200, 255, 0.1);
 	}
 
 	:global(
-		#content figure pre code > [data-line],
+		.content figure pre code > [data-line],
 		#type-definitions-container pre code > [data-line]
 	) {
 		padding: 2px 20px;
 	}
 
 	:global(
-		#content figure pre code[data-line-numbers] > [data-line]::before,
+		.content figure pre code[data-line-numbers] > [data-line]::before,
 		#type-definitions-container pre code[data-line-numbers] > [data-line]::before
 	) {
 		counter-increment: line;
@@ -189,22 +187,22 @@
 		color: gray;
 	}
 
-	:global(#content figure pre code, #type-definitions-container pre code),
-	:global(#content figure pre code span, #type-definitions-container pre code span) {
+	:global(.content figure pre code, #type-definitions-container pre code),
+	:global(.content figure pre code span, #type-definitions-container pre code span) {
 		color: var(--shiki-light);
 		background-color: var(--shiki-light-bg);
 	}
 
-	:global(html.dark #content figure pre code, html.dark #type-definitions-container pre code),
+	:global(html.dark .content figure pre code, html.dark #type-definitions-container pre code),
 	:global(
-		html.dark #content figure pre code span,
+		html.dark .content figure pre code span,
 		html.dark #type-definitions-container pre code span
 	) {
 		color: var(--shiki-dark);
 		background-color: var(--shiki-dark-bg);
 	}
 
-	:global(#content *:not(figure) code) {
+	:global(.content *:not(figure) code) {
 		@apply bg-svelte;
 		color: #fafafa;
 		padding: 2px 4px;

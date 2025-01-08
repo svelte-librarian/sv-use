@@ -50,20 +50,24 @@ async function convertMarkdownContentToHTML(
 		.use(rehypeStringify)
 		.process(content);
 
-	const html = value.toString().replaceAll('\n', '');
+	let html = value.toString();
 
-	const title = html.match(/<h1(.*?)>(.*?)<\/h1>/)?.at(2);
+	const h1Regex = /<h1(.*?)>(.*?)<\/h1>/;
+	const paragraphRegex = /<p>([\s\S]*?)<\/p>/;
+
+	const title = html.match(h1Regex)?.at(2);
+	html = html.replace(h1Regex, '');
 
 	const paragraphs = [];
-	let remainingHtml = html.replace(/<h1(.*?)>(.*?)<\/h1>/, '');
+	while (true) {
+		const h2Index = html.indexOf('<h2');
+		const pIndex = html.search(paragraphRegex);
+		const match = html.match(paragraphRegex);
 
-	let match;
-	const paragraphRegex = /<p>([\s\S]*?)<\/p>/g;
+		if (match === null || (h2Index !== -1 && h2Index < pIndex)) break;
 
-	while (remainingHtml.startsWith('<p>') && (match = paragraphRegex.exec(remainingHtml)) !== null) {
-		paragraphs.push(match[0]);
-
-		remainingHtml = remainingHtml.substring(paragraphRegex.lastIndex);
+		paragraphs.push(match.at(0));
+		html = html.replace(paragraphRegex, '');
 	}
 
 	const lede = paragraphs.join('');
@@ -81,7 +85,7 @@ async function convertMarkdownContentToHTML(
 	return {
 		title,
 		lede,
-		html: remainingHtml,
+		html,
 		// Remove h1 from headings
 		headings: (data.headings as MarkdownHeading[]).slice(1)
 	};
