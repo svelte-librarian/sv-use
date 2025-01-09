@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { getClipboardText } from '$sv-use/core';
+	import Button from '$ui/Button.svelte';
+	import Input from '$ui/Input.svelte';
 
 	let inputValue = $state('');
 	const clipboard = getClipboardText({ allowRead: true, legacyCopy: true });
@@ -8,17 +10,8 @@
 <div class="relative flex w-full flex-col gap-2">
 	{#if clipboard.isSupported}
 		<span>Currently copied : {clipboard.text}</span>
-		<input
-			type="text"
-			bind:value={inputValue}
-			class="rounded-md border border-zinc-300 px-3 py-2 text-sm"
-		/>
-		<button
-			onclick={() => clipboard.copyText(inputValue)}
-			class="rounded-md bg-svelte px-3 py-1 text-white"
-		>
-			Copy
-		</button>
+		<Input type="text" bind:value={inputValue} />
+		<Button onclick={() => clipboard.copyText(inputValue)}>Copy</Button>
 	{:else}
 		<span>Your browser doesn't support the Clipboard API...</span>
 	{/if}

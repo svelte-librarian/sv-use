@@ -7,6 +7,7 @@ export default {
 	kit: {
 		adapter: adapter(),
 		alias: {
+			$ui: './src/lib/ui',
 			$types: './src/lib/types',
 			$utils: './src/lib/utils',
 			'$sv-use/core': '../core/src/index.ts'

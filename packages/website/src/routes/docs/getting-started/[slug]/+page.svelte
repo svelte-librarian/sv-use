@@ -106,7 +106,7 @@
 	}
 
 	:global(.content *:not(figure) code) {
-		@apply bg-svelte;
+		@apply bg-svelte dark:bg-svelte-dark;
 		color: #fafafa;
 		padding: 2px 4px;
 		border-radius: 4px;

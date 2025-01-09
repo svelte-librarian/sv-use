@@ -6,7 +6,8 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				svelte: '#ff3e00'
+				svelte: '#ff3e00',
+				'svelte-dark': '#f96347'
 			}
 		}
 	},

@@ -54,32 +54,31 @@
 <div class="sticky left-0 top-0 z-10 flex w-full items-center justify-between lg:hidden">
 	<nav
 		bind:this={navNode}
-		class="relative flex w-full items-center justify-between border-b border-zinc-300 bg-[#fafafa] px-5 py-[15px]"
+		class="relative flex w-full items-center justify-between border-b border-zinc-300 bg-zinc-50 px-5 py-[15px] dark:border-zinc-700 dark:bg-zinc-900"
 	>
 		<button onclick={() => (showSidebar = true)} class="relative flex items-center gap-5">
 			<div class="relative flex flex-col gap-1">
-				<div class="h-[2px] w-4 bg-black"></div>
-				<div class="h-[2px] w-4 bg-black"></div>
+				<div class="h-[2px] w-4 bg-zinc-900 dark:bg-zinc-50"></div>
+				<div class="h-[2px] w-4 bg-zinc-900 dark:bg-zinc-50"></div>
 			</div>
-			<span class="text-sm">Menu</span>
+			<span class="text-sm dark:text-zinc-50">Menu</span>
 		</button>
 		<button
 			bind:this={onThisPageButtonNode}
 			class="flex items-center gap-3 [&>*]:pointer-events-none"
 		>
-			<span class="text-sm">On this page</span>
+			<span class="text-sm dark:text-zinc-50">On this page</span>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="16"
 				height="16"
 				viewBox="0 0 24 24"
 				fill="none"
-				stroke="currentColor"
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				vector-effect="non-scaling-stroke"
-				class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right duration-150 {showOnThisPage
+				class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right stroke-zinc-900 duration-150 dark:stroke-zinc-50 {showOnThisPage
 					? 'rotate-90'
 					: ''}"
 			>
@@ -99,7 +98,7 @@
 			></div>
 			<menu
 				transition:fly={{ x: -200 }}
-				class="fixed left-0 top-0 z-20 flex h-full w-4/5 flex-col gap-5 overflow-auto bg-zinc-50 p-5 shadow-[4px_0_8px_8px_rgba(0,0,0,0.1)]"
+				class="fixed left-0 top-0 z-20 flex h-full w-4/5 flex-col gap-5 overflow-auto bg-zinc-50 p-5 shadow-[4px_0_8px_8px_rgba(0,0,0,0.1)] dark:bg-zinc-800 dark:shadow-none"
 			>
 				<div class="relative flex w-full flex-col gap-5">
 					<h3 class="text-sm font-semibold text-zinc-900">Getting Started</h3>
@@ -110,8 +109,8 @@
 								onclick={() => (showSidebar = false)}
 								class="text-sm font-medium {$page.url.pathname ===
 								`${base}/docs/getting-started/${doc.slug}`
-									? 'text-svelte'
-									: 'text-zinc-500'}"
+									? 'text-svelte dark:text-svelte-dark'
+									: 'text-zinc-500 dark:text-zinc-400'}"
 							>
 								{doc.label}
 							</a>
@@ -129,7 +128,9 @@
 									onclick={() => (showSidebar = false)}
 									class={cn(
 										'text-sm font-medium',
-										$page.url.pathname === href ? 'text-svelte' : 'text-zinc-500'
+										$page.url.pathname === href
+											? 'text-svelte dark:text-svelte-dark'
+											: 'text-zinc-500 dark:text-zinc-400'
 									)}
 								>
 									{label}
@@ -146,18 +147,18 @@
 			bind:this={onThisPageMenuNode}
 			transition:fade={{ duration: 150 }}
 			style="top: {navNode.getBoundingClientRect().height}px"
-			class="absolute z-20 flex w-full flex-col items-start gap-3 bg-[#fafafa] p-5 shadow-md"
+			class="absolute z-20 flex w-full flex-col items-start gap-3 bg-zinc-50 p-5 shadow-md dark:bg-zinc-800 dark:shadow-none"
 		>
 			<button onclick={() => window.scrollTo(0, 0)} class="text-svelte font-medium">
 				Return to top
 			</button>
 			{#if onThisPageHeadings.current.length > 0}
-				<hr class="w-full text-zinc-400" />
+				<hr class="w-full text-zinc-400 dark:text-zinc-300" />
 				{#each onThisPageHeadings.current as heading}
 					<a
 						href="#{heading.data.id}"
 						style="padding-left: {(heading.depth - 2) * 20}px"
-						class="relative font-medium text-zinc-500"
+						class="relative font-medium text-zinc-500 dark:text-zinc-400"
 					>
 						{heading.value}
 					</a>
@@ -170,19 +171,19 @@
 <!-- DESKTOP -->
 
 <nav
-	class="sticky left-0 top-[65px] hidden h-[calc(100dvh-65px)] flex-1 flex-col items-center justify-start gap-5 overflow-scroll bg-zinc-100 p-8 lg:flex"
+	class="sticky left-0 top-[65px] hidden h-[calc(100dvh-65px)] flex-1 flex-col items-center justify-start gap-5 overflow-scroll bg-zinc-100 p-8 lg:flex dark:bg-zinc-800"
 >
 	<div class="relative flex flex-col items-start gap-5">
 		<div class="relative flex flex-col gap-5">
-			<h3 class="font-semibold text-zinc-900">Getting Started</h3>
+			<h3 class="font-semibold">Getting Started</h3>
 			<div class="relative flex w-full flex-col gap-1">
 				{#each gettingStartedDocs as doc}
 					<a
 						href="{base}/docs/getting-started/{doc.slug}"
 						onclick={() => (showSidebar = false)}
 						class="font-medium {$page.url.pathname === `${base}/docs/getting-started/${doc.slug}`
-							? 'text-svelte'
-							: 'text-zinc-500'}"
+							? 'text-svelte dark:text-svelte-dark'
+							: 'text-zinc-500 dark:text-zinc-400'}"
 					>
 						{doc.label}
 					</a>
@@ -199,7 +200,9 @@
 							{href}
 							class={cn(
 								'font-medium',
-								$page.url.pathname === href ? 'text-svelte' : 'text-zinc-500'
+								$page.url.pathname === href
+									? 'text-svelte dark:text-svelte-dark'
+									: 'text-zinc-500 dark:text-zinc-400'
 							)}
 						>
 							{label}

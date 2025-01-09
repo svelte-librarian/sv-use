@@ -6,5 +6,5 @@
 
 <div class="relative flex w-full flex-col gap-2">
 	<span>Camera status</span>
-	<pre>{JSON.stringify(permission, null, 2)}</pre>
+	<pre class="dark:text-zinc-50">{JSON.stringify(permission, null, 2)}</pre>
 </div>

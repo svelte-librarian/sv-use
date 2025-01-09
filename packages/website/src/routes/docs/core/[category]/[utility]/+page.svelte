@@ -32,7 +32,7 @@
 
 <main class="relative flex w-full flex-col">
 	<h1 class="mb-5 text-3xl font-semibold">{data.title}</h1>
-	<div class="relative mb-10 mt-5 grid w-full grid-cols-[100px_auto] gap-5">
+	<div class="relative mb-10 mt-5 grid w-full grid-cols-[100px_auto] gap-5 dark:text-zinc-50">
 		<span>Category</span>
 		<span>{toTitleCase($page.params.category)}</span>
 	</div>
@@ -42,7 +42,7 @@
 	{#if data.Component}
 		{@const DemoComponent = data.Component}
 		<h2 id="demo" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">Demo</h2>
-		<div class="relative overflow-auto rounded-lg bg-[#eff1f5] p-5 dark:bg-[#282c34]">
+		<div class="relative overflow-auto rounded-lg bg-zinc-100 p-5 dark:bg-zinc-800">
 			<DemoComponent />
 		</div>
 	{/if}
@@ -52,7 +52,7 @@
 	<details
 		bind:open={showTypeDefinitions}
 		id="type-definitions-container"
-		class="flex flex-col items-start gap-5"
+		class="flex flex-col items-start gap-5 text-zinc-900 dark:text-zinc-50"
 	>
 		<summary id="type-definitions" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">
 			Type definitions
@@ -69,7 +69,7 @@
 		>
 			View Source Code
 		</a>
-		•
+		<span class="text-zinc-900 dark:text-zinc-50">•</span>
 		{#if data.Component}
 			<a
 				href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{$page
@@ -79,7 +79,7 @@
 			>
 				Demo
 			</a>
-			•
+			<span class="text-zinc-900 dark:text-zinc-50">•</span>
 		{/if}
 		<a
 			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{$page
@@ -187,12 +187,14 @@
 		color: gray;
 	}
 
+	:global(.content figure pre, #type-definitions-container pre),
 	:global(.content figure pre code, #type-definitions-container pre code),
 	:global(.content figure pre code span, #type-definitions-container pre code span) {
 		color: var(--shiki-light);
 		background-color: var(--shiki-light-bg);
 	}
 
+	:global(html.dark .content figure pre, html.dark #type-definitions-container pre),
 	:global(html.dark .content figure pre code, html.dark #type-definitions-container pre code),
 	:global(
 		html.dark .content figure pre code span,
@@ -203,7 +205,7 @@
 	}
 
 	:global(.content *:not(figure) code) {
-		@apply bg-svelte;
+		@apply bg-svelte dark:bg-svelte-dark;
 		color: #fafafa;
 		padding: 2px 4px;
 		border-radius: 4px;
