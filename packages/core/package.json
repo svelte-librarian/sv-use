@@ -1,6 +1,6 @@
 {
 	"name": "@sv-use/core",
-	"version": "0.40.0",
+	"version": "0.40.1",
 	"license": "MIT",
 	"description": "A collection of Svelte 5 utilities.",
 	"main": "./dist/index.js",
@@ -19,7 +19,7 @@
 	"homepage": "https://github.com/svelte-librarian/sv-use#readme",
 	"scripts": {
 		"build": "svelte-package",
-		"build:watch": "nodemon -e js,ts -w src",
+		"build:watch": "npm run build && nodemon -e js,ts -w src",
 		"package": "svelte-kit sync && npm run build && publint",
 		"prepublishOnly": "npm run package",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
