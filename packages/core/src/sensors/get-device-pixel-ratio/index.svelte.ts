@@ -1,5 +1,4 @@
 import { BROWSER } from 'esm-env';
-import { isSupported } from '../../index.js';
 
 type GetDevicePixelRatioReturn = {
 	/** Whether the {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio | devicePixelRatio property} is supported or not. */
@@ -10,10 +9,10 @@ type GetDevicePixelRatioReturn = {
 
 /** Returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device. */
 export function getDevicePixelRatio(): GetDevicePixelRatioReturn {
-	const _isSupported = isSupported(() => window && 'devicePixelRatio' in window);
+	const _isSupported = $derived.by(() => window && 'devicePixelRatio' in window);
 	let devicePixelRatio = $state(1);
 
-	if (_isSupported.current && BROWSER) {
+	if (_isSupported && BROWSER) {
 		let media: MediaQueryList;
 
 		updatePixelRatio();
@@ -33,7 +32,7 @@ export function getDevicePixelRatio(): GetDevicePixelRatioReturn {
 
 	return {
 		get isSupported() {
-			return _isSupported.current;
+			return _isSupported;
 		},
 		get current() {
 			return devicePixelRatio;

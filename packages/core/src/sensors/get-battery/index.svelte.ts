@@ -1,4 +1,4 @@
-import { handleEventListener, isSupported } from '../../index.js';
+import { handleEventListener } from '../../index.js';
 
 // Custom type because only 1 out of 3 major browsers support it.
 export interface BatteryManager extends EventTarget {
@@ -32,7 +32,7 @@ type GetBatteryReturn = {
 export function getBattery(): GetBatteryReturn {
 	const events = ['chargingchange', 'chargingtimechange', 'dischargingtimechange', 'levelchange'];
 
-	const _isSupported = isSupported(() => navigator && 'getBattery' in navigator);
+	const _isSupported = $derived.by(() => navigator && 'getBattery' in navigator);
 	let _charging = $state<number>(0);
 	let _chargingTime = $state<number>(0);
 	let _dischargingTime = $state<number>(0);
@@ -40,7 +40,7 @@ export function getBattery(): GetBatteryReturn {
 
 	let battery: BatteryManager;
 
-	if (_isSupported.current) {
+	if (_isSupported) {
 		(navigator as NavigatorWithBattery).getBattery().then((_battery) => {
 			battery = _battery;
 			updateBatteryInfo.call(battery);
@@ -57,7 +57,7 @@ export function getBattery(): GetBatteryReturn {
 
 	return {
 		get isSupported() {
-			return _isSupported.current;
+			return _isSupported;
 		},
 		get charging() {
 			return _charging;

@@ -1,10 +1,3 @@
----
-slug: 'async-state'
-title: 'asyncState'
-description: 'A reactive state that handles the loading and error states of a promise.'
-category: 'states'
----
-
 # asyncState
 
 A reactive state that handles the loading and error states of a promise.

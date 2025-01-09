@@ -38,12 +38,12 @@ export function getClipboardText<AllowRead extends boolean = false>(
 ): GetClipboardReturn {
 	const { allowRead = false, copyDuration = 2000, legacyCopy = false } = options;
 
-	let _isClipboardAPISupported = $state<boolean>(false);
-	let _isCopied = $state<boolean>(false);
-	let _text = $state<string>('');
-	const _isSupported = $state<boolean>(_isClipboardAPISupported || legacyCopy);
+	const _isClipboardAPISupported = $derived.by(() => navigator && 'clipboard' in navigator);
+	const _isSupported = $derived.by(() => _isClipboardAPISupported || legacyCopy);
 	const _readPermission = getPermission('clipboard-read', { exposeControls: true });
 	const _writePermission = getPermission('clipboard-write');
+	let _isCopied = $state<boolean>(false);
+	let _text = $state<string>('');
 
 	function copyText(value: string) {
 		if (!_isSupported) return;
@@ -86,10 +86,6 @@ export function getClipboardText<AllowRead extends boolean = false>(
 	}
 
 	onMount(() => {
-		if (!('clipboard' in navigator)) return;
-
-		_isClipboardAPISupported = true;
-
 		if (!_isSupported || !allowRead) return;
 
 		return handleEventListener(['copy', 'cut'], readText);

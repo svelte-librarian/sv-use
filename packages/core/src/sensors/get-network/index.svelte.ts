@@ -1,4 +1,4 @@
-import { onMount } from 'svelte';
+import { BROWSER } from 'esm-env';
 
 type NetworkInformation = {
 	/** The effective bandwidth estimate in megabits per second, rounded to the nearest multiple of 25 kilobits per seconds. */
@@ -23,6 +23,10 @@ type NetworkInformation = {
 		| 'unknown';
 };
 
+type NavigatorWithConnection = Navigator & {
+	readonly connection: NetworkInformation;
+};
+
 type GetNetworkReturn = {
 	readonly isSupported: boolean;
 	readonly current: NetworkInformation;
@@ -33,7 +37,7 @@ type GetNetworkReturn = {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
  */
 export function getNetwork(): GetNetworkReturn {
-	let _isSupported = $state<boolean>(false);
+	const _isSupported = $derived.by(() => navigator && 'connection' in navigator);
 	let _current = $state<NetworkInformation>({
 		downlink: 0,
 		downlinkMax: 0,
@@ -43,13 +47,9 @@ export function getNetwork(): GetNetworkReturn {
 		type: 'unknown'
 	});
 
-	onMount(() => {
-		if (!('navigator' in window)) return;
-		if (!('connection' in navigator)) return;
-
-		_isSupported = true;
-		_current = { ..._current, ...(navigator.connection as NetworkInformation) };
-	});
+	if (BROWSER && _isSupported) {
+		_current = { ..._current, ...(navigator as NavigatorWithConnection).connection };
+	}
 
 	return {
 		get isSupported() {

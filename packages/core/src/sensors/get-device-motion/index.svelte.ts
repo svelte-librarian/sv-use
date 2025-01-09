@@ -1,4 +1,5 @@
 import { onMount } from 'svelte';
+import { handleEventListener } from '../../browser/index.js';
 
 type GetDeviceMotionReturn = {
 	/** Whether the device supports the {@link https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent | `DeviceMotionEvent`} feature or not. */
@@ -25,7 +26,7 @@ type GetDeviceMotionReturn = {
 
 /** Provides information about the device's motion, including acceleration and rotation rate. */
 export function getDeviceMotion(): GetDeviceMotionReturn {
-	let _isSupported = $state<boolean>(false);
+	const _isSupported = $derived.by(() => window && 'DeviceMotionEvent' in window);
 	let _acceleration = $state<NonNullable<DeviceMotionEvent['acceleration']>>({
 		x: null,
 		y: null,
@@ -46,9 +47,7 @@ export function getDeviceMotion(): GetDeviceMotionReturn {
 	let _interval = $state<number>(0);
 
 	onMount(() => {
-		if (!('DeviceMotionEvent' in window)) return;
-
-		_isSupported = true;
+		if (!_isSupported) return;
 
 		const onDeviceMotion = (event: DeviceMotionEvent) => {
 			if (event.acceleration) {
@@ -66,11 +65,7 @@ export function getDeviceMotion(): GetDeviceMotionReturn {
 			_interval = event.interval;
 		};
 
-		window.addEventListener('devicemotion', onDeviceMotion);
-
-		return () => {
-			window.removeEventListener('devicemotion', onDeviceMotion);
-		};
+		return handleEventListener('devicemotion', onDeviceMotion);
 	});
 
 	return {
