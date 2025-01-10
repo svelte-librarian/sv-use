@@ -18,7 +18,9 @@
 						style="padding-left: {(heading.depth - 2) * 20}px"
 						class={cn(
 							'relative font-medium',
-							$page.url.hash === hash ? 'text-svelte' : 'text-zinc-500 dark:text-zinc-400'
+							$page.url.hash === hash
+								? 'text-svelte dark:text-svelte-dark'
+								: 'text-zinc-500 dark:text-zinc-400'
 						)}
 					>
 						{heading.value}

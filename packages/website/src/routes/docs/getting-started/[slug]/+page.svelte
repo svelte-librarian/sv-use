@@ -49,6 +49,10 @@
 		text-decoration: underline;
 	}
 
+	:global(html.dark .content a) {
+		@apply text-svelte-dark;
+	}
+
 	:global(.content p) {
 		margin-bottom: 1.25rem;
 	}
@@ -62,6 +66,7 @@
 		width: 100%;
 		color: #ffffff;
 		margin-bottom: 1.25rem;
+		border-radius: 0.5rem;
 	}
 
 	:global(.content figure pre code) {
@@ -106,9 +111,13 @@
 	}
 
 	:global(.content *:not(figure) code) {
-		@apply bg-svelte dark:bg-svelte-dark;
+		@apply bg-svelte;
 		color: #fafafa;
 		padding: 2px 4px;
 		border-radius: 4px;
+	}
+
+	:global(html.dark .content *:not(figure) code) {
+		@apply bg-svelte-dark;
 	}
 </style>

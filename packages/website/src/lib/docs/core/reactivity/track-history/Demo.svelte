@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { trackHistory } from '$sv-use/core';
+	import Button from '$ui/Button.svelte';
 
 	let counter = $state(0);
 	const history = trackHistory(
@@ -26,21 +27,7 @@
 			<li class="italic">Empty...</li>
 		{/each}
 	</ul>
-	<button onclick={() => counter++} class="bg-svelte rounded-md px-3 py-1 text-white">
-		Increment
-	</button>
-	<button
-		disabled={!history.canUndo}
-		onclick={() => history.undo()}
-		class="bg-svelte rounded-md px-3 py-1 text-white disabled:cursor-not-allowed disabled:opacity-50"
-	>
-		Undo
-	</button>
-	<button
-		disabled={!history.canRedo}
-		onclick={() => history.redo()}
-		class="bg-svelte rounded-md px-3 py-1 text-white disabled:cursor-not-allowed disabled:opacity-50"
-	>
-		Redo
-	</button>
+	<Button onclick={() => counter++}>Increment</Button>
+	<Button disabled={!history.canUndo} onclick={() => history.undo()}>Undo</Button>
+	<Button disabled={!history.canRedo} onclick={() => history.redo()}>Redo</Button>
 </div>
