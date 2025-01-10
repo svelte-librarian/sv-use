@@ -1,5 +1,6 @@
-import { handleEventListener } from '../../browser/index.js';
 import { onMount } from 'svelte';
+import { isSupported } from '../../__internal__/is.svelte.js';
+import { handleEventListener } from '../../browser/index.js';
 
 type GetDeviceOrientationReturn = {
 	readonly isSupported: boolean;
@@ -18,14 +19,14 @@ type GetDeviceOrientationReturn = {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent
  */
 export function getDeviceOrientation(): GetDeviceOrientationReturn {
-	const _isSupported = $derived.by(() => window && 'DeviceOrientationEvent' in window);
+	const _isSupported = isSupported(() => window && 'DeviceOrientationEvent' in window);
 	let _isAbsolute = $state<boolean>(false);
 	let _alpha = $state<number>(0);
 	let _beta = $state<number>(0);
 	let _gamma = $state<number>(0);
 
 	onMount(() => {
-		if (!_isSupported) return;
+		if (!_isSupported.current) return;
 
 		const onDeviceOrientation = (event: DeviceOrientationEvent) => {
 			_isAbsolute = event.absolute;
@@ -39,7 +40,7 @@ export function getDeviceOrientation(): GetDeviceOrientationReturn {
 
 	return {
 		get isSupported() {
-			return _isSupported;
+			return _isSupported.current;
 		},
 		get isAbsolute() {
 			return _isAbsolute;
