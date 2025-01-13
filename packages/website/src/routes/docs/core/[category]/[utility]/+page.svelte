@@ -18,9 +18,10 @@
 
 		if (data.Component) {
 			headings.unshift({ depth: 2, value: 'Demo', data: { id: 'demo' } });
-			headings.push({ depth: 2, value: 'Type definitions', data: { id: 'type-definitions' } });
-			headings.push({ depth: 2, value: 'Sources', data: { id: 'sources' } });
 		}
+
+		headings.push({ depth: 2, value: 'Type definitions', data: { id: 'type-definitions' } });
+		headings.push({ depth: 2, value: 'Sources', data: { id: 'sources' } });
 
 		onThisPageHeadings.current = headings;
 	});
