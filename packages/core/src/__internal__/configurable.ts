@@ -6,3 +6,4 @@ export interface ConfigurableWindow {
 }
 
 export const defaultWindow = BROWSER ? window : undefined;
+export const defaultDocument = BROWSER ? document : undefined;
