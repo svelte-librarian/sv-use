@@ -6,6 +6,7 @@
         "esbenp.prettier-vscode",
         "github.vscode-github-actions",
         "svelte.svelte-vscode",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "EthanSK.restore-terminals"
     ]
 }

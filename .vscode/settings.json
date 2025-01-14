@@ -1,4 +1,34 @@
 {
     "editor.formatOnSave": true,
-    "svelte.enable-ts-plugin": true
+    "svelte.enable-ts-plugin": true,
+    "restoreTerminals.runOnStartup": true,
+    "restoreTerminals.terminals": [
+        {
+            "splitTerminals": [
+                {
+                    "name": "Website",
+                    "commands": ["cd packages/website", "npm run dev"]
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
+                    "name": "Core Build",
+                    "commands": ["cd packages/core", "npm run build:watch"]
+                },
+                {
+                    "name": "Core",
+                    "commands": ["cd packages/core"]
+                }
+            ]
+        },
+        {
+            "splitTerminals": [
+                {
+                    "name": "General"
+                }
+            ]
+        }
+    ]
 }
