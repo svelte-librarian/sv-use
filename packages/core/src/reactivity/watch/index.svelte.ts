@@ -4,7 +4,8 @@
  */
 
 import { untrack } from 'svelte';
-import type { Getter } from '$lib/__internal__/types.js';
+import { normalizeValue } from '../../__internal__/utils.js';
+import type { Arrayable, Getter } from '../../__internal__/types.js';
 
 type WatchOptions<RunOnMounted extends boolean> = {
 	/** Whether to run the effect on mount or not. */
@@ -17,10 +18,10 @@ export function watch<T, RunOnMounted extends boolean = true>(
 	options?: WatchOptions<RunOnMounted>
 ): void;
 
-export function watch<T, RunOnMounted extends boolean = true>(
-	deps: Array<Getter<T>>,
+export function watch<T extends unknown[], RunOnMounted extends boolean = true>(
+	deps: { [K in keyof T]: () => T[K] },
 	fn: (
-		values: Array<T>,
+		values: T,
 		previousValues: RunOnMounted extends true ? Array<T | undefined> : Array<T>
 	) => void,
 	options?: WatchOptions<RunOnMounted>
@@ -34,9 +35,9 @@ export function watch<T, RunOnMounted extends boolean = true>(
  * @note `watch` is a `$effect` but supplies the previous value(s) as the second argument.
  */
 export function watch<T, RunOnMounted extends boolean = true>(
-	deps: Getter<T> | Array<Getter<T>>,
+	deps: Arrayable<Getter<T>>,
 	fn: (
-		values: T | Array<T>,
+		values: Arrayable<T>,
 		previousValues:
 			| (RunOnMounted extends true ? T | undefined : T)
 			| (RunOnMounted extends true ? Array<T | undefined> : Array<T>)
@@ -46,10 +47,10 @@ export function watch<T, RunOnMounted extends boolean = true>(
 	const { runOnMounted = true } = options;
 
 	let active = runOnMounted;
-	let previousValues: T | undefined | Array<T | undefined> = Array.isArray(deps) ? [] : undefined;
+	let previousValues: Arrayable<T | undefined> = undefined;
 
 	$effect(() => {
-		const values = Array.isArray(deps) ? deps.map((dep) => dep()) : deps();
+		const values = Array.isArray(deps) ? deps.map(normalizeValue) : deps();
 
 		if (!active) {
 			active = true;
