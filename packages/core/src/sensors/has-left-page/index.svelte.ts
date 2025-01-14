@@ -22,6 +22,7 @@ type HasLeftPageReturnWithCleanup = HasLeftPageReturn & {
 /**
  * Whether the mouse has left the page or not.
  * @note You can only run this in the component initialization lifecycle, unless you set {@link HasLeftPageOptions.autoCleanup | `autoCleanup`} to `false`.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/has-left-page
  */
 export function hasLeftPage(): HasLeftPageReturn;
 
@@ -29,6 +30,7 @@ export function hasLeftPage(): HasLeftPageReturn;
  * Whether the mouse has left the page or not.
  * @note You can only run this in the component initialization lifecycle, unless you set {@link HasLeftPageOptions.autoCleanup | `autoCleanup`} to `false`.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/has-left-page
  */
 export function hasLeftPage<AutoCleanup extends boolean>(
 	options: HasLeftPageOptions<AutoCleanup>

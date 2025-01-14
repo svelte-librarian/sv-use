@@ -8,7 +8,10 @@ type GetDevicePixelRatioReturn = {
 	readonly current: number;
 };
 
-/** Returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device. */
+/**
+ * Returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-device-pixel-ratio
+ */
 export function getDevicePixelRatio(): GetDevicePixelRatioReturn {
 	const _isSupported = isSupported(() => window && 'devicePixelRatio' in window);
 	let devicePixelRatio = $state(1);

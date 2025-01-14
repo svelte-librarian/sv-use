@@ -39,9 +39,12 @@ export function getPermission<ExposeControls extends boolean = false>(
 	options: GetPermissionOptions<ExposeControls>
 ): ExposeControls extends true ? GetPermissionReturnWithControls : GetPermissionReturn;
 
-/** Retrieves the status of a given permission. */
+/**
+ * Retrieves the status of a given permission.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/get-permission
+ */
 export function getPermission<ExposeControls extends boolean>(
-    nameOrDesc: ExtendedPermissionName | ExtendedPermissionDescriptor,
+	nameOrDesc: ExtendedPermissionName | ExtendedPermissionDescriptor,
 	options: GetPermissionOptions<ExposeControls> = {}
 ): GetPermissionReturn | GetPermissionReturnWithControls {
 	const { exposeControls = false } = options;
@@ -58,7 +61,7 @@ export function getPermission<ExposeControls extends boolean>(
 		if (!('permissions' in navigator)) return;
 
 		try {
-            const status = await query();
+			const status = await query();
 			_isSupported = true;
 			_current = status.state;
 

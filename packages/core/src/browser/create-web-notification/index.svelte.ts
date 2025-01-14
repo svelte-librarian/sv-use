@@ -76,6 +76,7 @@ type CreateWebNotificationReturn = {
 /**
  * Configure and display desktop notifications to the user.
  * @warning Cannot be used in a lifecycle hook as it relies on `onMount`.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/create-web-notification
  */
 export function createWebNotification(
 	data: CreateWebNotificationData = {},

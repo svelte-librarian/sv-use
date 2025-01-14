@@ -25,7 +25,10 @@ type GetDeviceMotionReturn = {
 	readonly interval: number;
 };
 
-/** Provides information about the device's motion, including acceleration and rotation rate. */
+/**
+ * Provides information about the device's motion, including acceleration and rotation rate.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-device-motion
+ */
 export function getDeviceMotion(): GetDeviceMotionReturn {
 	const _isSupported = isSupported(() => window !== undefined && 'DeviceMotionEvent' in window);
 	let _acceleration = $state<NonNullable<DeviceMotionEvent['acceleration']>>({

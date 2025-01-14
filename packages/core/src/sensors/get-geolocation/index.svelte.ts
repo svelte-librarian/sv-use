@@ -21,7 +21,7 @@ type GetGeolocationReturn = {
  *
  * For privacy reasons, the user is asked for permission to report location information.
  * @param options Additional options to customize the behavior.
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-geolocation
  */
 export function getGeolocation(options: GetGeolocationOptions = {}): GetGeolocationReturn {
 	const {

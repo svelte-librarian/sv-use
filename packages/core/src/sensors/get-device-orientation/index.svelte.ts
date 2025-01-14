@@ -16,7 +16,7 @@ type GetDeviceOrientationReturn = {
 
 /**
  * Provides web developers with information from the physical orientation of the device running the web page.
- * @see https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-device-orientation
  */
 export function getDeviceOrientation(): GetDeviceOrientationReturn {
 	const _isSupported = isSupported(() => window && 'DeviceOrientationEvent' in window);

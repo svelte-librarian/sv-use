@@ -47,6 +47,7 @@ export interface ObserveIntersectionReturn {
  * @param targets The target(s) to observe.
  * @param callback The callback to run when the targets are visible on screen.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/observers/observe-intersection
  */
 export function observeIntersection(
 	targets: Arrayable<Getter<HTMLElement | null | undefined>>,

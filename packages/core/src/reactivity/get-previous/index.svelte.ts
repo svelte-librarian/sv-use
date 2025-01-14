@@ -8,6 +8,7 @@ type GetPreviousReturn<T> = {
  * A reactive state of a given state's previous value.
  * @param getter The state as a getter function.
  * @note The state is `undefined` until the given state is updated for the first time.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/reactivity/get-previous
  */
 export function getPrevious<T>(getter: () => T): GetPreviousReturn<T | undefined>;
 
@@ -15,6 +16,7 @@ export function getPrevious<T>(getter: () => T): GetPreviousReturn<T | undefined
  * A reactive state of a given state's previous value.
  * @param getter The state as a getter function.
  * @param initial The initial value of the state.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/reactivity/get-previous
  */
 export function getPrevious<T>(getter: () => T, initial: T): GetPreviousReturn<T>;
 

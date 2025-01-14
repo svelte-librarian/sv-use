@@ -19,6 +19,7 @@ const DEFAULT_INITIAL = { x: 0, y: 0 };
 /**
  * Retrieves information about the mouse.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-mouse
  */
 export function getMouse(options?: GetMouseOptions): GetMouseReturn {
 	const DEFAULT_ON_MOVE = (event: MouseEvent) => {

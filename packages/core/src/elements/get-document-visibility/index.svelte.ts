@@ -8,6 +8,7 @@ type GetDocumentVisibilityReturn = {
 /**
  * Whether the document is visible or not.
  * @note You can only run this in the component initialization lifecycle.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/get-document-visibility
  */
 export function getDocumentVisibility(): GetDocumentVisibilityReturn {
 	const _state = $state<{ current: DocumentVisibilityState }>({ current: 'visible' });

@@ -28,6 +28,7 @@ type GetBatteryReturn = {
 /**
  * Retrieves information about the battery.
  * @note The {@link https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API | Battery Status API} is not supported by all browsers.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-battery
  */
 export function getBattery(): GetBatteryReturn {
 	const events = ['chargingchange', 'chargingtimechange', 'dischargingtimechange', 'levelchange'];

@@ -15,6 +15,7 @@ type LocalStateOptions<T> = {
  * @param value The initial value of the state.
  * @param options Additional options to customize the behavior.
  * @returns A reactive `current` property.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/states/local-state
  */
 export function localState<T>(key: string, value: T, options: LocalStateOptions<T> = {}) {
 	const { serialize = JSON.stringify, deserialize = JSON.parse, overrideDefault = false } = options;

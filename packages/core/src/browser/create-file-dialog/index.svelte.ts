@@ -7,32 +7,33 @@ type CreateFileDialogOptions = {
 	/** @default false */
 	multiple?: boolean;
 	/**
-     * Triggers when the file selection changes.
-     * @default () => {}
-     */
+	 * Triggers when the file selection changes.
+	 * @default () => {}
+	 */
 	onChange?: (files: File[]) => void;
 	/**
-     * Triggers when the dialog is closed.
-     * @default () => {}
-     */
+	 * Triggers when the dialog is closed.
+	 * @default () => {}
+	 */
 	onCancel?: () => void;
 };
 
 type CreateFileDialogReturn = {
-    /**
-     * A list of selected files.
-     * @reactive
-     */
+	/**
+	 * A list of selected files.
+	 * @reactive
+	 */
 	readonly files: File[];
-    /** Opens the file dialog. */
+	/** Opens the file dialog. */
 	open: () => void;
-    /** Resets the file dialog. */
+	/** Resets the file dialog. */
 	reset: () => void;
 };
 
 /**
  * Creates a file dialog to interact with programatically.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/create-file-dialog
  */
 export function createFileDialog(options: CreateFileDialogOptions = {}): CreateFileDialogReturn {
 	const { accept = '*', multiple = false, onChange = () => {}, onCancel = () => {} } = options;
@@ -47,7 +48,7 @@ export function createFileDialog(options: CreateFileDialogOptions = {}): CreateF
 		_input.multiple = multiple;
 
 		const changeCleanup = handleEventListener(_input, 'change', (event) => {
-            _files = Array.from((event.currentTarget as EventTarget & HTMLInputElement).files ?? []);
+			_files = Array.from((event.currentTarget as EventTarget & HTMLInputElement).files ?? []);
 			onChange(_files);
 		});
 

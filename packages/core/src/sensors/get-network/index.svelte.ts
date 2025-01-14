@@ -34,7 +34,7 @@ type GetNetworkReturn = {
 
 /**
  * Provides information about the connection a device is using to communicate with the network.
- * @see https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-network
  */
 export function getNetwork(): GetNetworkReturn {
 	const _isSupported = $derived.by(() => navigator && 'connection' in navigator);

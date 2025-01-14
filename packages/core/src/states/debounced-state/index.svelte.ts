@@ -7,6 +7,7 @@ type DebouncedStateOptions = {
  * A reactive state that updates its value after a delay.
  * @param initial The initial value of the state.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/states/debounced-state
  */
 export function debouncedState<T>(initial: T, options: DebouncedStateOptions = {}): { current: T } {
 	const { delay = 1000 } = options;

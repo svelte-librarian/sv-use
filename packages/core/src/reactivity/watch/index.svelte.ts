@@ -33,6 +33,7 @@ export function watch<T extends unknown[], RunOnMounted extends boolean = true>(
  * @param fn The callback to trigger when a dependency changes.
  * @param options Additional options to customize the behavior.
  * @note `watch` is a `$effect` but supplies the previous value(s) as the second argument.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/reactivity/watch
  */
 export function watch<T, RunOnMounted extends boolean = true>(
 	deps: Arrayable<Getter<T>>,

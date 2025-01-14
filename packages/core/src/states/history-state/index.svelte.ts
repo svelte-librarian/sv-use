@@ -12,6 +12,7 @@ type HistoryStateReturn<T> = TrackHistoryReturn<T> & {
 /**
  * A reactive state that allows for undo and redo operations by tracking the change history.
  * @param initial The initial value of the state.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/states/history-state
  */
 export function historyState<T>(
 	initial: T,

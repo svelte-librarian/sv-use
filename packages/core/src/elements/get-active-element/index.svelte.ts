@@ -31,6 +31,9 @@ export function getActiveElement<AutoMountAndCleanup extends boolean = false>(
 	options: GetActiveElementOptions<AutoMountAndCleanup>
 ): AutoMountAndCleanup extends true ? GetActiveElementReturn : GetActiveElementReturnWithCleanup;
 
+/**
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/get-active-element
+ */
 export function getActiveElement<AutoMountAndCleanup extends boolean = false>(
 	options: GetActiveElementOptions<AutoMountAndCleanup> = {}
 ): GetActiveElementReturn | GetActiveElementReturnWithCleanup {

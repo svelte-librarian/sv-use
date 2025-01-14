@@ -32,6 +32,7 @@ type GetClipboardReturn = {
 /**
  * Provides write (and optionally read) access to the text clipboard.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/get-clipboard-text
  */
 export function getClipboardText<AllowRead extends boolean = false>(
 	options: GetClipboardOptions<AllowRead> = {}

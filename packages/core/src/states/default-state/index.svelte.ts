@@ -12,6 +12,7 @@ type DefaultStateReturn<T> = {
  * A reactive state that falls back to `defaultValue` if set to `null` or `undefined`.
  * @param defaultValue The fallback value when the value is set to `null` or `undefined`.
  * @param initialValue The initial value of the state. Defaults to `defaultValue` if omitted.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/states/default-state
  */
 export function defaultState<T>(defaultValue: T, initialValue?: T): DefaultStateReturn<T> {
 	const _default = $state({ current: initialValue ?? defaultValue });
