@@ -1,6 +1,7 @@
-import { onMount } from 'svelte';
-
-type Arrayable<T> = T | T[];
+import { onDestroy } from 'svelte';
+import { BROWSER } from 'esm-env';
+import { defaultWindow } from '../../__internal__/configurable.js';
+import type { Arrayable, CleanupFunction } from '../../__internal__/types.js';
 
 interface InferEventTarget<Events> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,7 +21,6 @@ type HandleEventListenerOptions = AddEventListenerOptions & {
 	 */
 	autoMountAndCleanup?: boolean;
 };
-type CleanupFunction = () => void;
 
 export function handleEventListener<WindowEvent extends keyof WindowEventMap>(
 	event: Arrayable<WindowEvent>,
@@ -98,7 +98,7 @@ export function handleEventListener<
 	listenerOrOptions?: ListenerOrOptions,
 	optionsOrNever?: OptionsOrNever
 ): CleanupFunction {
-	let element: Window | Document | HTMLElement,
+	let element: Window | Document | HTMLElement | undefined,
 		events:
 			| Array<keyof WindowEventMap>
 			| Array<keyof DocumentEventMap>
@@ -108,7 +108,7 @@ export function handleEventListener<
 		autoMountAndCleanup: boolean;
 
 	if (typeof elementOrEvent === 'string' || Array.isArray(elementOrEvent)) {
-		element = typeof window === 'undefined' ? ({} as Window) : window;
+		element = defaultWindow;
 		events = (Array.isArray(elementOrEvent) ? elementOrEvent : [elementOrEvent]) as
 			| Array<keyof WindowEventMap>
 			| Array<keyof DocumentEventMap>
@@ -142,28 +142,21 @@ export function handleEventListener<
 		autoMountAndCleanup = optionsOrNever?.autoMountAndCleanup ?? false;
 	}
 
-	function cleanup() {
-		events.forEach((evt) => {
-			listeners.forEach((listener) => element.removeEventListener(evt, listener, options));
-		});
-	}
-
-	if (!autoMountAndCleanup) {
+	if (BROWSER && element) {
 		events.forEach((evt) => {
 			listeners.forEach((listener) => element.addEventListener(evt, listener, options));
 		});
-	} else {
-		onMount(() => {
-			// Is window
-			if (typeof element === 'object' && Object.keys(element).length === 0) {
-				element = window;
-			}
+	}
 
-			events.forEach((evt) => {
-				listeners.forEach((listener) => element.addEventListener(evt, listener, options));
-			});
+	if (autoMountAndCleanup) {
+		onDestroy(() => {
+			cleanup();
+		});
+	}
 
-			return cleanup;
+	function cleanup() {
+		events.forEach((evt) => {
+			listeners.forEach((listener) => element?.removeEventListener(evt, listener, options));
 		});
 	}
 
