@@ -1,8 +1,17 @@
-import { onMount } from 'svelte';
+import { onDestroy } from 'svelte';
+import { BROWSER } from 'esm-env';
 import { getPermission } from '../get-permission/index.svelte.js';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
+import type { CleanupFunction } from '../../__internal__/types.js';
+import { noop } from '../../__internal__/utils.js';
 
 type GetClipboardOptions<AllowRead extends boolean> = {
+	/**
+	 * Whether to automatically clean up the event listeners or not.
+	 * @note If set to `true`, you must call `getClipboardText` in the component initialization lifecycle.
+	 * @default true
+	 */
+	autoCleanup?: boolean;
 	/**
 	 * Whether to allow reading from the clipboard.
 	 * @default false
@@ -27,6 +36,8 @@ type GetClipboardReturn = {
 	readonly text: string;
 	/** Copies text to the clipboard. */
 	copyText: (value: string) => void;
+	/** Cleans up the event listeners. */
+	cleanup: CleanupFunction;
 };
 
 /**
@@ -37,7 +48,12 @@ type GetClipboardReturn = {
 export function getClipboardText<AllowRead extends boolean = false>(
 	options: GetClipboardOptions<AllowRead> = {}
 ): GetClipboardReturn {
-	const { allowRead = false, copyDuration = 2000, legacyCopy = false } = options;
+	const {
+		autoCleanup = true,
+		allowRead = false,
+		copyDuration = 2000,
+		legacyCopy = false
+	} = options;
 
 	const _isClipboardAPISupported = $derived.by(() => navigator && 'clipboard' in navigator);
 	const _isSupported = $derived.by(() => _isClipboardAPISupported || legacyCopy);
@@ -45,6 +61,17 @@ export function getClipboardText<AllowRead extends boolean = false>(
 	const _writePermission = getPermission('clipboard-write');
 	let _isCopied = $state<boolean>(false);
 	let _text = $state<string>('');
+	let cleanup: CleanupFunction = noop;
+
+	if (BROWSER && _isSupported && allowRead) {
+		cleanup = handleEventListener(['copy', 'cut'], readText);
+	}
+
+	if (autoCleanup) {
+		onDestroy(() => {
+			cleanup();
+		});
+	}
 
 	function copyText(value: string) {
 		if (!_isSupported) return;
@@ -86,12 +113,6 @@ export function getClipboardText<AllowRead extends boolean = false>(
 		return document?.getSelection?.()?.toString() ?? '';
 	}
 
-	onMount(() => {
-		if (!_isSupported || !allowRead) return;
-
-		return handleEventListener(['copy', 'cut'], readText);
-	});
-
 	return {
 		get isSupported() {
 			return _isClipboardAPISupported;
@@ -102,6 +123,7 @@ export function getClipboardText<AllowRead extends boolean = false>(
 		get text() {
 			return _text;
 		},
-		copyText
+		copyText,
+		cleanup
 	};
 }
