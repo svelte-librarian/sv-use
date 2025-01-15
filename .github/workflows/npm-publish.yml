@@ -12,8 +12,11 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                   node-version: 20
-            - run: npm install
-            - run: npm test
+            - name: Test the 'core' package
+              working-directory: ./packages/core
+              run: |
+                  npm install
+                  npm test
 
     publish-npm:
         needs: test
@@ -24,7 +27,10 @@ jobs:
               with:
                   node-version: 20
                   registry-url: https://registry.npmjs.org/
-            - run: npm install
-            - run: npm publish --provenance --access public
+            - name: Publish the 'core' package
+              working-directory: ./packages/core
+              run: |
+                  npm install
+                  npm publish --provenance --access public
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
