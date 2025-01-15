@@ -1,4 +1,4 @@
-import { handleEventListener } from '../../index.js';
+import { handleEventListener } from '../../browser/handle-event-listener/index.svelte.js';
 
 // Custom type because only 1 out of 3 major browsers support it.
 export interface BatteryManager extends EventTarget {
