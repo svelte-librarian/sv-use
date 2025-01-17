@@ -23,6 +23,7 @@ type ObserveMutationReturn = {
  * @param targets The targets to observe.
  * @param callback The callback for when a change is detected.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/observers/observe-mutation
  */
 export function observeMutation(
 	targets: Arrayable<MaybeGetter<HTMLElement | undefined>>,
