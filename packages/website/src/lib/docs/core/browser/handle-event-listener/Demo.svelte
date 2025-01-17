@@ -7,7 +7,9 @@
 	onMount(() => {
 		if (!divNode) return;
 
-		const cleanup = handleEventListener(divNode, 'click', () => console.log('clicked'));
+		const cleanup = handleEventListener(divNode, 'click', () => console.log('clicked'), {
+			autoCleanup: false
+		});
 
 		return () => {
 			cleanup();
