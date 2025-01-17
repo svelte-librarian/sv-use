@@ -1,6 +1,9 @@
 # handleEventListener
 
-Handles the mounting (and, optionally, unmounting) of an event listener.
+Convenience wrapper for event listeners.
+
+Handles mounting and unmounting automatically, unless `options.autoCleanup` is
+set to `false`, in which case the cleanup will have to be done manually.
 
 ## Usage
 
@@ -8,7 +11,7 @@ Handles the mounting (and, optionally, unmounting) of an event listener.
 <script lang="ts">
 	import { handleEventListener } from '@sv-use/core';
 
-	handleEventListener('click', () => console.log('clicked'), { autoMountAndCleanup: true });
+	handleEventListener('click', () => console.log('clicked'));
 </script>
 ```
 

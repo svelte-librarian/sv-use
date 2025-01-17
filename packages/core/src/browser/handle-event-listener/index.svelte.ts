@@ -13,13 +13,12 @@ interface InferEventTarget<Events> {
 type GeneralEventListener<EventType extends Event = Event> = (evt: EventType) => void;
 type HandleEventListenerOptions = AddEventListenerOptions & {
 	/**
-	 * Whether to automatically mount and cleanup the event listener by running it in an `onMount` or not.
+	 * Whether to auto-cleanup the event listeners or not.
 	 *
-	 * Don't use this if you are calling `handleEventListener` outside the component initialization lifecycle. Instead, call it from outside and clean it using the returned function.
-	 *
-	 * @default false
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
 	 */
-	autoMountAndCleanup?: boolean;
+	autoCleanup?: boolean;
 };
 
 export function handleEventListener<WindowEvent extends keyof WindowEventMap>(
@@ -68,7 +67,7 @@ export function handleEventListener<EventType extends Event = Event>(
 
 /**
  * Handles the mounting (and, optionally, unmounting via the {@link HandleEventListenerOptions.autoMountAndCleanup | `autoMountAndCleanup`} option) of an event listener.
- * @returns A cleanup function that can be used to remove the event listener.
+ * @returns A cleanup function to manually remove the event listener.
  * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/handle-event-listener
  */
 export function handleEventListener<
@@ -105,7 +104,7 @@ export function handleEventListener<
 			| Array<keyof HTMLElementEventMap>,
 		listeners: Array<GeneralEventListener>,
 		options: HandleEventListenerOptions,
-		autoMountAndCleanup: boolean;
+		autoCleanup: boolean;
 
 	if (typeof elementOrEvent === 'string' || Array.isArray(elementOrEvent)) {
 		element = defaultWindow;
@@ -123,7 +122,7 @@ export function handleEventListener<
 			once: _options?.once ?? undefined,
 			passive: _options?.passive ?? undefined
 		};
-		autoMountAndCleanup = _options?.autoMountAndCleanup ?? false;
+		autoCleanup = _options?.autoCleanup ?? true;
 	} else {
 		element = elementOrEvent as Window | Document | HTMLElement;
 		events = (Array.isArray(eventOrListener) ? eventOrListener : [eventOrListener]) as
@@ -139,7 +138,7 @@ export function handleEventListener<
 			once: optionsOrNever?.once ?? undefined,
 			passive: optionsOrNever?.passive ?? undefined
 		};
-		autoMountAndCleanup = optionsOrNever?.autoMountAndCleanup ?? false;
+		autoCleanup = optionsOrNever?.autoCleanup ?? true;
 	}
 
 	if (BROWSER && element) {
@@ -148,7 +147,7 @@ export function handleEventListener<
 		});
 	}
 
-	if (autoMountAndCleanup) {
+	if (autoCleanup) {
 		onDestroy(() => {
 			cleanup();
 		});
