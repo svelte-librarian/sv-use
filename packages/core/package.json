@@ -1,6 +1,6 @@
 {
 	"name": "@sv-use/core",
-	"version": "0.48.0",
+	"version": "0.49.0",
 	"license": "MIT",
 	"description": "A collection of Svelte 5 utilities.",
 	"main": "./dist/index.js",
@@ -10,7 +10,13 @@
 	},
 	"keywords": [
 		"svelte",
-		"utilities"
+		"svelte-5",
+		"utilities",
+		"svelte-utilities",
+		"svelte-5-utilities",
+		"svelte-use",
+		"svelteuse",
+		"typescript"
 	],
 	"author": "Sajidur Rahman",
 	"bugs": {
