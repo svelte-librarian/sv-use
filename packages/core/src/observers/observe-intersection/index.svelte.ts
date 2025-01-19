@@ -7,8 +7,16 @@ import {
 } from '../../__internal__/configurable.js';
 import { noop, normalizeValue, notNullish, toArray } from '../../__internal__/utils.js';
 import type { Arrayable, CleanupFunction, Getter } from '../../__internal__/types.js';
+import { onDestroy } from 'svelte';
 
 export interface ObserveIntersectionOptions extends ConfigurableWindow {
+	/**
+	 * Whether to automatically cleanup the observer or not.
+	 *
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
+	 */
+	autoCleanup?: boolean;
 	/**
 	 * Whether to start the IntersectionObserver on creation or not.
 	 * @default true
@@ -82,6 +90,7 @@ export function observeIntersection(
 		root = defaultDocument,
 		rootMargin = '0px',
 		threshold = 0,
+		autoCleanup = true,
 		window = defaultWindow,
 		immediate = true
 	} = options;
@@ -116,6 +125,12 @@ export function observeIntersection(
 			},
 			{ runOnMounted: immediate }
 		);
+	}
+
+	if (autoCleanup) {
+		onDestroy(() => {
+			pause();
+		});
 	}
 
 	function pause() {
