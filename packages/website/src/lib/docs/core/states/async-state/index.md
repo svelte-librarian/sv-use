@@ -24,7 +24,8 @@ A basic example where you wait for the value to be resolved.
 	import { asyncState } from '@sv-use/core';
 
 	const recipe = asyncState(
-		fetch(`https://dummyjson.com/recipes/1`).then((res) => res.json()),
+		fetch(`https://dummyjson.com/recipes/1`)
+            .then((res) => res.json()),
 		null
 	);
 </script>
