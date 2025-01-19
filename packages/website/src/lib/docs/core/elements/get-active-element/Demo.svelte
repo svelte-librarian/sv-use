@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getActiveElement } from '$sv-use/core';
 
-	const activeElement = getActiveElement({ autoMountAndCleanup: true });
+	const activeElement = getActiveElement({ autoCleanup: true });
 	const key = $derived(activeElement.current?.dataset?.id);
 </script>
 
