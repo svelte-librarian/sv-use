@@ -30,3 +30,44 @@ An example using a state that is persisted via local storage :
 
 <span>counter : {counter.current}</span>
 ```
+
+## Best Practices
+
+### Cleanup
+
+Some utilities produce side-effects, such as invoking an event listener. By
+default, they are automatically cleaned up in an `onDestroy` hook.
+
+However, this requires the function to be called in the component
+initialization lifecycle.
+
+To opt out of this, every utility that produces a side-effect returns a cleanup
+function that can be used to clean it manually.
+
+Here is an example using [handleEventListener](/sv-use/docs/core/browser/handle-event-listener) :
+
+```svelte
+<script>
+	import { handleEventListener } from '@sv-use/core';
+
+    // Automatic cleanup
+	handleEventListener('click', () => console.log('clicked'));
+</script>
+```
+
+And how to cleanup manually :
+
+```svelte
+<script>
+	import { handleEventListener } from '@sv-use/core';
+
+	const cleanup = handleEventListener('click', () => {
+        console.log('clicked');
+    }, { autoCleanup: false });
+
+    // ...
+
+    // Manual cleanp
+    cleanup();
+</script>
+```
