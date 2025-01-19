@@ -1,3 +1,4 @@
+import { onDestroy } from 'svelte';
 import { normalizeValue, toArray } from '../../__internal__/utils.js';
 import { isSupported } from '../../__internal__/is.svelte.js';
 import { defaultWindow, type ConfigurableWindow } from '../../__internal__/configurable.js';
@@ -22,6 +23,13 @@ type ResizeObserverCallback = (
 ) => void;
 
 interface ObserveResizeOptions extends ConfigurableWindow {
+	/**
+	 * Whether to automatically cleanup the observer or not.
+	 *
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
+	 */
+	autoCleanup?: boolean;
 	/**
 	 * Sets which box model the observer will observe changes to. Possible values
 	 * are `content-box` (the default), `border-box` and `device-pixel-content-box`.
@@ -76,7 +84,7 @@ export function observeResize(
 	callback: ResizeObserverCallback,
 	options: ObserveResizeOptions = {}
 ): ObserveResizeReturn {
-	const { window = defaultWindow, ...observerOptions } = options;
+	const { autoCleanup = true, window = defaultWindow, ...observerOptions } = options;
 
 	let _observer: ResizeObserver | undefined;
 
@@ -96,6 +104,12 @@ export function observeResize(
 			}
 		}
 	});
+
+	if (autoCleanup) {
+		onDestroy(() => {
+			cleanup();
+		});
+	}
 
 	function cleanup() {
 		if (!_observer) return;
