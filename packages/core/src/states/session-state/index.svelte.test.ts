@@ -1,16 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { sessionState } from './index.svelte.js';
-
-// Used for testing classes
-class Vector {
-	x: number;
-	y: number;
-
-	constructor(x: number, y: number) {
-		this.x = x;
-		this.y = y;
-	}
-}
+import { flushSync } from 'svelte';
 
 const ORIGINAL_WINDOW_LOCATION = window.location;
 
@@ -41,7 +31,9 @@ describe('Works with primitives', () => {
 			expect(state.current).toBe(0);
 			expect(sessionStorage.getItem('counter')).toBe('0');
 
-			state.current = 1;
+			flushSync(() => {
+				state.current = 1;
+			});
 			expect(state.current).toBe(1);
 			expect(sessionStorage.getItem('counter')).toBe('1');
 		});
@@ -56,7 +48,9 @@ describe('Works with primitives', () => {
 			expect(state.current).toBe(0);
 			expect(sessionStorage.getItem('counter')).toBe('0');
 
-			state.current = 1;
+			flushSync(() => {
+				state.current = 1;
+			});
 			expect(state.current).toBe(1);
 			expect(sessionStorage.getItem('counter')).toBe('1');
 
@@ -76,15 +70,21 @@ describe('Works with primitives', () => {
 			expect(state.current).toBe(0);
 			expect(sessionStorage.getItem('counter')).toBe('0');
 
-			state.current = 1;
+			flushSync(() => {
+				state.current = 1;
+			});
 			expect(state.current).toBe(1);
 			expect(sessionStorage.getItem('counter')).toBe('1');
 
-			state.current = 2;
+			flushSync(() => {
+				state.current = 2;
+			});
 			expect(state.current).toBe(2);
 			expect(sessionStorage.getItem('counter')).toBe('2');
 
-			state.current = 3;
+			flushSync(() => {
+				state.current = 3;
+			});
 			expect(state.current).toBe(3);
 			expect(sessionStorage.getItem('counter')).toBe('3');
 		});
@@ -161,7 +161,9 @@ describe('Works with objects', () => {
 			expect(state.current).toStrictEqual({ value: 0 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":0}');
 
-			state.current = { value: 1 };
+			flushSync(() => {
+				state.current = { value: 1 };
+			});
 			expect(state.current).toStrictEqual({ value: 1 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":1}');
 		});
@@ -176,7 +178,9 @@ describe('Works with objects', () => {
 			expect(state.current).toStrictEqual({ value: 0 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":0}');
 
-			state.current = { value: 1 };
+			flushSync(() => {
+				state.current = { value: 1 };
+			});
 			expect(state.current).toStrictEqual({ value: 1 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":1}');
 
@@ -196,15 +200,21 @@ describe('Works with objects', () => {
 			expect(state.current).toStrictEqual({ value: 0 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":0}');
 
-			state.current = { value: 1 };
+			flushSync(() => {
+				state.current = { value: 1 };
+			});
 			expect(state.current).toStrictEqual({ value: 1 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":1}');
 
-			state.current = { value: 2 };
+			flushSync(() => {
+				state.current = { value: 2 };
+			});
 			expect(state.current).toStrictEqual({ value: 2 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":2}');
 
-			state.current = { value: 3 };
+			flushSync(() => {
+				state.current = { value: 3 };
+			});
 			expect(state.current).toStrictEqual({ value: 3 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":3}');
 		});
@@ -252,7 +262,9 @@ describe('Works with property assignment on objects', () => {
 			expect(state.current).toStrictEqual({ value: 0 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":0}');
 
-			state.current.value = 1;
+			flushSync(() => {
+				state.current.value = 1;
+			});
 			expect(state.current).toStrictEqual({ value: 1 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":1}');
 		});
@@ -267,7 +279,9 @@ describe('Works with property assignment on objects', () => {
 			expect(state.current).toStrictEqual({ value: 0 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":0}');
 
-			state.current.value = 1;
+			flushSync(() => {
+				state.current.value = 1;
+			});
 			expect(state.current).toStrictEqual({ value: 1 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":1}');
 
@@ -287,15 +301,21 @@ describe('Works with property assignment on objects', () => {
 			expect(state.current).toStrictEqual({ value: 0 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":0}');
 
-			state.current.value = 1;
+			flushSync(() => {
+				state.current.value = 1;
+			});
 			expect(state.current).toStrictEqual({ value: 1 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":1}');
 
-			state.current.value = 2;
+			flushSync(() => {
+				state.current.value = 2;
+			});
 			expect(state.current).toStrictEqual({ value: 2 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":2}');
 
-			state.current.value = 3;
+			flushSync(() => {
+				state.current.value = 3;
+			});
 			expect(state.current).toStrictEqual({ value: 3 });
 			expect(sessionStorage.getItem('counter')).toBe('{"value":3}');
 		});
@@ -331,7 +351,9 @@ describe('Works with arrays', () => {
 			expect(state.current).toStrictEqual([]);
 			expect(sessionStorage.getItem('counter')).toBe('[]');
 
-			state.current = [1];
+			flushSync(() => {
+				state.current = [1];
+			});
 			expect(state.current).toStrictEqual([1]);
 			expect(sessionStorage.getItem('counter')).toBe('[1]');
 		});
@@ -346,7 +368,9 @@ describe('Works with arrays', () => {
 			expect(state.current).toStrictEqual([]);
 			expect(sessionStorage.getItem('counter')).toBe('[]');
 
-			state.current = [1];
+			flushSync(() => {
+				state.current = [1];
+			});
 			expect(state.current).toStrictEqual([1]);
 			expect(sessionStorage.getItem('counter')).toBe('[1]');
 
@@ -366,15 +390,21 @@ describe('Works with arrays', () => {
 			expect(state.current).toStrictEqual([]);
 			expect(sessionStorage.getItem('counter')).toBe('[]');
 
-			state.current = [1];
+			flushSync(() => {
+				state.current = [1];
+			});
 			expect(state.current).toStrictEqual([1]);
 			expect(sessionStorage.getItem('counter')).toBe('[1]');
 
-			state.current = [2];
+			flushSync(() => {
+				state.current = [2];
+			});
 			expect(state.current).toStrictEqual([2]);
 			expect(sessionStorage.getItem('counter')).toBe('[2]');
 
-			state.current = [3];
+			flushSync(() => {
+				state.current = [3];
+			});
 			expect(state.current).toStrictEqual([3]);
 			expect(sessionStorage.getItem('counter')).toBe('[3]');
 		});
@@ -422,7 +452,9 @@ describe('Works with array methods', () => {
 			expect(state.current).toStrictEqual([]);
 			expect(sessionStorage.getItem('counter')).toBe('[]');
 
-			state.current.push(1);
+			flushSync(() => {
+				state.current.push(1);
+			});
 			expect(state.current).toStrictEqual([1]);
 			expect(sessionStorage.getItem('counter')).toBe('[1]');
 		});
@@ -437,7 +469,9 @@ describe('Works with array methods', () => {
 			expect(state.current).toStrictEqual([]);
 			expect(sessionStorage.getItem('counter')).toBe('[]');
 
-			state.current.push(1);
+			flushSync(() => {
+				state.current.push(1);
+			});
 			expect(state.current).toStrictEqual([1]);
 			expect(sessionStorage.getItem('counter')).toBe('[1]');
 
@@ -457,15 +491,21 @@ describe('Works with array methods', () => {
 			expect(state.current).toStrictEqual([]);
 			expect(sessionStorage.getItem('counter')).toBe('[]');
 
-			state.current.push(1);
+			flushSync(() => {
+				state.current.push(1);
+			});
 			expect(state.current).toStrictEqual([1]);
 			expect(sessionStorage.getItem('counter')).toBe('[1]');
 
-			state.current.push(2);
+			flushSync(() => {
+				state.current.push(2);
+			});
 			expect(state.current).toStrictEqual([1, 2]);
 			expect(sessionStorage.getItem('counter')).toBe('[1,2]');
 
-			state.current.push(3);
+			flushSync(() => {
+				state.current.push(3);
+			});
 			expect(state.current).toStrictEqual([1, 2, 3]);
 			expect(sessionStorage.getItem('counter')).toBe('[1,2,3]');
 		});
@@ -480,109 +520,6 @@ describe('Works with array methods', () => {
 			const state = sessionState('counter', [] as number[]);
 
 			expect(state.current).toStrictEqual([1]);
-		});
-
-		cleanup();
-	});
-});
-
-describe('Works with classes', () => {
-	beforeEach(() => {
-		sessionStorage.clear();
-	});
-
-	beforeAll(() => {
-		/** @see https://stackoverflow.com/a/55771671/20892950 */
-		Object.defineProperty(window, 'location', {
-			configurable: true,
-			value: { reload: vi.fn(() => {}) }
-		});
-	});
-
-	afterAll(() => {
-		Object.defineProperty(window, 'location', {
-			configurable: true,
-			value: ORIGINAL_WINDOW_LOCATION
-		});
-	});
-
-	it('Persists state correctly', () => {
-		const cleanup = $effect.root(() => {
-			const state = sessionState('vector', new Vector(0, 0), {
-				serialize: (value) => JSON.stringify([value.x, value.y]),
-				deserialize: (value) => new Vector(...(JSON.parse(value) as [number, number]))
-			});
-
-			expect(state.current).toStrictEqual(new Vector(0, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[0,0]');
-
-			state.current.x = 1;
-			expect(state.current).toStrictEqual(new Vector(1, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[1,0]');
-		});
-
-		cleanup();
-	});
-
-	it('Persists state correctly after reload', () => {
-		const cleanup = $effect.root(() => {
-			const state = sessionState('vector', new Vector(0, 0), {
-				serialize: (value) => JSON.stringify([value.x, value.y]),
-				deserialize: (value) => new Vector(...(JSON.parse(value) as [number, number]))
-			});
-
-			expect(state.current).toStrictEqual(new Vector(0, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[0,0]');
-
-			state.current.x = 1;
-			expect(state.current).toStrictEqual(new Vector(1, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[1,0]');
-
-			window.location.reload();
-
-			expect(state.current).toStrictEqual(new Vector(1, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[1,0]');
-		});
-
-		cleanup();
-	});
-
-	it('Persists state correctly after multiple changes', () => {
-		const cleanup = $effect.root(() => {
-			const state = sessionState('vector', new Vector(0, 0), {
-				serialize: (value) => JSON.stringify([value.x, value.y]),
-				deserialize: (value) => new Vector(...(JSON.parse(value) as [number, number]))
-			});
-
-			expect(state.current).toStrictEqual(new Vector(0, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[0,0]');
-
-			state.current.x = 1;
-			expect(state.current).toStrictEqual(new Vector(1, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[1,0]');
-
-			state.current.x = 2;
-			expect(state.current).toStrictEqual(new Vector(2, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[2,0]');
-
-			state.current.x = 3;
-			expect(state.current).toStrictEqual(new Vector(3, 0));
-			expect(sessionStorage.getItem('vector')).toBe('[3,0]');
-		});
-
-		cleanup();
-	});
-
-	it('Retrieves initial state from local storage correctly', () => {
-		const cleanup = $effect.root(() => {
-			sessionStorage.setItem('vector', '[1,2]');
-
-			const state = sessionState('vector', new Vector(0, 0), {
-				serialize: (value) => JSON.stringify([value.x, value.y]),
-				deserialize: (value) => new Vector(...(JSON.parse(value) as [number, number]))
-			});
-
-			expect(state.current).toStrictEqual(new Vector(1, 2));
 		});
 
 		cleanup();

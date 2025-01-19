@@ -30,27 +30,9 @@ export function sessionState<T>(key: string, value: T, options: SessionStateOpti
 		}
 	}
 
-	const handler: ProxyHandler<{ current: T }> = {
-		get(target: Record<string, unknown>, key: string) {
-			if (
-				target &&
-				typeof target === 'object' &&
-				typeof target[key] === 'object' &&
-				target[key] !== null
-			) {
-				return new Proxy(target[key], handler);
-			} else {
-				return target[key];
-			}
-		},
-		set(target: Record<string, unknown>, proxyKey: string, proxyValue: unknown) {
-			target[proxyKey] = proxyValue;
+	$effect(() => {
+		sessionStorage.setItem(key, serialize(_state.current));
+	});
 
-			sessionStorage.setItem(key, serialize(_state.current));
-
-			return true;
-		}
-	};
-
-	return new Proxy(_state, handler);
+	return _state;
 }
