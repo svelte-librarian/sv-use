@@ -40,6 +40,11 @@ export interface ObserveIntersectionReturn {
 	resume: () => void;
 	/** Pauses the observer. It can also be used to cleanup the observer. */
 	pause: () => void;
+	/**
+	 * Cleans up the observer.
+	 * @note Alias for `pause`.
+	 */
+	cleanup: () => void;
 }
 
 /**
@@ -113,6 +118,11 @@ export function observeIntersection(
 		);
 	}
 
+	function pause() {
+		cleanup();
+		_isActive = false;
+	}
+
 	return {
 		get isSupported() {
 			return _isSupported.current;
@@ -120,10 +130,8 @@ export function observeIntersection(
 		get isActive() {
 			return _isActive;
 		},
-		pause() {
-			cleanup();
-			_isActive = false;
-		},
+		pause,
+		cleanup: pause,
 		resume() {
 			_isActive = true;
 		}
