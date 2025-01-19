@@ -1,4 +1,4 @@
-import { onMount } from 'svelte';
+import { BROWSER } from 'esm-env';
 
 type GetFpsOptions = {
 	/** Re-calculate the frames per second every `x` frames. */
@@ -20,25 +20,25 @@ export function getFps(options: GetFpsOptions = {}): GetFpsReturn {
 	let last = performance.now();
 	let ticks = 0;
 
-	onMount(() => {
-		const callback = () => {
-			ticks += 1;
+	if (BROWSER) {
+		window.requestAnimationFrame(callback);
+	}
 
-			if (ticks >= every) {
-				const now = performance.now();
-				const delta = now - last;
+	function callback() {
+		ticks += 1;
 
-				_fps = Math.round(1000 / (delta / ticks));
+		if (ticks >= every) {
+			const now = performance.now();
+			const delta = now - last;
 
-				last = now;
-				ticks = 0;
-			}
+			_fps = Math.round(1000 / (delta / ticks));
 
-			window.requestAnimationFrame(callback);
-		};
+			last = now;
+			ticks = 0;
+		}
 
 		window.requestAnimationFrame(callback);
-	});
+	}
 
 	return {
 		get current() {
