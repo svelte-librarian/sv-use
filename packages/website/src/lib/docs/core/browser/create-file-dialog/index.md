@@ -13,6 +13,8 @@ files that are currently held.
 </script>
 ```
 
+### Examples
+
 ```svelte
 <script lang="ts">
 	import { createFileDialog } from '@sv-use/core';
