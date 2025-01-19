@@ -10,7 +10,7 @@ capabilities as well as access to the histories.
 
 ```svelte
 <script lang="ts">
-	import { trackHistory } from '$sv-use/core';
+	import { trackHistory } from '@sv-use/core';
 
 	let counter = $state(0);
 	const counterHistory = trackHistory(
