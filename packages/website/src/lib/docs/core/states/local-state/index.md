@@ -11,5 +11,5 @@ A state that is synced with local storage.
 	const counter = localState('counter', 0);
 </script>
 
-<span>counter : {counter}</span>
+<span>counter : {counter.current}</span>
 ```
