@@ -17,7 +17,7 @@ type GetDocumentVisibilityReturn = {
 	readonly current: DocumentVisibilityState;
 	/**
 	 * Cleans up the event listener.
-	 * @note Called automatically if {@link GetDocumentVisibilityOptions.autoCleanup | `GetDocumentVisibilityOptions.autoCleanup`} is `true`.
+	 * @note Is called automatically if `options.autoCleanup` is `true`.
 	 */
 	cleanup: CleanupFunction;
 };
@@ -31,21 +31,21 @@ export function getDocumentVisibility(
 ): GetDocumentVisibilityReturn {
 	const { autoCleanup = true } = options;
 
-	const _state = $state<{ current: DocumentVisibilityState }>({ current: 'visible' });
 	let cleanup: CleanupFunction = noop;
+	let _current = $state<DocumentVisibilityState>('visible');
 
 	if (BROWSER) {
 		cleanup = handleEventListener(
 			document,
 			'visibilitychange',
-			() => (_state.current = document.visibilityState),
-			{ autoMountAndCleanup: autoCleanup }
+			() => (_current = document.visibilityState),
+			{ autoCleanup }
 		);
 	}
 
 	return {
 		get current() {
-			return _state.current;
+			return _current;
 		},
 		cleanup
 	};
