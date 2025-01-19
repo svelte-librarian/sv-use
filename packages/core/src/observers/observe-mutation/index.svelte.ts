@@ -3,8 +3,17 @@ import { isSupported } from '../../__internal__/is.svelte.js';
 import { defaultWindow, type ConfigurableWindow } from '../../__internal__/configurable.js';
 import { normalizeValue, notNullish, toArray } from '../../__internal__/utils.js';
 import type { Arrayable, CleanupFunction, MaybeGetter } from '../../__internal__/types.js';
+import { onDestroy } from 'svelte';
 
-interface ObserveMutationOptions extends MutationObserverInit, ConfigurableWindow {}
+interface ObserveMutationOptions extends MutationObserverInit, ConfigurableWindow {
+	/**
+	 * Whether to automatically cleanup the observer or not.
+	 *
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
+	 */
+	autoCleanup?: boolean;
+}
 
 type ObserveMutationReturn = {
 	/**
@@ -12,11 +21,27 @@ type ObserveMutationReturn = {
 	 * @see https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver#browser_compatibility
 	 */
 	readonly isSupported: boolean;
-	/** A function to cleanup the observer. */
+	/**
+	 * A function to cleanup the observer.
+	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
+	 */
 	cleanup: CleanupFunction;
 	/** Empties the record queue and returns what was in there. */
 	takeRecords: () => void;
 };
+
+/**
+ * Watch for changes being made to the DOM tree.
+ * @param targets The target to observe.
+ * @param callback The callback for when a change is detected.
+ * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/observers/observe-mutation
+ */
+export function observeMutation(
+	target: MaybeGetter<HTMLElement | undefined>,
+	callback: MutationCallback,
+	options?: ObserveMutationOptions
+): ObserveMutationReturn;
 
 /**
  * Watch for changes being made to the DOM tree.
@@ -26,11 +51,17 @@ type ObserveMutationReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/observers/observe-mutation
  */
 export function observeMutation(
+	targets: Array<MaybeGetter<HTMLElement | undefined>>,
+	callback: MutationCallback,
+	options?: ObserveMutationOptions
+): ObserveMutationReturn;
+
+export function observeMutation(
 	targets: Arrayable<MaybeGetter<HTMLElement | undefined>>,
 	callback: MutationCallback,
 	options: ObserveMutationOptions = {}
 ): ObserveMutationReturn {
-	const { window = defaultWindow, ...mutationOptions } = options;
+	const { autoCleanup = true, window = defaultWindow, ...mutationOptions } = options;
 
 	let _observer: MutationObserver | undefined;
 
@@ -51,6 +82,12 @@ export function observeMutation(
 		},
 		{ runOnMounted: true }
 	);
+
+	if (autoCleanup) {
+		onDestroy(() => {
+			cleanup();
+		});
+	}
 
 	function takeRecords() {
 		return _observer?.takeRecords();
