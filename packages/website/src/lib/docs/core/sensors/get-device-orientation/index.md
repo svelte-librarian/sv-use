@@ -11,13 +11,4 @@ device running the web page.
 
 	const deviceOrientation = getDeviceOrientation();
 </script>
-
-{#if deviceOrientation.isSupported}
-	<span>isAbsolute : {deviceOrientation.isAbsolute}</span>
-	<span>alpha : {deviceOrientation.alpha}</span>
-	<span>beta : {deviceOrientation.beta}</span>
-	<span>gamma : {deviceOrientation.gamma}</span>
-{:else}
-	<p>Your browser doesn't support the `DeviceOrientationEvent` event :(</p>
-{/if}
 ```
