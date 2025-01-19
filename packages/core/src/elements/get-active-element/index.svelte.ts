@@ -1,14 +1,16 @@
+import { onDestroy } from 'svelte';
 import { BROWSER } from 'esm-env';
 import { handleEventListener } from '../../browser/index.js';
+import type { CleanupFunction } from '../../__internal__/types.js';
 
-type GetActiveElementOptions<AutoMountAndCleanup extends boolean> = {
+type GetActiveElementOptions = {
 	/**
 	 * Whether to automatically cleanup the event listener or not.
 	 *
-	 * Don't use this if you are calling `getActiveElement` outside the component initialization lifecycle. Instead, use the `cleanup` function that is returned.
-	 * @default false
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
 	 */
-	autoMountAndCleanup?: AutoMountAndCleanup;
+	autoCleanup?: boolean;
 	/**
 	 * Whether to search for the active element inside shadow DOM or not.
 	 * @default true
@@ -19,50 +21,50 @@ type GetActiveElementOptions<AutoMountAndCleanup extends boolean> = {
 type GetActiveElementReturn = {
 	/** The current active element or `null`. */
 	readonly current: HTMLElement | null;
-};
-
-type GetActiveElementReturnWithCleanup = GetActiveElementReturn & {
-	/** The function to cleanup the event listener. */
+	/**
+	 * The function to cleanup the event listener.
+	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
+	 */
 	cleanup: () => void;
 };
 
-export function getActiveElement(): GetActiveElementReturnWithCleanup;
-export function getActiveElement<AutoMountAndCleanup extends boolean = false>(
-	options: GetActiveElementOptions<AutoMountAndCleanup>
-): AutoMountAndCleanup extends true ? GetActiveElementReturn : GetActiveElementReturnWithCleanup;
-
 /**
+ * Returns the element within the DOM that currently has focus.
  * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/get-active-element
  */
-export function getActiveElement<AutoMountAndCleanup extends boolean = false>(
-	options: GetActiveElementOptions<AutoMountAndCleanup> = {}
-): GetActiveElementReturn | GetActiveElementReturnWithCleanup {
-	const { autoMountAndCleanup = false, searchInShadow = true } = options;
+export function getActiveElement(options: GetActiveElementOptions = {}): GetActiveElementReturn {
+	const { autoCleanup = true, searchInShadow = true } = options;
 
-	let activeElement = $state<HTMLElement | null>(null);
-	const cleanups: Array<() => void> = [];
+	const cleanups: CleanupFunction[] = [];
+	let _current = $state<HTMLElement | null>(null);
 
 	if (BROWSER) {
 		cleanups.push(
-			handleEventListener(window, 'blur', onBlur, { autoMountAndCleanup, capture: true })
+			handleEventListener('blur', onBlur, { autoCleanup, capture: true }),
+			handleEventListener('focus', onFocus, { autoCleanup, capture: true })
 		);
-		cleanups.push(
-			handleEventListener(window, 'focus', onFocus, { autoMountAndCleanup, capture: true })
-		);
+	}
+
+	if (autoCleanup) {
+		onDestroy(() => {
+			cleanup();
+		});
 	}
 
 	function getDeepActiveElement() {
 		let element = document?.activeElement;
+
 		if (searchInShadow) {
 			while (element?.shadowRoot) {
 				element = element?.shadowRoot?.activeElement;
 			}
 		}
+
 		return element;
 	}
 
 	function onFocus() {
-		activeElement = getDeepActiveElement() as HTMLElement | null;
+		_current = getDeepActiveElement() as HTMLElement | null;
 	}
 
 	function onBlur(event: FocusEvent) {
@@ -71,21 +73,14 @@ export function getActiveElement<AutoMountAndCleanup extends boolean = false>(
 		onFocus();
 	}
 
-	if (autoMountAndCleanup) {
-		return {
-			get current() {
-				return activeElement;
-			},
-			cleanup() {}
-		};
-	} else {
-		return {
-			get current() {
-				return activeElement;
-			},
-			cleanup() {
-				cleanups.forEach((cleanup) => cleanup());
-			}
-		};
+	function cleanup() {
+		cleanups.forEach((fn) => fn());
 	}
+
+	return {
+		get current() {
+			return _current;
+		},
+		cleanup
+	};
 }
