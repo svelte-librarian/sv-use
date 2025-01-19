@@ -11,5 +11,5 @@ A state that is synced with session storage.
 	const counter = sessionState('counter', 0);
 </script>
 
-<span>counter : {counter}</span>
+<span>counter : {counter.current}</span>
 ```
