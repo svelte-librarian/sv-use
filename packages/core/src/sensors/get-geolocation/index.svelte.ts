@@ -1,5 +1,18 @@
+import { onDestroy } from 'svelte';
+
 interface GetGeolocationOptions extends Partial<PositionOptions> {
-	startImmediately?: boolean;
+	/**
+	 * Whether to auto-cleanup the geolocation service or not.
+	 *
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
+	 */
+	autoCleanup?: boolean;
+	/**
+	 * Whether to start the geolocation service on creation or not.
+	 * @default true
+	 */
+	immediate?: boolean;
 }
 
 type GetGeolocationReturn = {
@@ -12,8 +25,13 @@ type GetGeolocationReturn = {
 	readonly error: GeolocationPositionError | null;
 	/** Resumes the geolocation service. */
 	resume: () => void;
-	/** Pauses the geolocation service. */
+	/** Pauses the geolocation service. Can also be used to cleanup the geolocation service. */
 	pause: () => void;
+	/**
+	 * Cleans up the geolocation service.
+	 * @note Alias for `pause`.
+	 */
+	cleanup: () => void;
 };
 
 /**
@@ -28,7 +46,8 @@ export function getGeolocation(options: GetGeolocationOptions = {}): GetGeolocat
 		enableHighAccuracy = true,
 		maximumAge = 30000,
 		timeout = 27000,
-		startImmediately = true
+		autoCleanup = true,
+		immediate = true
 	} = options;
 
 	const _isSupported = $derived.by(() => navigator && 'geolocation' in navigator);
@@ -45,33 +64,37 @@ export function getGeolocation(options: GetGeolocationOptions = {}): GetGeolocat
 	let _timestamp = $state<number>(0);
 	let _error = $state<GeolocationPositionError | null>(null);
 
+	if (immediate) {
+		resume();
+	}
+
+	if (autoCleanup) {
+		onDestroy(() => pause());
+	}
+
 	function resume() {
-		if (_isSupported) {
-			_watcherId = navigator.geolocation.watchPosition(
-				(position) => {
-					_coords = position.coords;
-					_timestamp = Date.now();
-				},
-				(error) => {
-					_error = error;
-				},
-				{
-					enableHighAccuracy: enableHighAccuracy,
-					maximumAge: maximumAge,
-					timeout: timeout
-				}
-			);
-		}
+		if (!_isSupported) return;
+
+		_watcherId = navigator.geolocation.watchPosition(
+			(position) => {
+				_coords = position.coords;
+				_timestamp = Date.now();
+			},
+			(error) => {
+				_error = error;
+			},
+			{
+				enableHighAccuracy: enableHighAccuracy,
+				maximumAge: maximumAge,
+				timeout: timeout
+			}
+		);
 	}
 
 	function pause() {
-		if (_isSupported && _watcherId) {
-			navigator.geolocation.clearWatch(_watcherId);
-		}
-	}
+		if (!_isSupported || !_watcherId) return;
 
-	if (startImmediately) {
-		resume();
+		navigator.geolocation.clearWatch(_watcherId);
 	}
 
 	return {
@@ -88,6 +111,7 @@ export function getGeolocation(options: GetGeolocationOptions = {}): GetGeolocat
 			return _error;
 		},
 		resume,
-		pause
+		pause,
+		cleanup: pause
 	};
 }
