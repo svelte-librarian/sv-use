@@ -1,48 +1,37 @@
+import { onDestroy } from 'svelte';
 import { handleEventListener } from '../../browser/index.js';
 import { defaultWindow, type ConfigurableWindow } from '../../__internal__/configurable.js';
 import type { CleanupFunction } from '../../__internal__/types.js';
 
-interface HasLeftPageOptions<AutoCleanup extends boolean> extends ConfigurableWindow {
+interface HasLeftPageOptions extends ConfigurableWindow {
 	/**
-	 * Whether to automatically clean up the event listener or not.
-	 * @note If set to `true`, you must call {@link hasLeftPage | `hasLeftPage`} in the component initialization lifecycle.
+	 * Whether to automatically clean up the event listeners or not.
+	 *
+	 * If set to `true`, it must run in the component initialization lifecycle.
 	 * @default true
 	 */
-	autoCleanup?: AutoCleanup;
+	autoCleanup?: boolean;
 }
 
 type HasLeftPageReturn = {
 	readonly current: boolean;
-};
-
-type HasLeftPageReturnWithCleanup = HasLeftPageReturn & {
+	/**
+	 * Cleans up the event listeners.
+	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
+	 */
 	cleanup: CleanupFunction;
 };
 
 /**
  * Whether the mouse has left the page or not.
- * @note You can only run this in the component initialization lifecycle, unless you set {@link HasLeftPageOptions.autoCleanup | `autoCleanup`} to `false`.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/has-left-page
- */
-export function hasLeftPage(): HasLeftPageReturn;
-
-/**
- * Whether the mouse has left the page or not.
- * @note You can only run this in the component initialization lifecycle, unless you set {@link HasLeftPageOptions.autoCleanup | `autoCleanup`} to `false`.
  * @param options Additional options to customize the behavior.
  * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/has-left-page
  */
-export function hasLeftPage<AutoCleanup extends boolean>(
-	options: HasLeftPageOptions<AutoCleanup>
-): AutoCleanup extends true ? HasLeftPageReturn : HasLeftPageReturnWithCleanup;
-
-export function hasLeftPage<AutoCleanup extends boolean>(
-	options: HasLeftPageOptions<AutoCleanup> = {}
-): HasLeftPageReturn | HasLeftPageReturnWithCleanup {
+export function hasLeftPage(options: HasLeftPageOptions = {}): HasLeftPageReturn {
 	const { autoCleanup = true, window = defaultWindow } = options;
 
 	const cleanups: CleanupFunction[] = [];
-	const _hasLeft = $state({ current: false });
+	let _current = $state(false);
 
 	const handler = (event: MouseEvent) => {
 		if (!window) return;
@@ -51,36 +40,34 @@ export function hasLeftPage<AutoCleanup extends boolean>(
 		// @ts-expect-error missing types
 		const from = event.relatedTarget || event.toElement;
 
-		_hasLeft.current = !from;
+		_current = !from;
 	};
 
 	if (window) {
 		cleanups.push(
 			handleEventListener(window, 'mouseout', handler, {
-				passive: true,
-				autoMountAndCleanup: autoCleanup
+				autoCleanup,
+				passive: true
 			}),
 			handleEventListener(document, ['mouseleave', 'mouseenter'], handler, {
-				passive: true,
-				autoMountAndCleanup: autoCleanup
+				autoCleanup,
+				passive: true
 			})
 		);
 	}
 
 	if (autoCleanup) {
-		return {
-			get current() {
-				return _hasLeft.current;
-			}
-		};
-	} else {
-		return {
-			get current() {
-				return _hasLeft.current;
-			},
-			cleanup() {
-				cleanups.forEach((cleanup) => cleanup());
-			}
-		};
+		onDestroy(() => cleanup());
 	}
+
+	function cleanup() {
+		cleanups.forEach((cleanup) => cleanup());
+	}
+
+	return {
+		get current() {
+			return _current;
+		},
+		cleanup
+	};
 }
