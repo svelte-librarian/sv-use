@@ -11,9 +11,4 @@ Get the last time the reactive value changed. It is returned as a number in mill
 	let value = $state(0);
 	const lastChanged = getLastChanged(() => value);
 </script>
-
-<div>
-	<span>Value : {value}</span>
-	<span>Last changed : {lastChanged.current}</span>
-</div>
 ```
