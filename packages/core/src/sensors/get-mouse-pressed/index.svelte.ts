@@ -1,5 +1,7 @@
+import { onDestroy } from 'svelte';
 import { handleEventListener } from '../../browser/index.js';
 import { defaultWindow } from '../../__internal__/configurable.js';
+import type { CleanupFunction } from '../../__internal__/types.js';
 
 type GetMousePressedPressAndReleaseEvent<
 	EnableTouch extends boolean,
@@ -14,10 +16,17 @@ type GetMousePressedPressAndReleaseEvent<
 
 type GetMousePressedOptions<EnableTouch extends boolean, EnableDrag extends boolean> = {
 	/**
+	 * Whether to auto-cleanup the event listeners or not.
+	 *
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
+	 */
+	autoCleanup?: boolean;
+	/**
 	 * Only trigger if the click happened inside `target`.
 	 * @default window
 	 */
-	target?: HTMLElement;
+	target?: Window | HTMLElement;
 	/**
 	 * Whether to detect touch events or not.
 	 * @default true
@@ -30,10 +39,12 @@ type GetMousePressedOptions<EnableTouch extends boolean, EnableDrag extends bool
 	enableDrag?: EnableDrag;
 	/**
 	 * Callback for when the mouse/tap is pressed.
+	 * @default () => {}
 	 */
 	onPressed?: (event: GetMousePressedPressAndReleaseEvent<EnableTouch, EnableDrag>) => void;
 	/**
 	 * Callback for when the mouse/tap is released.
+	 * @default () => {}
 	 */
 	onReleased?: (event: GetMousePressedPressAndReleaseEvent<EnableTouch, EnableDrag>) => void;
 };
@@ -43,6 +54,11 @@ type GetMousePressedType = 'mouse' | 'touch' | null;
 type GetMousePressedReturn = {
 	readonly isPressed: boolean;
 	readonly type: GetMousePressedType;
+	/**
+	 * Cleans up the event listeners.
+	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
+	 */
+	cleanup: CleanupFunction;
 };
 
 /**
@@ -55,6 +71,7 @@ export function getMousePressed<
 	EnableDrag extends boolean = true
 >(options: GetMousePressedOptions<EnableTouch, EnableDrag> = {}): GetMousePressedReturn {
 	const {
+		autoCleanup = true,
 		target = defaultWindow,
 		enableTouch = true,
 		enableDrag = true,
@@ -62,34 +79,61 @@ export function getMousePressed<
 		onReleased = () => {}
 	} = options;
 
+	const cleanups: CleanupFunction[] = [];
+
 	let _isPressed = $state(false);
 	let _type = $state<GetMousePressedType>(null);
 
 	if (target) {
-		handleEventListener<MouseEvent>(target, 'mousedown', _onPressed('mouse'), {
-			passive: true
-		});
+		cleanups.push(
+			handleEventListener<MouseEvent>(target, 'mousedown', _onPressed('mouse'), {
+				passive: true
+			}),
 
-		handleEventListener<MouseEvent>(window, 'mouseleave', _onReleased, { passive: true });
-		handleEventListener<MouseEvent>(window, 'mouseup', _onReleased, { passive: true });
+			handleEventListener<MouseEvent>(window, 'mouseleave', _onReleased, {
+				autoCleanup,
+				passive: true
+			}),
+			handleEventListener<MouseEvent>(window, 'mouseup', _onReleased, {
+				autoCleanup,
+				passive: true
+			})
+		);
 
 		if (enableDrag) {
-			handleEventListener<DragEvent>(target, 'dragstart', _onPressed('mouse'), {
-				passive: true
-			});
+			cleanups.push(
+				handleEventListener<DragEvent>(target, 'dragstart', _onPressed('mouse'), {
+					passive: true
+				}),
 
-			handleEventListener<DragEvent>(window, 'drop', _onReleased, { passive: true });
-			handleEventListener<DragEvent>(window, 'dragend', _onReleased, { passive: true });
+				handleEventListener<DragEvent>(window, 'drop', _onReleased, { autoCleanup, passive: true }),
+				handleEventListener<DragEvent>(window, 'dragend', _onReleased, {
+					autoCleanup,
+					passive: true
+				})
+			);
 		}
 
 		if (enableTouch) {
-			handleEventListener<TouchEvent>(target, 'touchstart', _onPressed('touch'), {
-				passive: true
-			});
+			cleanups.push(
+				handleEventListener<TouchEvent>(target, 'touchstart', _onPressed('touch'), {
+					passive: true
+				}),
 
-			handleEventListener<TouchEvent>(window, 'touchend', _onReleased, { passive: true });
-			handleEventListener<TouchEvent>(window, 'touchcancel', _onReleased, { passive: true });
+				handleEventListener<TouchEvent>(window, 'touchend', _onReleased, {
+					autoCleanup,
+					passive: true
+				}),
+				handleEventListener<TouchEvent>(window, 'touchcancel', _onReleased, {
+					autoCleanup,
+					passive: true
+				})
+			);
 		}
+	}
+
+	if (autoCleanup) {
+		onDestroy(() => cleanup());
 	}
 
 	function _onPressed(type: GetMousePressedType) {
@@ -110,12 +154,17 @@ export function getMousePressed<
 		onReleased(event);
 	}
 
+	function cleanup() {
+		cleanups.forEach((fn) => fn());
+	}
+
 	return {
 		get isPressed() {
 			return _isPressed;
 		},
 		get type() {
 			return _type;
-		}
+		},
+		cleanup
 	};
 }
