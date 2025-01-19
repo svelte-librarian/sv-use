@@ -10,7 +10,4 @@ Retrieves information about the mouse.
 
 	const mouse = getMouse();
 </script>
-
-<span>x : {mouse.x}</span>
-<span>y : {mouse.y}</span>
 ```
