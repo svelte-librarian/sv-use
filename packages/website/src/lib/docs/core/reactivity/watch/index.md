@@ -63,28 +63,3 @@ this in the options.
 	);
 </script>
 ```
-
-## Caveats
-
-There are some caveats to watch out for (no pun intended...) when using the
-`watch` utility that are listed down below.
-
-### Objects And Arrays
-
-If you want to watch changes in objects or arrays, you must wrap the state
-in `$state.snapshot`. This allows for tracking deep changes.
-
-```svelte
-<script lang="ts">
-	import { watch } from '@sv-use/core';
-
-	let counter = $state({ value: 0 });
-
-	watch(
-		() => $state.snapshot(counter),
-		(curr, prev) => {
-			console.log(`Went from ${prev} to ${curr}`);
-		}
-	);
-</script>
-```

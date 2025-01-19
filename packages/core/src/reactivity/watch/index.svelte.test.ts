@@ -104,7 +104,7 @@ describe('Runs on mount', () => {
 				const counter = $state({ value: 0 });
 
 				watch(
-					() => $state.snapshot(counter),
+					() => counter,
 					() => callback()
 				);
 
@@ -125,7 +125,7 @@ describe('Runs on mount', () => {
 				const counter = $state({ value: 0 });
 
 				watch(
-					() => $state.snapshot(counter),
+					() => counter,
 					() => callback()
 				);
 
@@ -198,7 +198,7 @@ describe('Runs on mount', () => {
 				const counter = $state([0]);
 
 				watch(
-					() => $state.snapshot(counter),
+					() => counter,
 					() => callback()
 				);
 
@@ -219,7 +219,7 @@ describe('Runs on mount', () => {
 				const counter = $state([0]);
 
 				watch(
-					() => $state.snapshot(counter),
+					() => counter,
 					() => callback()
 				);
 
