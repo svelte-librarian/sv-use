@@ -1,4 +1,7 @@
+import { onDestroy } from 'svelte';
 import { handleEventListener } from '../../browser/handle-event-listener/index.svelte.js';
+import { noop } from '../../__internal__/utils.js';
+import type { CleanupFunction } from '../../__internal__/types.js';
 
 // Custom type because only 1 out of 3 major browsers support it.
 export interface BatteryManager extends EventTarget {
@@ -12,6 +15,16 @@ type NavigatorWithBattery = Navigator & {
 	getBattery: () => Promise<BatteryManager>;
 };
 
+type GetBatteryOptions = {
+	/**
+	 * Whether to auto-cleanup the event listener or not.
+	 *
+	 * If set to `true`, it must run in the component initialization lifecycle.
+	 * @default true
+	 */
+	autoCleanup?: boolean;
+};
+
 type GetBatteryReturn = {
 	/** Whether the {@link https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API | Battery Status API} is supported by the browser or not. */
 	readonly isSupported: boolean;
@@ -23,15 +36,24 @@ type GetBatteryReturn = {
 	readonly dischargingTime: number;
 	/** The system's battery charge level scaled to a value between 0.0 and 1.0. */
 	readonly level: number;
+	/**
+	 * Cleans up the event listeners.
+	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
+	 */
+	cleanup: CleanupFunction;
 };
 
 /**
  * Retrieves information about the battery.
- * @note The {@link https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API | Battery Status API} is not supported by all browsers.
  * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-battery
  */
-export function getBattery(): GetBatteryReturn {
+export function getBattery(options: GetBatteryOptions = {}): GetBatteryReturn {
+	const { autoCleanup = true } = options;
+
 	const events = ['chargingchange', 'chargingtimechange', 'dischargingtimechange', 'levelchange'];
+
+	let battery: BatteryManager;
+	let cleanup: CleanupFunction = noop;
 
 	const _isSupported = $derived.by(() => navigator && 'getBattery' in navigator);
 	let _charging = $state<number>(0);
@@ -39,14 +61,19 @@ export function getBattery(): GetBatteryReturn {
 	let _dischargingTime = $state<number>(0);
 	let _level = $state<number>(1);
 
-	let battery: BatteryManager;
-
 	if (_isSupported) {
 		(navigator as NavigatorWithBattery).getBattery().then((_battery) => {
 			battery = _battery;
 			updateBatteryInfo.call(battery);
-			handleEventListener(battery, events, updateBatteryInfo, { passive: true });
+			cleanup = handleEventListener(battery, events, updateBatteryInfo, {
+				autoCleanup,
+				passive: true
+			});
 		});
+	}
+
+	if (autoCleanup) {
+		onDestroy(() => cleanup());
 	}
 
 	function updateBatteryInfo(this: BatteryManager) {
@@ -71,6 +98,7 @@ export function getBattery(): GetBatteryReturn {
 		},
 		get level() {
 			return _level;
-		}
+		},
+		cleanup
 	};
 }
