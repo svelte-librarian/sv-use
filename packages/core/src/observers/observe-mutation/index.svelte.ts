@@ -1,4 +1,4 @@
-import { watch } from '../../reactivity/watch/index.svelte.js';
+import { watch } from '../../lifecycle/watch/index.svelte.js';
 import { isSupported } from '../../__internal__/is.svelte.js';
 import { defaultWindow, type ConfigurableWindow } from '../../__internal__/configurable.js';
 import { normalizeValue, notNullish, toArray } from '../../__internal__/utils.js';

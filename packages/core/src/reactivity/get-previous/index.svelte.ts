@@ -1,4 +1,4 @@
-import { watch } from '../watch/index.svelte.js';
+import { watch } from '../../lifecycle/watch/index.svelte.js';
 
 type GetPreviousReturn<T> = {
 	current: T;

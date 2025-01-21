@@ -1,4 +1,4 @@
-import { watch } from '../../reactivity/watch/index.svelte.js';
+import { watch } from '../../lifecycle/index.js';
 import { isSupported } from '../../__internal__/is.svelte.js';
 import {
 	defaultDocument,
