@@ -10,6 +10,7 @@ export default defineConfig({
 		: undefined,
 	test: {
 		environment: 'jsdom',
-		include: ['src/**/*.{test,spec}.{js,ts}']
+		include: ['src/**/*.{test,spec}.{js,ts}'],
+		setupFiles: ['./tests/pointer-event-polyfill.ts']
 	}
 });
