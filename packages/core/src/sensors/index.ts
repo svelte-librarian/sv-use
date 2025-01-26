@@ -9,3 +9,4 @@ export * from './get-mouse-pressed/index.svelte.js';
 export * from './get-network/index.svelte.js';
 export * from './has-left-page/index.svelte.js';
 export * from './on-click-outside/index.svelte.js';
+export * from './on-long-press/index.svelte.js';
