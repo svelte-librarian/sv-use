@@ -185,7 +185,12 @@ export function createDropZone(
 	}
 
 	return {
-		files,
+		get files() {
+			return files;
+		},
+		set files(v) {
+			files = v;
+		},
 		get isOver() {
 			return isOver;
 		},
