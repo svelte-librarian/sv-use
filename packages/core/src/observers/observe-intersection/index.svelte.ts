@@ -5,7 +5,7 @@ import {
 	defaultWindow,
 	type ConfigurableWindow
 } from '../../__internal__/configurable.js';
-import { noop, normalizeValue, notNullish, toArray } from '../../__internal__/utils.js';
+import { noop, normalizeValue, notNullish, toArray } from '../../__internal__/utils.svelte.js';
 import type { Arrayable, CleanupFunction, Getter } from '../../__internal__/types.js';
 import { onDestroy } from 'svelte';
 

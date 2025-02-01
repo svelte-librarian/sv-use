@@ -1,5 +1,5 @@
 import { handleEventListener } from '../../browser/index.js';
-import { noop, normalizeValue, toArray } from '../../__internal__/utils.js';
+import { noop, normalizeValue, toArray } from '../../__internal__/utils.svelte.js';
 import type { CleanupFunction, MaybeGetter } from '../../__internal__/types.js';
 import { untrack } from 'svelte';
 

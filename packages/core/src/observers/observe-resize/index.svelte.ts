@@ -1,5 +1,5 @@
 import { onDestroy } from 'svelte';
-import { normalizeValue, toArray } from '../../__internal__/utils.js';
+import { normalizeValue, toArray } from '../../__internal__/utils.svelte.js';
 import { isSupported } from '../../__internal__/is.svelte.js';
 import { defaultWindow, type ConfigurableWindow } from '../../__internal__/configurable.js';
 import type { Arrayable, CleanupFunction, MaybeGetter } from '../../__internal__/types.js';

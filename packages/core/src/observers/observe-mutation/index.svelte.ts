@@ -1,7 +1,7 @@
 import { watch } from '../../lifecycle/watch/index.svelte.js';
 import { isSupported } from '../../__internal__/is.svelte.js';
 import { defaultWindow, type ConfigurableWindow } from '../../__internal__/configurable.js';
-import { normalizeValue, notNullish, toArray } from '../../__internal__/utils.js';
+import { normalizeValue, notNullish, toArray } from '../../__internal__/utils.svelte.js';
 import type { Arrayable, CleanupFunction, MaybeGetter } from '../../__internal__/types.js';
 import { onDestroy } from 'svelte';
 

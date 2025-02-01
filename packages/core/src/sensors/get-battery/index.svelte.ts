@@ -1,6 +1,6 @@
 import { onDestroy } from 'svelte';
 import { handleEventListener } from '../../browser/handle-event-listener/index.svelte.js';
-import { noop } from '../../__internal__/utils.js';
+import { noop } from '../../__internal__/utils.svelte.js';
 import type { CleanupFunction } from '../../__internal__/types.js';
 
 // Custom type because only 1 out of 3 major browsers support it.

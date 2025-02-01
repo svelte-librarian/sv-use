@@ -3,7 +3,7 @@ import { BROWSER } from 'esm-env';
 import { getPermission } from '../get-permission/index.svelte.js';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
 import type { CleanupFunction } from '../../__internal__/types.js';
-import { noop } from '../../__internal__/utils.js';
+import { noop } from '../../__internal__/utils.svelte.js';
 
 type GetClipboardOptions<AllowRead extends boolean> = {
 	/**
