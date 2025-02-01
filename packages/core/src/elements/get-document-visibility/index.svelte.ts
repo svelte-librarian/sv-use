@@ -32,7 +32,7 @@ export function getDocumentVisibility(
 	const { autoCleanup = true, document = defaultDocument } = options;
 
 	let cleanup: CleanupFunction = noop;
-	let _current = $state<DocumentVisibilityState>('visible');
+	let _current = $state<DocumentVisibilityState>(document?.visibilityState ?? 'visible');
 
 	if (document) {
 		cleanup = handleEventListener(
