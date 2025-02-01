@@ -22,7 +22,7 @@ type ResizeObserverCallback = (
 	observer: ResizeObserver
 ) => void;
 
-interface ObserveResizeOptions extends ConfigurableWindow {
+export interface ObserveResizeOptions extends ConfigurableWindow {
 	/**
 	 * Whether to automatically cleanup the observer or not.
 	 *
