@@ -150,7 +150,6 @@ export function createDropZone(
 
 		switch (eventType) {
 			case 'enter':
-				console.log(event);
 				counter += 1;
 				isOver = true;
 				onEnter(event);
