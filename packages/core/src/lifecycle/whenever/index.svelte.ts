@@ -1,5 +1,5 @@
 import type { Arrayable, Getter } from '../../__internal__/types.js';
-import { normalizeValue, toArray } from '../../__internal__/utils.js';
+import { normalizeValue, toArray } from '../../__internal__/utils.svelte.js';
 
 type WheneverOptions = {
 	/**

@@ -1,5 +1,5 @@
 import { handleEventListener } from '../../browser/handle-event-listener/index.svelte.js';
-import { noop } from '../../__internal__/utils.js';
+import { noop } from '../../__internal__/utils.svelte.js';
 import { defaultDocument, type ConfigurableDocument } from '../../__internal__/configurable.js';
 import type { CleanupFunction } from '../../__internal__/types.js';
 
@@ -38,7 +38,10 @@ export function getDocumentVisibility(
 		cleanup = handleEventListener(
 			document,
 			'visibilitychange',
-			() => (_current = document.visibilityState),
+			() => {
+				console.log('change', document.visibilityState);
+				_current = document.visibilityState;
+			},
 			{ autoCleanup }
 		);
 	}

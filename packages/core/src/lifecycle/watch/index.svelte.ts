@@ -4,7 +4,7 @@
  */
 
 import { untrack } from 'svelte';
-import { normalizeValue } from '../../__internal__/utils.js';
+import { normalizeValue } from '../../__internal__/utils.svelte.js';
 import type { Arrayable, Getter } from '../../__internal__/types.js';
 
 type WatchOptions<RunOnMounted extends boolean> = {

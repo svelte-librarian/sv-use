@@ -1,7 +1,7 @@
 import { onDestroy } from 'svelte';
 import { BROWSER } from 'esm-env';
 import { handleEventListener } from '../../browser/index.js';
-import { noop } from '../../__internal__/utils.js';
+import { noop } from '../../__internal__/utils.svelte.js';
 import type { CleanupFunction } from '../../__internal__/types.js';
 
 type GetMouseOptions = {

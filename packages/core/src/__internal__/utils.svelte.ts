@@ -18,3 +18,13 @@ export function normalizeValue<T>(v: T | Getter<T>): T {
 export function notNullish<T>(v: T | null | undefined): v is T {
 	return v !== null && v !== undefined;
 }
+
+export function asyncEffectRoot(cb: () => Promise<void>) {
+	let promise: Promise<void>;
+
+	const cleanup = $effect.root(() => {
+		promise = cb();
+	});
+
+	return () => promise.finally(cleanup);
+}

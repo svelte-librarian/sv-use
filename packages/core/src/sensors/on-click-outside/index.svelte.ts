@@ -1,5 +1,5 @@
 import { handleEventListener } from '../../browser/index.js';
-import { toArray } from '../../__internal__/utils.js';
+import { toArray } from '../../__internal__/utils.svelte.js';
 import { defaultWindow, type ConfigurableWindow } from '../../__internal__/configurable.js';
 import type { Arrayable, CleanupFunction, Getter } from '../../__internal__/types.js';
 import { onDestroy } from 'svelte';

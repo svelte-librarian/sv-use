@@ -1,6 +1,6 @@
 import { onDestroy } from 'svelte';
 import { handleEventListener } from '../../browser/index.js';
-import { noop, normalizeValue } from '../../__internal__/utils.js';
+import { noop, normalizeValue } from '../../__internal__/utils.svelte.js';
 import type { CleanupFunction, MaybeGetter } from '../../__internal__/types.js';
 
 type Position = {
