@@ -1,9 +1,9 @@
-import { BROWSER } from 'esm-env';
 import { handleEventListener } from '../../browser/handle-event-listener/index.svelte.js';
 import { noop } from '../../__internal__/utils.js';
+import { defaultDocument, type ConfigurableDocument } from '../../__internal__/configurable.js';
 import type { CleanupFunction } from '../../__internal__/types.js';
 
-interface GetDocumentVisibilityOptions {
+interface GetDocumentVisibilityOptions extends ConfigurableDocument {
 	/**
 	 * Whether to auto-cleanup the event listener or not.
 	 *
@@ -29,12 +29,12 @@ type GetDocumentVisibilityReturn = {
 export function getDocumentVisibility(
 	options: GetDocumentVisibilityOptions = {}
 ): GetDocumentVisibilityReturn {
-	const { autoCleanup = true } = options;
+	const { autoCleanup = true, document = defaultDocument } = options;
 
 	let cleanup: CleanupFunction = noop;
 	let _current = $state<DocumentVisibilityState>('visible');
 
-	if (BROWSER) {
+	if (document) {
 		cleanup = handleEventListener(
 			document,
 			'visibilitychange',
