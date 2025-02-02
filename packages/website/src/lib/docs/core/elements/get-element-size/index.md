@@ -12,7 +12,6 @@ Tracks the size of an element using the [Resize Observer API](https://developer.
 	import { getElementSize } from '@sv-use/core';
 
 	let el = $state();
-
 	const size = getElementSize(() => el);
 </script>
 

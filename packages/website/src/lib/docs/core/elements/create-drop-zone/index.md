@@ -17,12 +17,10 @@ Creates a zone where files can be dropped.
 	const dropZone = createDropZone(() => container, {
         allowedDataTypes: 'image/*',
         multiple: true,
-        onDrop
+        onDrop(files: File[] | null) {
+            // Called when files are dropped in the drop zone
+        }
     });
-	
-    function onDrop(files: File[] | null) {
-        // Called when files are dropped in the drop zone
-    }
 </script>
 
 <div bind:this={container}>

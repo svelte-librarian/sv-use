@@ -6,7 +6,7 @@ device running the web page.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getDeviceOrientation } from '@sv-use/core';
 
 	const deviceOrientation = getDeviceOrientation();

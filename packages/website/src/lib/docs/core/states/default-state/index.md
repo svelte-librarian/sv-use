@@ -10,9 +10,13 @@ A reactive state that falls back to `defaultValue` if set to `null` or `undefine
 > This is to ensure that you can set a nullable value when changing the state without TS complaining.
 
 ```svelte
-<script lang="ts">
+<script>
     import { defaultState } from "@sv-use/core";
 
     const message = defaultState("fallback message", "initial message");
+
+    message.current = "Hello, World!";
+
+    message.current = null; // message is now "fallback message"
 </script>
 ```

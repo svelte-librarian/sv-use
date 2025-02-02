@@ -5,7 +5,7 @@ Provides information about the system's battery charge level and lets you be not
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getBattery } from '@sv-use/core';
 
 	const battery = getBattery();

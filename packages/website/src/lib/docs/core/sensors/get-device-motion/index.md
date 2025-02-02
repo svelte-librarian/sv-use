@@ -6,7 +6,7 @@ rotation rate.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getDeviceMotion } from '@sv-use/core';
 
 	const deviceMotion = getDeviceMotion();

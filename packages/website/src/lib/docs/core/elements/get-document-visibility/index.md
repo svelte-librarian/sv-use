@@ -8,7 +8,7 @@ minimized window, or is otherwise not visible to the user.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getDocumentVisibility } from '@sv-use/core';
 
 	const documentVisibility = getDocumentVisibility();

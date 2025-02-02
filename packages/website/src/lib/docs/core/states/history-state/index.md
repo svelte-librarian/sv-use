@@ -9,7 +9,7 @@ capabilities as well as access to the histories.
 > If you prefer to have them separate, check out [trackHistory](/sv-use/docs/core/reactivity/track-history).
 
 ```svelte
-<script lang="ts">
+<script>
 	import { historyState } from '@sv-use/core';
 
 	const counter = historyState(0);
@@ -19,7 +19,7 @@ capabilities as well as access to the histories.
 ## Examples
 
 ```svelte
-<script lang="ts">
+<script>
 	import { historyState } from '@sv-use/core';
 
 	const counter = historyState(0);

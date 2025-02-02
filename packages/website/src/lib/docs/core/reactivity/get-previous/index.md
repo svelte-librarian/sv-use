@@ -12,7 +12,7 @@ It is set to `undefined` until the first change if `initial` is not set.
 > It supplies the previous value in the callback.
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getPrevious } from '@sv-use/core';
 
 	let counter = $state(0);

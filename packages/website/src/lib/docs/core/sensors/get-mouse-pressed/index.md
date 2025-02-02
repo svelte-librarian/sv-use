@@ -5,7 +5,7 @@ Reactive values for mouse/touch/drag pressing state.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getMousePressed } from '@sv-use/core';
 
 	const mousePressed = getMousePressed();

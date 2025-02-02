@@ -9,7 +9,7 @@ information.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getGeolocation } from '@sv-use/core';
 
 	const geolocation = getGeolocation();

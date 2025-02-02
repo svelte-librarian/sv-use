@@ -15,7 +15,5 @@ Runs a callback when a long press occurs on a given element.
     });
 </script>
 
-<button bind:this={el}>
-    Long press
-</button>
+<button bind:this={el}>Long press</button>
 ```
