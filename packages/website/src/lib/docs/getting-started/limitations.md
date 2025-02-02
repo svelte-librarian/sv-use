@@ -13,7 +13,7 @@ reactivity.
 So, instead of doing this :
 
 ```svelte
-<script lang="ts">
+<script>
 	import { localState } from '@sv-use/core';
 
 	const { current } = localState('counter', 0);
@@ -25,7 +25,7 @@ So, instead of doing this :
 Do this :
 
 ```svelte
-<script lang="ts">
+<script>
 	import { localState } from '@sv-use/core';
 
 	const counter = localState('counter', 0);
@@ -47,7 +47,7 @@ To avoid this, you have to pass a getter function :
 
 ```svelte
 <!-- Incorrect -->
-<script lang="ts">
+<script>
 	import { getLastChanged } from '@sv-use/core';
 
 	let value = $state(0);
@@ -55,7 +55,7 @@ To avoid this, you have to pass a getter function :
 </script>
 
 <!-- Correct -->
-<script lang="ts">
+<script>
 	import { getLastChanged } from '@sv-use/core';
 
 	let value = $state(0);
@@ -75,13 +75,15 @@ However, to undo/redo, the value of the state must be modified. This is where
 the setter function comes into play.
 
 ```svelte
-<script lang="ts">
-	import { trackHistory } from '$sv-use/core';
+<script>
+	import { trackHistory } from '@sv-use/core';
 
 	let counter = $state(0);
 	const counterHistory = trackHistory(
-		() => counter, // Getter function to retrieve the value
-		(v) => (counter = v) // Setter function to set the value
+        // Getter function to retrieve the value
+		() => counter,
+        // Setter function to set the value    
+		(v) => (counter = v)
 	);
 </script>
 ```

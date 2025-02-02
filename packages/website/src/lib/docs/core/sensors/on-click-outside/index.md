@@ -5,10 +5,10 @@ Runs a callback when a click occurs outside the target element.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { onClickOutside } from '@sv-use/core';
 
-	let divNode = $state<HTMLDivElement>();
+	let divNode = $state();
 
 	onClickOutside(() => divNode, (event) => {
         console.log('outside');

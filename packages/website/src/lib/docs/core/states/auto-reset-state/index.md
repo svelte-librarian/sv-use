@@ -5,7 +5,7 @@ A state that automatically resets to the default value after a delay.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { autoResetState } from '@sv-use/core';
 
 	const message = autoResetState('This is the default message', 3000);

@@ -17,7 +17,5 @@ You can also pass a callback that is called when the element is being hovered.
     });
 </script>
 
-<div bind:this={el}>
-    hover me
-</div>
+<div bind:this={el}>hover me</div>
 ```

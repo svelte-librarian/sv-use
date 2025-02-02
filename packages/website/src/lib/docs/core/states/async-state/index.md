@@ -5,11 +5,12 @@ A reactive state that handles the loading and error states of a promise.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { asyncState } from '@sv-use/core';
 
 	const recipe = asyncState(
-		fetch(`https://dummyjson.com/recipes/1`).then((res) => res.json()),
+		fetch(`https://dummyjson.com/recipes/1`)
+            .then((res) => res.json()),
 		null
 	);
 </script>
@@ -20,7 +21,7 @@ A reactive state that handles the loading and error states of a promise.
 A basic example where you wait for the value to be resolved.
 
 ```svelte
-<script lang="ts">
+<script>
 	import { asyncState } from '@sv-use/core';
 
 	const recipe = asyncState(
@@ -42,19 +43,14 @@ A more advanced usage where the recipe is fetched again when the `id` changes an
 Note that you have to set `immediate` to `false` if you are using a function that depends on arguments for the promise parameter, and then manually call the `execute` function.
 
 ```svelte
-<script lang="ts">
+<script>
 	import { asyncState } from '@sv-use/core';
 
 	let id = $state(1);
-	const recipe = asyncState(
-		(id: number) => {
-			return fetch(`https://dummyjson.com/recipes/${id}`).then((res) => res.json());
-		},
-		null,
-		{
-			immediate: false
-		}
-	);
+	const recipe = asyncState((id) => {
+        return fetch(`https://dummyjson.com/recipes/${id}`)
+                .then((res) => res.json());
+    }, null, { immediate: false });
 
 	$effect(() => {
 		recipe.execute(id);

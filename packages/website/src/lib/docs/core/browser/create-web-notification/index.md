@@ -5,11 +5,13 @@ Configure and display desktop notifications to the user.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { createWebNotification } from '@sv-use/core';
 
 	const notification = createWebNotification();
 </script>
 
-<button onclick={() => notification.show()}>Show notification</button>
+<button onclick={notification.show}>
+    Show notification
+</button>
 ```

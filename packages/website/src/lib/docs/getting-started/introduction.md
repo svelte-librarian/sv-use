@@ -22,7 +22,7 @@ You can simply import the utility you need from `@sv-use/core` and use it.
 An example using a state that is persisted via local storage :
 
 ```svelte
-<script lang="ts">
+<script>
 	import { localState } from '@sv-use/core';
 
 	const counter = localState('counter', 0);

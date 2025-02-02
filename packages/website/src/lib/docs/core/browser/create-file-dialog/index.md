@@ -1,12 +1,11 @@
 # createFileDialog
 
-Creates a file dialog to interact with programatically. Provides access to the
-files that are currently held.
+Creates a file dialog to interact with programatically.
 
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { createFileDialog } from '@sv-use/core';
 
 	const dialog = createFileDialog();
@@ -16,7 +15,7 @@ files that are currently held.
 ### Examples
 
 ```svelte
-<script lang="ts">
+<script>
 	import { createFileDialog } from '@sv-use/core';
 
 	const dialog = createFileDialog({
@@ -31,26 +30,25 @@ files that are currently held.
 	});
 </script>
 
-<div class="relative flex w-full flex-col gap-2">
-	<button onclick={dialog.open} class="rounded-md bg-svelte px-3 py-1 text-white">
-		Open file dialog
-	</button>
-	<button
-		onclick={dialog.reset}
-		disabled={dialog.files.length === 0}
-		class="rounded-md bg-svelte px-3 py-1 text-white disabled:cursor-not-allowed disabled:opacity-50"
-	>
-		Reset
-	</button>
-	<div class="flex flex-col gap-5">
-		Selected Files ({dialog.files.length})
-		<ul>
-			{#each dialog.files as file (file.name)}
-				<li>{file.name}</li>
-			{:else}
-				<p class="italic">Empty...</p>
-			{/each}
-		</ul>
-	</div>
+<button onclick={dialog.open}>
+    Open file dialog
+</button>
+<button
+    onclick={dialog.reset}
+    disabled={dialog.files.length === 0}
+>
+    Reset
+</button>
+<div class="flex flex-col gap-5">
+    <span>Selected Files ({dialog.files.length})</span>
+    {#if dialog.files}
+        <ul>
+            {#each dialog.files as file (file.name)}
+                <li>{file.name}</li>
+            {/each}
+        </ul>
+    {:else}
+        <p>No files detected</p>
+    {/if}
 </div>
 ```

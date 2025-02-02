@@ -9,7 +9,7 @@ capabilities as well as access to the histories.
 > If you prefer to have them combined, check out [historyState](/sv-use/docs/core/states/history-state).
 
 ```svelte
-<script lang="ts">
+<script>
 	import { trackHistory } from '@sv-use/core';
 
 	let counter = $state(0);

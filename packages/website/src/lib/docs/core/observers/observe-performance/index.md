@@ -8,7 +8,7 @@ the entry types that have been registered.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { observePerformance } from '@sv-use/core';
 
 	observePerformance((list) => {

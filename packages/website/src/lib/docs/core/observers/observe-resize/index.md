@@ -12,13 +12,10 @@ It can also watch multiple elements if given an array of elements.
 
 	let el = $state();
 
-	observeResize(
-		() => el,
-		(entries) => {
-			const { width, height } = entries[0].contentRect;
-            console.log(`New width : ${width} | New height : ${height}`);
-		}
-	);
+	observeResize(() => el, (entries) => {
+        const { width, height } = entries[0].contentRect;
+        console.log(`New width : ${width} | New height : ${height}`);
+    });
 </script>
 
 <textarea bind:this={el} style="resize: both;"></textarea>

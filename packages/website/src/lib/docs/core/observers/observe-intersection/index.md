@@ -11,17 +11,12 @@ Runs a callback when the targets are visible on the screen.
     let divNode = $state();
     let isVisible = $state(false);
 
-    observeIntersection(
-        () => divNode,
-        ([entry], _mutationObserver) => {
-            isVisible = entry?.isIntersecting || false;
-        }
-    );
+    observeIntersection(() => divNode, ([entry]) => {
+        isVisible = entry?.isIntersecting || false;
+    });
 </script>
 
-<div class="relative w-full h-[200%]">
-    <div bind:this={divNode}>
-        i'm the target element
-    </div>
+<div bind:this={divNode}>
+    i'm the target element
 </div>
 ```

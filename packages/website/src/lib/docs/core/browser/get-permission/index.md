@@ -5,7 +5,7 @@ Retrieves the status of a given permission.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getPermission } from '@sv-use/core';
 
 	const permission = getPermission('camera');

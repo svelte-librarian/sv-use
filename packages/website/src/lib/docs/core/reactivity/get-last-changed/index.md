@@ -5,7 +5,7 @@ Get the last time the reactive value changed. It is returned as a number in mill
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getLastChanged } from '@sv-use/core';
 
 	let value = $state(0);

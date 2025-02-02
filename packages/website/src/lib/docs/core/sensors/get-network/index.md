@@ -6,7 +6,7 @@ the network.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getNetwork } from '@sv-use/core';
 
 	const network = getNetwork();

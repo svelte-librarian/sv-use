@@ -5,7 +5,7 @@ Gets the current active element in the DOM.
 ## Usage
 
 ```svelte
-<script lang="ts">
+<script>
 	import { getActiveElement } from '@sv-use/core';
 
 	const activeElement = getActiveElement();

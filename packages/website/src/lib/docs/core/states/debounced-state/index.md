@@ -8,7 +8,7 @@ A reactive state that updates its value after a delay.
 > If you'd rather have them separate, check out [debounce](/sv-use/docs/core/reactivity/debounce).
 
 ```svelte
-<script lang="ts">
+<script>
 	import { debouncedState } from '@sv-use/core';
 
 	const search = debouncedState('', { delay: 1000 });
