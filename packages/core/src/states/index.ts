@@ -5,3 +5,4 @@ export * from './default-state/index.svelte.js';
 export * from './history-state/index.svelte.js';
 export * from './local-state/index.svelte.js';
 export * from './session-state/index.svelte.js';
+export * from './throttled-state/index.svelte.js';
