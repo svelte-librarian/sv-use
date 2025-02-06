@@ -1,3 +1,4 @@
+export * from './create-speech-recognition/index.svelte.js';
 export * from './get-battery/index.svelte.js';
 export * from './get-device-motion/index.svelte.js';
 export * from './get-device-orientation/index.svelte.js';
