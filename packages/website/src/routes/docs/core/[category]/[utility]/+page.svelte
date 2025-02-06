@@ -32,7 +32,7 @@
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
-	<h1 class="mb-5 text-3xl font-semibold">{data.title}</h1>
+	<h1 class="mb-5 break-words text-2xl font-semibold lg:text-3xl">{data.title}</h1>
 	<div class="relative mb-10 mt-5 grid w-full grid-cols-[100px_auto] gap-5">
 		<span>Category</span>
 		<span>{toTitleCase($page.params.category)}</span>
@@ -53,7 +53,7 @@
 	<details
 		bind:open={showTypeDefinitions}
 		id="type-definitions-container"
-		class="flex flex-col items-start gap-5"
+		class="relative flex w-full flex-col items-start gap-5"
 	>
 		<summary id="type-definitions" class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16">
 			Type definitions
@@ -134,6 +134,11 @@
 		width: 100%;
 		color: #ffffff;
 		margin-bottom: 1.25rem;
+	}
+
+	/* https://stackoverflow.com/a/79221450/20892950 */
+	:global(#type-definitions-container[open]::details-content) {
+		display: contents;
 	}
 
 	:global(#type-definitions-container pre) {
