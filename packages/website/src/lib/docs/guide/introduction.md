@@ -44,7 +44,7 @@ initialization lifecycle.
 To opt out of this, every utility that produces a side-effect returns a cleanup
 function that can be used to clean it manually.
 
-Here is an example using [handleEventListener](/sv-use/docs/core/browser/handle-event-listener) :
+Here is an example using [handleEventListener](/sv-use/docs/core/handle-event-listener) :
 
 ```svelte
 <script>
