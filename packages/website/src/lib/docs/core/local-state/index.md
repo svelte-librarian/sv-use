@@ -1,5 +1,5 @@
 ---
-category: State
+category: state
 ---
 
 # localState

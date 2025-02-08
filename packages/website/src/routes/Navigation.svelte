@@ -3,11 +3,6 @@
 	import { theme } from '$lib/contexts/theme.svelte.js';
 	import { cn } from '$utils/cn.js';
 	import ThemeHandler from './ThemeHandler.svelte';
-
-	const githubLogoSrc = $derived.by(() => {
-		const name = theme.current === 'light' ? 'dark' : 'light';
-		return `${base}/logos/github/${name}.svg`;
-	});
 </script>
 
 <nav

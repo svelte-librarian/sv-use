@@ -1,5 +1,5 @@
 ---
-category: Observers
+category: observers
 ---
 
 # observeMutation

@@ -1,5 +1,5 @@
 ---
-category: Elements
+category: elements
 ---
 
 # isWindowFocused
