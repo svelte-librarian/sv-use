@@ -1,7 +1,7 @@
 /**
  * Get the last time a state changed.
  * @param value The state to track as a getter function.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/reactivity/get-last-changed
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-last-changed
  */
 export function getLastChanged<T>(value: () => T) {
 	let _lastChanged = $state<number>(0);

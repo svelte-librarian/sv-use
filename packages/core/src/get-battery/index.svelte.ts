@@ -45,7 +45,7 @@ type GetBatteryReturn = {
 
 /**
  * Retrieves information about the battery.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-battery
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-battery
  */
 export function getBattery(options: GetBatteryOptions = {}): GetBatteryReturn {
 	const { autoCleanup = true } = options;

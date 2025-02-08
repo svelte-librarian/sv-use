@@ -75,7 +75,7 @@ type OnLongPressModifiers = {
  * @param handler The callback to execute.
  * @param options Additional options to customize the behavior.
  * @returns A cleanup function.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/on-long-press
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/on-long-press
  */
 export function onLongPress(
 	target: MaybeGetter<HTMLElement | null | undefined>,

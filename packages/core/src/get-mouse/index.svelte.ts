@@ -39,7 +39,7 @@ type GetMouseReturn = {
 /**
  * Retrieves information about the mouse.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-mouse
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-mouse
  */
 export function getMouse(options: GetMouseOptions = {}): GetMouseReturn {
 	const { autoCleanup = true, initial = { x: 0, y: 0 }, onMove = noop } = options;

@@ -33,7 +33,7 @@ type GetDeviceOrientationReturn = {
 
 /**
  * Provides web developers with information from the physical orientation of the device running the web page.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-device-orientation
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-device-orientation
  */
 export function getDeviceOrientation(
 	options: GetDeviceOrientationOptions = {}

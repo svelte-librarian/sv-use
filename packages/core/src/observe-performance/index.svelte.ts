@@ -80,7 +80,7 @@ interface ObservePerformanceReturn {
  * Observes performance metrics.
  * @param callback The callback for when performance entry events are recorded.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/observers/observe-performance
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/observe-performance
  */
 export function observePerformance(
 	callback: PerformanceObserverCallback,

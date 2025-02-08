@@ -39,7 +39,7 @@ type CreateDropZoneReturn = {
  * Creates a zone where files can be dropped.
  * @param target The element that acts as the drop zone.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/create-drop-zone
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/create-drop-zone
  */
 export function createDropZone(
 	target: MaybeGetter<HTMLElement | null | undefined>,

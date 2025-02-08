@@ -68,7 +68,7 @@ export function handleEventListener<EventType extends Event = Event>(
 /**
  * Handles the mounting (and, optionally, unmounting via the {@link HandleEventListenerOptions.autoMountAndCleanup | `autoMountAndCleanup`} option) of an event listener.
  * @returns A cleanup function to manually remove the event listener.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/handle-event-listener
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/handle-event-listener
  */
 export function handleEventListener<
 	ElementOrEvent extends

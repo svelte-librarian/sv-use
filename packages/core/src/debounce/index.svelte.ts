@@ -12,7 +12,7 @@ type DebounceOptions = {
  * Debounces the update of the value after a delay.
  * @param initial The reactive value as a getter.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/reactivity/debounce
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/debounce
  */
 export function debounce<T>(value: () => T, options: DebounceOptions = {}) {
 	const { delay = 1000 } = options;

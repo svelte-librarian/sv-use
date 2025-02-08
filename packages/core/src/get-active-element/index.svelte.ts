@@ -30,7 +30,7 @@ type GetActiveElementReturn = {
 
 /**
  * Returns the element within the DOM that currently has focus.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/get-active-element
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-active-element
  */
 export function getActiveElement(options: GetActiveElementOptions = {}): GetActiveElementReturn {
 	const { autoCleanup = true, searchInShadow = true } = options;

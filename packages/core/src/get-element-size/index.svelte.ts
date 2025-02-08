@@ -26,7 +26,7 @@ type GetElementSizeReturn = {
  * Tracks the size of an element.
  * @param element The element to track.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/get-element-size
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-element-size
  */
 export function getElementSize(
 	element: MaybeGetter<HTMLElement | undefined>,

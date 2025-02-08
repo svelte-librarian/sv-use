@@ -25,7 +25,7 @@ type IsWindowFocusedReturn = {
 /**
  * Tracks whether the window is focused or not.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/is-window-focused
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/is-window-focused
  */
 export function isWindowFocused(options: IsWindowFocusedOptions = {}): IsWindowFocusedReturn {
 	const { window = defaultWindow, autoCleanup = true } = options;

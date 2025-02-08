@@ -64,7 +64,7 @@ type GetMousePressedReturn = {
 /**
  * Reactive values for mouse/touch/drag pressing state.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-mouse-pressed
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-mouse-pressed
  */
 export function getMousePressed<
 	EnableTouch extends boolean = true,

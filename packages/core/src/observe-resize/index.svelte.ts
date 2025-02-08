@@ -58,7 +58,7 @@ type ObserveResizeReturn = {
  * @param target The target to watch.
  * @param callback The callback for when an element's dimensions changes.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/observers/observe-resize
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/observe-resize
  */
 export function observeResize(
 	target: MaybeGetter<HTMLElement | undefined>,
@@ -71,7 +71,7 @@ export function observeResize(
  * @param targets The targets to watch.
  * @param callback The callback for when an element's dimensions changes.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/observers/observe-resize
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/observe-resize
  */
 export function observeResize(
 	targets: Array<MaybeGetter<HTMLElement | undefined>>,

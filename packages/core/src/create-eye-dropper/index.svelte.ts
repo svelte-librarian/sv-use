@@ -38,7 +38,7 @@ type CreateEyeDropperReturn = {
 
 /**
  * Provides a mechanism for creating an eye dropper tool.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/create-eye-dropper
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/create-eye-dropper
  */
 export function createEyeDropper(options: CreateEyeDropperOptions = {}): CreateEyeDropperReturn {
 	const { initialValue = undefined, window = defaultWindow } = options;

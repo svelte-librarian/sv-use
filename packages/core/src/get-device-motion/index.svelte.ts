@@ -44,7 +44,7 @@ type GetDeviceMotionReturn = {
 
 /**
  * Provides information about the device's motion, including acceleration and rotation rate.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-device-motion
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-device-motion
  */
 export function getDeviceMotion(options: GetDeviceMotionOptions = {}): GetDeviceMotionReturn {
 	const { autoCleanup = true } = options;

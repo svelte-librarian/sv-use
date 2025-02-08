@@ -43,7 +43,7 @@ type CreateFileDialogReturn = {
 /**
  * Creates a file dialog to interact with programatically.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/create-file-dialog
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/create-file-dialog
  */
 export function createFileDialog(options: CreateFileDialogOptions = {}): CreateFileDialogReturn {
 	const {

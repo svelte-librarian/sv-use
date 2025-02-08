@@ -57,7 +57,7 @@ type CreateSpeechRecognitionReturn = {
 /**
  * Reactive controller interface for the recognition service.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/create-speech-recognition
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/create-speech-recognition
  */
 export function createSpeechRecognition(
 	options: CreateSpeechRecognitionOptions = {}

@@ -26,7 +26,7 @@ type OnHoverReturn = {
  * Tracks whether the given element is hovered or not.
  * @param element The element on which to detect the hover.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/on-hover
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/on-hover
  */
 export function onHover(
 	element: MaybeGetter<HTMLElement | null | undefined>,
@@ -38,7 +38,7 @@ export function onHover(
  * @param element The element on which to detect the hover.
  * @param callback The callback to run if the element is hovered.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/on-hover
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/on-hover
  */
 export function onHover(
 	element: MaybeGetter<HTMLElement | null | undefined>,

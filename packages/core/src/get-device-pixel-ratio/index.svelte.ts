@@ -28,7 +28,7 @@ type GetDevicePixelRatioReturn = {
 
 /**
  * Returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-device-pixel-ratio
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-device-pixel-ratio
  */
 export function getDevicePixelRatio(
 	options: GetDevicePixelRatioOptions = {}

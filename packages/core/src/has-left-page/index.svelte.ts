@@ -25,7 +25,7 @@ type HasLeftPageReturn = {
 /**
  * Whether the mouse has left the page or not.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/has-left-page
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/has-left-page
  */
 export function hasLeftPage(options: HasLeftPageOptions = {}): HasLeftPageReturn {
 	const { autoCleanup = true, window = defaultWindow } = options;

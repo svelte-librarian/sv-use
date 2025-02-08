@@ -10,7 +10,7 @@ type GetFpsReturn = {
 };
 
 /**
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/get-fps
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-fps
  */
 export function getFps(options: GetFpsOptions = {}): GetFpsReturn {
 	const { every = 10 } = options;

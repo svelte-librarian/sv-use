@@ -29,7 +29,7 @@ export type TrackHistoryReturn<T> = {
  * @param value The value to track.
  * @param set The setter function to update the value.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/reactivity/track-history
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/track-history
  */
 export function trackHistory<T>(
 	value: Getter<T>,

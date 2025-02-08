@@ -41,7 +41,7 @@ export function getPermission<ExposeControls extends boolean = false>(
 
 /**
  * Retrieves the status of a given permission.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/get-permission
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-permission
  */
 export function getPermission<ExposeControls extends boolean>(
 	nameOrDesc: ExtendedPermissionName | ExtendedPermissionDescriptor,

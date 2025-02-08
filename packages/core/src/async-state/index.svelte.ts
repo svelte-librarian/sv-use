@@ -49,7 +49,7 @@ type AsyncStateReturn<Data = unknown, Parameters extends unknown[] = unknown[]> 
  * @param promise The promise to handle.
  * @param initial The initial value of the state.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/states/async-state
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/async-state
  */
 export function asyncState<Data = unknown, Parameters extends unknown[] = unknown[]>(
 	promise: Promise<Data> | ((...args: Parameters) => Promise<Data>),

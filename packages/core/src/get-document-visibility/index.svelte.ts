@@ -24,7 +24,7 @@ type GetDocumentVisibilityReturn = {
 
 /**
  * Whether the document is visible or not.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/elements/get-document-visibility
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/get-document-visibility
  */
 export function getDocumentVisibility(
 	options: GetDocumentVisibilityOptions = {}

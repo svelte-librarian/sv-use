@@ -17,7 +17,7 @@ interface OnStartTypingOptions extends ConfigurableDocument {
  * Fires when users start typing on non-editable elements.
  * @param callback The callback for when users start typing on non-editable elements.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/on-start-typing
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/on-start-typing
  */
 export function onStartTyping(
 	callback: (event: KeyboardEvent) => void,

@@ -29,7 +29,7 @@ interface OnClickOutsideOptions extends ConfigurableWindow {
  * @param element The main element on which not to trigger a click.
  * @param callback The callback to run when an outside click is valid.
  * @param options Additional options to customize the behavior.
- * @see https://svelte-librarian.github.io/sv-use/docs/core/sensors/on-click-outside
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/on-click-outside
  */
 export function onClickOutside<T extends HTMLElement>(
 	element: Getter<T | null | undefined>,
