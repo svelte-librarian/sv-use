@@ -14,7 +14,7 @@
 		<p class="dark:text-zinc-200">A collection of Svelte 5 utilities</p>
 		<div class="relative flex w-full flex-wrap items-center justify-center gap-5">
 			<a
-				href="{base}/docs/getting-started/introduction"
+				href="{base}/docs/guide/introduction"
 				class="bg-svelte dark:bg-darksvelte rounded-full px-5 py-2 text-sm text-white"
 			>
 				Get Started

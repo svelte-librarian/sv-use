@@ -8,11 +8,10 @@
 	import { cn } from '$utils/cn.js';
 
 	interface Props {
-		gettingStartedDocs: { slug: string; label: string }[];
-		docs: Record<string, { slug: string; label: string; category: string }[]>;
+		docs: Record<string, { slug: string; label: string; category: string; package: string }[]>;
 	}
 
-	let { gettingStartedDocs, docs }: Props = $props();
+	let { docs }: Props = $props();
 
 	let navNode = $state<HTMLElement>();
 	let onThisPageMenuNode = $state<HTMLMenuElement>();
@@ -99,31 +98,14 @@
 					'bg-zinc-50 dark:bg-zinc-800'
 				)}
 			>
-				<div class="relative flex w-full flex-col gap-5">
-					<h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-200">Getting Started</h3>
-					<div class="relative flex w-full flex-col gap-1">
-						{#each gettingStartedDocs as doc}
-							<a
-								href="{base}/docs/getting-started/{doc.slug}"
-								onclick={() => (showSidebar = false)}
-								class="text-sm font-medium {$page.url.pathname ===
-								`${base}/docs/getting-started/${doc.slug}`
-									? 'text-svelte dark:text-darksvelte'
-									: 'text-zinc-500 dark:text-zinc-400'}"
-							>
-								{doc.label}
-							</a>
-						{/each}
-					</div>
-				</div>
 				{#each Object.entries(docs) as [category, utilities]}
 					<div class="relative flex w-full flex-col gap-5">
 						<h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-200">
 							{toTitleCase(category)}
 						</h3>
 						<div class="relative flex w-full flex-col gap-1">
-							{#each utilities as { slug, label }}
-								{@const href = `${base}/docs/core/${slug}`}
+							{#each utilities as { slug, label, package: _package }}
+								{@const href = `${base}/docs/${_package}/${slug}`}
 								<a
 									{href}
 									onclick={() => (showSidebar = false)}
@@ -187,28 +169,12 @@
 	)}
 >
 	<div class="relative flex flex-col items-start gap-5">
-		<div class="relative flex flex-col gap-5">
-			<h3 class="font-semibold text-zinc-900 dark:text-zinc-200">Getting Started</h3>
-			<div class="relative flex w-full flex-col gap-1">
-				{#each gettingStartedDocs as doc}
-					<a
-						href="{base}/docs/getting-started/{doc.slug}"
-						onclick={() => (showSidebar = false)}
-						class="font-medium {$page.url.pathname === `${base}/docs/getting-started/${doc.slug}`
-							? 'text-svelte dark:text-darksvelte'
-							: 'text-zinc-500 dark:text-zinc-400'}"
-					>
-						{doc.label}
-					</a>
-				{/each}
-			</div>
-		</div>
 		{#each Object.entries(docs) as [category, utilities]}
 			<div class="relative flex flex-col gap-5">
 				<h3 class="font-semibold dark:text-zinc-200">{toTitleCase(category)}</h3>
 				<div class="relatve flex w-full flex-col gap-1">
-					{#each utilities as { slug, label }}
-						{@const href = `${base}/docs/core/${slug}`}
+					{#each utilities as { slug, label, package: _package }}
+						{@const href = `${base}/docs/${_package}/${slug}`}
 						<a
 							{href}
 							class={cn(

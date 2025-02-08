@@ -1,5 +1,5 @@
 ---
-category: Reactivity
+category: reactivity
 ---
 
 # debounce
