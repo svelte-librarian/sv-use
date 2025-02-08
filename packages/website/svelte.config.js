@@ -9,7 +9,7 @@ export default {
 		alias: {
 			$types: './src/lib/types',
 			$utils: './src/lib/utils',
-			'$sv-use/core': '../core/src/index.ts'
+			'$sv-use/core': '../core/dist/index.js'
 		},
 		paths: {
 			base: '/sv-use'

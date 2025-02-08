@@ -1,17 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
+	import { handleEventListener } from '$sv-use/core';
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
 	import { toTitleCase } from '$utils/text-transform.js';
-	import type { Category } from '$types/markdown.js';
 	import { cn } from '$utils/cn.js';
-	import { handleEventListener } from '$sv-use/core';
 
 	interface Props {
 		gettingStartedDocs: { slug: string; label: string }[];
-		docs: Category[];
+		docs: Record<string, { slug: string; label: string; category: string }[]>;
 	}
 
 	let { gettingStartedDocs, docs }: Props = $props();
@@ -118,14 +116,14 @@
 						{/each}
 					</div>
 				</div>
-				{#each docs as { category, utilities }}
+				{#each Object.entries(docs) as [category, utilities]}
 					<div class="relative flex w-full flex-col gap-5">
 						<h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-200">
 							{toTitleCase(category)}
 						</h3>
 						<div class="relative flex w-full flex-col gap-1">
 							{#each utilities as { slug, label }}
-								{@const href = `${base}/docs/core/${category}/${slug}`}
+								{@const href = `${base}/docs/core/${slug}`}
 								<a
 									{href}
 									onclick={() => (showSidebar = false)}
@@ -205,12 +203,12 @@
 				{/each}
 			</div>
 		</div>
-		{#each docs as { category, utilities }}
+		{#each Object.entries(docs) as [category, utilities]}
 			<div class="relative flex flex-col gap-5">
 				<h3 class="font-semibold dark:text-zinc-200">{toTitleCase(category)}</h3>
 				<div class="relatve flex w-full flex-col gap-1">
 					{#each utilities as { slug, label }}
-						{@const href = `${base}/docs/core/${category}/${slug}`}
+						{@const href = `${base}/docs/core/${slug}`}
 						<a
 							{href}
 							class={cn(
