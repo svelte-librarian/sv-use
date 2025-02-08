@@ -54,7 +54,7 @@
 		>
 			<div class="flex items-center px-5">
 				<a
-					href="{base}/docs/getting-started/introduction"
+					href="{base}/docs/guide/introduction"
 					class="hover:text-svelte dark:hover:text-darksvelte duration-150 ease-in-out dark:text-zinc-200"
 				>
 					Docs
