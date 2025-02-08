@@ -1,8 +1,7 @@
 import fs from 'node:fs/promises';
-import path from 'node:path';
 import { toCamelCase, toTitleCase } from '$utils/text-transform.js';
+import { convertMarkdownFileToHTML } from '$utils/markdown.server.js';
 import type { LayoutServerLoad } from './$types.js';
-import type { Category } from '$types/markdown.js';
 
 const CORE_DIRECTORY = './src/lib/docs/core';
 
@@ -28,28 +27,48 @@ async function getGettingStartedDocs() {
 	);
 }
 
-async function getPackageDocs(dirPath: string): Promise<Category[]> {
-	const categories: Category[] = [];
+async function getPackageDocs(dirPath: string) {
+	const utilityDirs = (await fs.readdir(dirPath, { withFileTypes: true })).filter((dirent) =>
+		dirent.isDirectory()
+	);
 
-	const categoryDirs = (await fs.readdir(dirPath, { withFileTypes: true }))
-		.filter((dirent) => dirent.isDirectory())
-		.map((dirent) => dirent.name);
+	const utilities = await Promise.all(
+		utilityDirs.map(async (dir) => {
+			const { attributes } = await convertMarkdownFileToHTML<{ category: string }>(
+				`${dir.parentPath}/${dir.name}/index.md`
+			);
 
-	for (const category of categoryDirs) {
-		const categoryPath = path.join(dirPath, category);
-		const utilityDirs = (await fs.readdir(categoryPath, { withFileTypes: true }))
-			.filter((dirent) => dirent.isDirectory())
-			.map((dirent) => dirent.name);
-
-		const utilities: { slug: string; label: string }[] = utilityDirs.map((slug) => {
 			return {
-				slug,
-				label: toCamelCase(slug)
+				slug: dir.name,
+				label: toCamelCase(dir.name),
+				category: attributes.category
 			};
-		});
+		})
+	);
 
-		categories.push({ category, utilities });
-	}
+	const groupedUtilities = Object.groupBy(utilities, ({ category }) => category) as Record<
+		string,
+		{
+			slug: string;
+			label: string;
+			category: string;
+		}[]
+	>;
 
-	return categories;
+	return Object.keys(groupedUtilities)
+		.sort()
+		.reduce(
+			(obj, key) => {
+				obj[key] = groupedUtilities[key];
+				return obj;
+			},
+			{} as Record<
+				string,
+				{
+					slug: string;
+					label: string;
+					category: string;
+				}[]
+			>
+		);
 }
