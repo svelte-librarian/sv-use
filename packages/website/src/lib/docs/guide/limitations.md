@@ -69,7 +69,7 @@ If you are passing a state as parameter of a function and the function needs
 to modify the state, you will need to pass a setter function that receives
 the new value as the only parameter in the callback function.
 
-As an example, [trackHistory](/sv-use/docs/core/reactivity/track-history) is a
+As an example, [trackHistory](/sv-use/docs/core/track-history) is a
 utility that tracks the history of a given state with undo/redo capabilities.
 However, to undo/redo, the value of the state must be modified. This is where
 the setter function comes into play.
