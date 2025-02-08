@@ -4,6 +4,4 @@
 	const network = getNetwork();
 </script>
 
-<div class="relative flex w-full flex-col gap-2">
-	<pre>{JSON.stringify(network, null, 2)}</pre>
-</div>
+<pre class="dark:text-zinc-200">{JSON.stringify(network, null, 2)}</pre>

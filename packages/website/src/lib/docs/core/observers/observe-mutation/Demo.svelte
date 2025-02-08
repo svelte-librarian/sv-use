@@ -1,34 +1,28 @@
 <script lang="ts">
+	import { theme } from '$lib/contexts/theme.svelte.js';
 	import { observeMutation } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
 	const messages = $state<string[]>([]);
 	let el = $state<HTMLElement>();
-	let className = $state<Record<string, boolean>>({});
+	let className = $state<string>('');
 	let style = $state<string>('');
 
 	observeMutation(
 		() => el,
-		(mutations) => {
-			const mutation = mutations[0];
-
-			if (!mutation) return;
-
+		([mutation]) => {
 			messages.push(mutation.attributeName!);
 		},
 		{ attributes: true }
 	);
 
 	setTimeout(() => {
-		className = {
-			test: true,
-			test2: true
-		};
+		className = 'underline';
 	}, 1000);
 
 	setTimeout(() => {
-		style = 'color: red;';
-	}, 1550);
+		style = theme.current === 'light' ? 'color: #ff3e00;' : 'color: #f96743';
+	}, 1500);
 </script>
 
 <div bind:this={el} class={cn('relative flex w-full flex-col gap-2', className)} {style}>

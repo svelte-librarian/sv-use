@@ -4,6 +4,4 @@
 	const devicePixelRatio = getDevicePixelRatio();
 </script>
 
-<div class="relative flex w-full flex-col gap-2">
-	<pre>{JSON.stringify(devicePixelRatio, null, 2)}</pre>
-</div>
+<pre class="dark:text-zinc-200">{JSON.stringify(devicePixelRatio, null, 2)}</pre>

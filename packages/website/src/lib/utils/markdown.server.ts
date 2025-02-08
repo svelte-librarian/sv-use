@@ -43,7 +43,7 @@ async function convertMarkdownContentToHTML(
 		})
 		.use(rehypePrettyCode, {
 			theme: {
-				light: 'catppuccin-latte',
+				light: 'one-light',
 				dark: 'one-dark-pro'
 			}
 		})

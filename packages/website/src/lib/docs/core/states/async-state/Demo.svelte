@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '$lib/components/atoms/index.js';
 	import { asyncState } from '$sv-use/core';
 
 	type Recipe = {
@@ -26,24 +27,20 @@
 
 <div class="flex flex-col items-start gap-5">
 	{#if !recipe.isReady}
-		<p>Loading the recipe with id {id}...</p>
+		<p class="dark:text-zinc-200">Loading the recipe with id {id}...</p>
 	{:else}
 		<div class="flex flex-col">
 			{#if 'message' in recipe.current}
-				<p>Oops ! {recipe.current.message}</p>
+				<p class="dark:text-zinc-200">Oops ! {recipe.current.message}</p>
 			{:else}
-				<span>ID : {recipe.current.id}</span>
-				<span>Title : {recipe.current.title}</span>
-				<span>Tags : {recipe.current.tags.join(', ')}</span>
+				<p class="dark:text-zinc-200">ID : {recipe.current.id}</p>
+				<p class="dark:text-zinc-200">Title : {recipe.current.title}</p>
+				<p class="dark:text-zinc-200">Tags : {recipe.current.tags.join(', ')}</p>
 			{/if}
 		</div>
 	{/if}
 	<div class="flex gap-5">
-		<button onclick={() => id--} class="rounded-md bg-svelte px-3 py-1 text-white">
-			Previous recipe
-		</button>
-		<button onclick={() => id++} class="rounded-md bg-svelte px-3 py-1 text-white">
-			Next recipe
-		</button>
+		<Button onclick={() => id--}>Previous recipe</Button>
+		<Button onclick={() => id++}>Next recipe</Button>
 	</div>
 </div>

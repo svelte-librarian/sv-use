@@ -4,7 +4,7 @@
 	const permission = getPermission('camera');
 </script>
 
-<div class="relative flex w-full flex-col gap-2">
+<div class="relative flex w-full flex-col gap-2 dark:text-zinc-200">
 	<span>Camera status</span>
 	<pre>{JSON.stringify(permission, null, 2)}</pre>
 </div>

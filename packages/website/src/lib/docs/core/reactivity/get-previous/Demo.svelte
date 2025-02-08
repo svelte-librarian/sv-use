@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '$lib/components/atoms/index.js';
 	import { getPrevious } from '$sv-use/core';
 
 	let counter = $state(0);
@@ -6,9 +7,7 @@
 </script>
 
 <div class="relative flex w-full flex-col gap-2">
-	<span>Counter : {counter}</span>
-	<span>Previous counter : {previousCounter.current ?? 'undefined'}</span>
-	<button onclick={() => counter++} class="bg-svelte rounded-md px-3 py-1 text-white">
-		Increment counter
-	</button>
+	<p class="dark:text-zinc-200">Counter : {counter}</p>
+	<p class="dark:text-zinc-200">Previous counter : {previousCounter.current ?? 'undefined'}</p>
+	<Button onclick={() => counter++}>Increment counter</Button>
 </div>
