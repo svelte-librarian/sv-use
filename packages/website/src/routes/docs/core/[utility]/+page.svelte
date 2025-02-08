@@ -3,7 +3,7 @@
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
 	import { theme } from '$lib/contexts/theme.svelte.js';
 	import { toTitleCase } from '$utils/text-transform.js';
-	import { highlighter } from '$utils/type-definitions.js';
+	import { getHighlighter } from '$utils/type-definitions.js';
 
 	let { data } = $props();
 
@@ -72,11 +72,13 @@
 			Type definitions
 		</summary>
 		{#if showTypeDefinitions}
-			{@const styled = highlighter.codeToHtml(data.typeDefinitions, {
-				lang: 'typescript',
-				theme: themeStyle
-			})}
-			{@html styled}
+			{#await getHighlighter() then highlighter}
+				{@const styled = highlighter.codeToHtml(data.typeDefinitions, {
+					lang: 'typescript',
+					theme: themeStyle
+				})}
+				{@html styled}
+			{/await}
 		{/if}
 	</details>
 	<h2
