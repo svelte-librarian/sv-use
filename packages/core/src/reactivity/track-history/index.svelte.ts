@@ -1,6 +1,6 @@
 import { untrack } from 'svelte';
 import { watch } from '../../lifecycle/watch/index.svelte.js';
-import type { Getter, Setter } from '$lib/__internal__/types.js';
+import type { Getter, Setter } from '../../__internal__/types.js';
 
 type HistorySnapshot<T> = { snapshot: T; timestamp: number };
 
