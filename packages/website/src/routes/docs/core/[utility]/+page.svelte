@@ -8,7 +8,7 @@
 	let { data } = $props();
 
 	let showTypeDefinitions = $state(false);
-	let themeStyle = $derived(theme.current === 'light' ? 'catppuccin-latte' : 'one-dark-pro');
+	let themeStyle = $derived(theme.current === 'light' ? 'one-light' : 'one-dark-pro');
 
 	$effect(() => {
 		$page.url.pathname;
