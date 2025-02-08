@@ -9,7 +9,7 @@
 >
 	{#if onThisPageHeadings.current.length > 0}
 		<div class="relative flex max-w-60 flex-col gap-5">
-			<span>On this page</span>
+			<span class="dark:text-zinc-200">On this page</span>
 			<div class="relative flex flex-col gap-[10px]">
 				{#each onThisPageHeadings.current as heading}
 					{@const hash = `#${heading.data.id}`}
@@ -18,7 +18,9 @@
 						style="padding-left: {(heading.depth - 2) * 20}px"
 						class={cn(
 							'relative font-medium',
-							$page.url.hash === hash ? 'text-svelte' : 'text-zinc-500'
+							$page.url.hash === hash
+								? 'text-svelte dark:text-darksvelte'
+								: 'text-zinc-500 dark:text-zinc-400'
 						)}
 					>
 						{heading.value}

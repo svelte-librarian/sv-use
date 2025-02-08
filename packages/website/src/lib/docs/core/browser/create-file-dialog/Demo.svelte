@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createFileDialog } from '$sv-use/core';
+	import { Button } from '$lib/components/atoms/index.js';
 
 	const dialog = createFileDialog({
 		accept: 'image/*',
@@ -14,17 +15,9 @@
 </script>
 
 <div class="relative flex w-full flex-col gap-2">
-	<button onclick={dialog.open} class="bg-svelte rounded-md px-3 py-1 text-white">
-		Open file dialog
-	</button>
-	<button
-		onclick={dialog.reset}
-		disabled={dialog.files.length === 0}
-		class="bg-svelte rounded-md px-3 py-1 text-white disabled:cursor-not-allowed disabled:opacity-50"
-	>
-		Reset
-	</button>
-	<div class="flex flex-col gap-5">
+	<Button onclick={dialog.open}>Open file dialog</Button>
+	<Button onclick={dialog.reset} disabled={dialog.files.length === 0}>Reset</Button>
+	<div class="flex flex-col gap-5 dark:text-zinc-200">
 		Selected Files ({dialog.files.length})
 		<ul>
 			{#each dialog.files as file (file.name)}

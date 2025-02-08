@@ -4,4 +4,4 @@
 	const hasLeft = hasLeftPage();
 </script>
 
-<span>Has left page : {hasLeft.current}</span>
+<p class="dark:text-zinc-200">Has left page : {hasLeft.current}</p>

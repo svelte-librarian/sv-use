@@ -4,4 +4,4 @@
 	const fps = getFps();
 </script>
 
-<span>fps : {fps.current}</span>
+<p class="dark:text-zinc-200">Current FPS : {fps.current}</p>
