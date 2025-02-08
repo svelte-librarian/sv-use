@@ -11,7 +11,7 @@ It is set to `undefined` until the first change if `initial` is not set.
 ## Usage
 
 > [!TIP]
-> If you only care about the previous value when the value changes, you can use [watch](/sv-use/docs/core/lifecycle/watch).  
+> If you only care about the previous value when the value changes, you can use [watch](/sv-use/docs/core/watch).  
 >  
 > It supplies the previous value in the callback.
 

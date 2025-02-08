@@ -10,7 +10,7 @@ capabilities as well as access to the histories.
 ## Usage
 
 > [!TIP]
-> If you prefer to have them combined, check out [historyState](/sv-use/docs/core/states/history-state).
+> If you prefer to have them combined, check out [historyState](/sv-use/docs/core/history-state).
 
 ```svelte
 <script>

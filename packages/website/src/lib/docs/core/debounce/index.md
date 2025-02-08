@@ -9,7 +9,7 @@ Debounces the update of the value after a delay.
 ## Usage
 
 > [!TIP]
-> If you'd rather have them combined in one variable, check out [debouncedState](/sv-use/docs/core/states/debounced-state).
+> If you'd rather have them combined in one variable, check out [debouncedState](/sv-use/docs/core/debounced-state).
 
 ```svelte
 <script>

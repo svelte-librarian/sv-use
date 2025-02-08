@@ -10,7 +10,7 @@ capabilities as well as access to the histories.
 ## Usage
 
 > [!TIP]
-> If you prefer to have them separate, check out [trackHistory](/sv-use/docs/core/reactivity/track-history).
+> If you prefer to have them separate, check out [trackHistory](/sv-use/docs/core/track-history).
 
 ```svelte
 <script>
