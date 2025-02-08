@@ -45,6 +45,7 @@
 >
 	<nav
 		class="relative mx-auto flex h-full w-full max-w-[1200px] items-center justify-between px-5 py-5"
+		class="relative mx-auto flex h-full w-full max-w-[1200px] items-center justify-between px-5 py-5"
 	>
 		<a href={base} class="flex items-center gap-5">
 			<span class="text-svelte dark:text-darksvelte font-semibold">SvelteUse</span>
