@@ -4,7 +4,7 @@
 	const mouse = getMouse();
 </script>
 
-<div class="relative flex w-full flex-col gap-2">
-	<span>x : {mouse.x}</span>
-	<span>y : {mouse.y}</span>
+<div class="relative flex w-full flex-col gap-2 dark:text-zinc-200">
+	<p>x : {mouse.x}</p>
+	<p>y : {mouse.y}</p>
 </div>

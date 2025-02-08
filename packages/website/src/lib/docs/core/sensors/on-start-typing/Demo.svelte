@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Input } from '$lib/components/atoms/index.js';
 	import { onStartTyping } from '$sv-use/core';
 
 	let input = $state<HTMLInputElement>();
@@ -10,17 +11,10 @@
 	});
 </script>
 
-<div class="relative flex w-full flex-col gap-2">
-	<note class="text-sm">Type anything</note>
-	<input
-		bind:this={input}
-		type="text"
-		placeholder="Start typing to focus"
-		class="rounded-md border border-zinc-300 px-3 py-2 text-sm"
-	/>
-	<input
-		type="text"
-		placeholder="Start typing has no effect here"
-		class="rounded-md border border-zinc-300 px-3 py-2 text-sm"
-	/>
+<div class="relative flex w-full flex-col gap-5">
+	<p class="dark:text-zinc-200">Type anything</p>
+	<div class="relative flex w-full flex-col gap-2">
+		<Input bind:el={input} placeholder="Start typing to focus" />
+		<Input placeholder="Start typing has no effect here" />
+	</div>
 </div>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { debouncedState } from '$sv-use/core';
+	import { Input } from '$lib/components/atoms/index.js';
 	import type { FormEventHandler } from 'svelte/elements';
 
 	const search = debouncedState('');
@@ -10,6 +11,6 @@
 </script>
 
 <div class="relative flex w-full flex-col gap-5">
-	<span>Search : {search.current}</span>
-	<input type="text" {oninput} class="rounded-md border border-zinc-300 px-3 py-2 text-sm" />
+	<p class="dark:text-zinc-200">Search : {search.current}</p>
+	<Input {oninput} />
 </div>

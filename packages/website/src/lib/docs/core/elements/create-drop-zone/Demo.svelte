@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '$lib/components/atoms/index.js';
 	import { createDropZone } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
@@ -26,7 +27,7 @@
 	}
 </script>
 
-<div class="relative flex w-full flex-col gap-5">
+<div class="relative flex w-full flex-col gap-5 dark:text-zinc-200">
 	<p>Drop files from your computer on to one of the drop zones.</p>
 	<div class="relative flex w-full flex-col gap-5 md:flex-row">
 		<div class="relative flex w-full flex-col gap-2">
@@ -34,22 +35,16 @@
 				bind:this={genericContainer}
 				class={cn(
 					'rounded-m relative flex h-[200px] w-full flex-col items-center justify-center gap-2 rounded-md',
-					genericDropZone.isOver ? 'bg-svelte text-zinc-50' : 'bg-zinc-200'
+					genericDropZone.isOver ? 'bg-svelte text-zinc-50' : 'bg-zinc-200 dark:bg-zinc-800'
 				)}
 			>
 				<span class="font-semibold">General Drop Zone</span>
 				<span>Is Over ? {genericDropZone.isOver}</span>
 			</div>
-			<!-- <div class="relative aspect-square w-full max-w-[200px] bg-blue-500"></div> -->
 			<div class="relative flex w-full flex-col items-start gap-2">
 				<div class="relative flex w-full items-center justify-between">
 					<span>Files</span>
-					<button
-						onclick={() => (genericDropZone.files = [])}
-						class="bg-svelte rounded-md px-3 py-1 text-sm text-white"
-					>
-						Clear
-					</button>
+					<Button onclick={() => (genericDropZone.files = [])}>Clear</Button>
 				</div>
 				{#if genericDropZone.files !== null}
 					<div class="relative flex w-full flex-col divide-y divide-zinc-200">
@@ -65,7 +60,7 @@
 				bind:this={imageContainer}
 				class={cn(
 					'rounded-m relative flex h-[200px] w-full flex-col items-center justify-center gap-2 rounded-md',
-					imageDropZone.isOver ? 'bg-svelte text-zinc-50' : 'bg-zinc-200'
+					imageDropZone.isOver ? 'bg-svelte text-zinc-50' : 'bg-zinc-200 dark:bg-zinc-800'
 				)}
 			>
 				<span class="font-semibold">Image Drop Zone</span>
@@ -74,12 +69,7 @@
 			<div class="relative flex w-full flex-col items-start gap-2">
 				<div class="relative flex w-full items-center justify-between">
 					<span>Files</span>
-					<button
-						onclick={() => (imageDropZone.files = [])}
-						class="bg-svelte rounded-md px-3 py-1 text-sm text-white"
-					>
-						Clear
-					</button>
+					<Button onclick={() => (imageDropZone.files = [])}>Clear</Button>
 				</div>
 				{#if imageDropZone.files !== null}
 					<div class="relative flex w-full flex-col divide-y divide-zinc-200">

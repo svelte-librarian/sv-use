@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises';
-import { codeToHtml } from 'shiki';
 
 export async function getTypeDefinitions(category: string, utility: string) {
 	let typeDefinitions: string;
@@ -9,15 +8,7 @@ export async function getTypeDefinitions(category: string, utility: string) {
 			'utf8'
 		);
 
-		const html = await codeToHtml(typeDefinitions, {
-			lang: 'typescript',
-			themes: {
-				light: 'catppuccin-latte',
-				dark: 'one-dark-pro'
-			}
-		});
-
-		return html;
+		return typeDefinitions;
 	} catch {
 		throw new Error(`Missing type definitions for ${utility} - Build the core package first.`);
 	}

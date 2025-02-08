@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Input } from '$lib/components/atoms/index.js';
 	import { getActiveElement } from '$sv-use/core';
 
 	const activeElement = getActiveElement({ autoCleanup: true });
@@ -9,10 +10,10 @@
 	<div class="grid grid-cols-1 gap-2 md:grid-cols-3">
 		{#each { length: 6 } as _, i}
 			{@const id = i + 1}
-			<input data-id={id} placeholder={id.toString()} class="my-0 min-w-0 rounded-md px-3 py-1" />
+			<Input data-id={id} placeholder={id.toString()} />
 		{/each}
 	</div>
-	<span>
+	<span class="dark:text-zinc-200">
 		Current Active Element : {key}
 	</span>
 </div>
