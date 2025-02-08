@@ -1,8 +1,18 @@
 <script lang="ts">
+	import { base } from '$app/paths';
+	import { page } from '$app/stores';
 	import Navigation from './Navigation.svelte';
 	import OnThisPage from './OnThisPage.svelte';
 
 	let { children, data } = $props();
+
+	let meta = $derived.by(() => {
+		const slug = $page.url.pathname.split('/').at(-1);
+
+		return Object.values(data.docs)
+			.flat()
+			.find((u) => u.slug === slug)?.meta;
+	});
 </script>
 
 <svelte:head>
@@ -10,10 +20,34 @@
 </svelte:head>
 
 <div class="relative flex w-full flex-col lg:flex-row lg:justify-center lg:gap-10 2xl:gap-20">
-	<Navigation gettingStartedDocs={data.gettingStartedDocs} docs={data.docs} />
+	<Navigation docs={data.docs} />
 	<div class="relative w-full lg:w-auto lg:flex-[2_1_0%] xl:flex-none">
 		<div class="relative mx-auto w-full max-w-[720px] p-5 lg:py-10 xl:w-[720px]">
 			{@render children()}
+			<div class="relative mt-10 flex w-full flex-col gap-2 md:flex-row">
+				{#if meta?.previous}
+					<a
+						href="{base}/docs/{meta.previous.package}/{meta.previous.slug}"
+						class="relative flex w-full flex-col items-start gap-1 rounded-md border border-zinc-200 p-4 dark:border-zinc-800"
+					>
+						<span class="text-sm text-zinc-500 dark:text-zinc-400">Previous page</span>
+						<span class="text-svelte dark:text-darksvelte">{meta.previous.label}</span>
+					</a>
+				{:else}
+					<div class="relative w-full"></div>
+				{/if}
+				{#if meta?.next}
+					<a
+						href="{base}/docs/{meta.next.package}/{meta.next.slug}"
+						class="relative flex w-full flex-col items-end gap-1 rounded-md border border-zinc-200 p-4 dark:border-zinc-800"
+					>
+						<span class="text-sm text-zinc-500 dark:text-zinc-400">Next page</span>
+						<span class="text-svelte dark:text-darksvelte">{meta.next.label}</span>
+					</a>
+				{:else}
+					<div class="relative w-full"></div>
+				{/if}
+			</div>
 		</div>
 	</div>
 	<OnThisPage />

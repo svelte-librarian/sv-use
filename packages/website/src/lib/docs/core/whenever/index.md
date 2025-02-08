@@ -1,5 +1,5 @@
 ---
-category: Lifecycle
+category: lifecycle
 ---
 
 # whenever

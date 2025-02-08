@@ -1,6 +1,5 @@
 <script>
 	import { observeIntersection } from '$sv-use/core';
-	import { cn } from '$utils/cn.js';
 
 	let root = $state();
 	let divNode = $state();
@@ -34,10 +33,7 @@
 			<span class="mt-5 italic text-zinc-500 dark:text-zinc-400">Scroll down...</span>
 			<div
 				bind:this={divNode}
-				class={cn(
-					'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-dashed p-5',
-					'border-svelte dark:border-darksvelte dark:text-zinc-200'
-				)}
+				class="border-svelte dark:border-darksvelte absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-dashed p-5 dark:text-zinc-200"
 			>
 				i'm the target element
 			</div>

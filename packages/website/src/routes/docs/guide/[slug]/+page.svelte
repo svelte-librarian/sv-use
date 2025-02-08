@@ -10,7 +10,7 @@
 
 <svelte:head>
 	<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cascadia-code" />
-	<title>{data.title} - Getting Started | SvelteUse</title>
+	<title>{data.title} - Guide | SvelteUse</title>
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
