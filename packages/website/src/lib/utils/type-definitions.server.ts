@@ -1,12 +1,9 @@
 import fs from 'node:fs/promises';
 
-export async function getTypeDefinitions(category: string, utility: string) {
+export async function getTypeDefinitions(utility: string) {
 	let typeDefinitions: string;
 	try {
-		typeDefinitions = await fs.readFile(
-			`../core/dist/${category}/${utility}/index.svelte.d.ts`,
-			'utf8'
-		);
+		typeDefinitions = await fs.readFile(`../core/dist/${utility}/index.svelte.d.ts`, 'utf8');
 
 		return typeDefinitions;
 	} catch {
