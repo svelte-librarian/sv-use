@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '$lib/components/atoms/index.js';
 	import { createSpeechRecognition, watch } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
@@ -118,12 +119,12 @@
 
 <div class="relative flex w-full flex-col gap-2">
 	{#if !speech.isSupported}
-		<div class="relative flex w-full flex-col items-start gap-2">
+		<div class="relative flex w-full flex-col items-start gap-2 dark:text-zinc-200">
 			<p>Your browser does not support the Speech Recognition API.</p>
 			<a
 				target="_blank"
 				href="https://caniuse.com/speech-recognition"
-				class="bg-svelte rounded-md px-3 py-1 text-white"
+				class="bg-svelte dark:bg-darksvelte rounded-md px-3 py-1 text-white"
 			>
 				More details on caniuse.
 			</a>
@@ -136,24 +137,20 @@
 				{@render language('Spanish', 'es')}
 			</div>
 			{#if !speech.isListening}
-				<button onclick={start} class="bg-svelte rounded-md px-3 py-1 text-white">
-					Press and talk
-				</button>
+				<Button onclick={start}>Press and talk</Button>
 			{:else}
 				{@const bgColor = lang === 'en-US' ? `background: ${color}` : ''}
-				<button onclick={() => speech.stop()} class="bg-svelte rounded-md px-3 py-1 text-white">
-					Stop
-				</button>
+				<Button onclick={() => speech.stop()}>Stop</Button>
 				{#if lang === 'en-US'}
-					<p class="text-sm italic text-zinc-500">
+					<p class="text-sm italic text-zinc-500 dark:text-zinc-400">
 						Speak some english ! Try one of these colors : {sampled.join(', ')}
 					</p>
 				{:else if lang === 'es'}
-					<p class="text-sm italic text-zinc-500">Speak some Spanish!</p>
+					<p class="text-sm italic text-zinc-500 dark:text-zinc-400">Speak some spanish!</p>
 				{:else if lang === 'fr'}
-					<p class="text-sm italic text-zinc-500">Speak some French!</p>
+					<p class="text-sm italic text-zinc-500 dark:text-zinc-400">Speak some french!</p>
 				{/if}
-				<p class="tag" style={bgColor}>
+				<p class="dark:text-zinc-200" style={bgColor}>
 					{speech.result}
 				</p>
 			{/if}
@@ -162,15 +159,18 @@
 </div>
 
 {#snippet language(label: string, value: string)}
-	<label class="my-auto inline-flex cursor-pointer select-none items-center gap-2">
+	<label
+		class="my-auto inline-flex cursor-pointer select-none items-center gap-2 dark:text-zinc-200"
+	>
 		<input
 			type="radio"
 			checked={lang === value}
 			onchange={() => changeLanguage(value)}
 			class={cn(
-				'relative mr-1 h-4 w-4 select-none rounded-full bg-gray-400/30 p-0',
+				'relative mr-1 h-4 w-4 select-none rounded-full bg-zinc-500/30 p-0',
 				'inline-block shrink-0 select-none appearance-none bg-origin-border',
-				'after:checked:bg-svelte after:absolute after:inset-[3px] after:rounded-full after:content-[""]'
+				'after:checked:bg-svelte dark:after:checked:bg-darksvelte',
+				'after:absolute after:inset-[3px] after:rounded-full after:content-[""]'
 			)}
 		/>
 		{label}

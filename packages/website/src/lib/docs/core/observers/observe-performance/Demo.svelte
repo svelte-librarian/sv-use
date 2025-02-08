@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '$lib/components/atoms/index.js';
 	import { observePerformance, type PerformanceEntryType } from '$sv-use/core';
 
 	let entries = $state<PerformanceEntry[]>([]);
@@ -9,11 +10,6 @@
 </script>
 
 <div class="relative flex w-full flex-col gap-2">
-	<button
-		onclick={() => window.location.reload()}
-		class="bg-svelte rounded-md px-3 py-1 text-white"
-	>
-		Refresh page
-	</button>
-	<pre lang="json">{JSON.stringify(entries, null, 2)}</pre>
+	<Button onclick={() => window.location.reload()}>Refresh page</Button>
+	<pre lang="json" class="dark:text-zinc-200">{JSON.stringify(entries, null, 2)}</pre>
 </div>

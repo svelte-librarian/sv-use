@@ -4,6 +4,4 @@
 	const deviceMotion = getDeviceMotion();
 </script>
 
-<div class="relative flex w-full flex-col gap-2">
-	<pre>{JSON.stringify(deviceMotion, null, 2)}</pre>
-</div>
+<pre class="dark:text-zinc-200">{JSON.stringify(deviceMotion, null, 2)}</pre>

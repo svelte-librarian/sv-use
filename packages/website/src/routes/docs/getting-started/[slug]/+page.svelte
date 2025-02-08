@@ -14,7 +14,7 @@
 </svelte:head>
 
 <main class="relative flex w-full flex-col">
-	<h1 class="mb-5 text-3xl font-semibold">{data.title}</h1>
+	<h1 class="mb-5 text-3xl font-semibold dark:text-zinc-200">{data.title}</h1>
 	<div class="content contents">
 		{@html data.lede}
 		{@html data.html}
@@ -22,93 +22,116 @@
 </main>
 
 <style lang="postcss">
-	:global(.content h2) {
-		font-size: 1.5rem;
-		font-weight: 600;
-		padding-top: 1.25rem;
-		padding-bottom: 1.25rem;
-		scroll-margin-top: 3rem;
-	}
+	:global {
+		.content h2 {
+			font-size: 1.5rem;
+			font-weight: 600;
+			padding-top: 1.25rem;
+			padding-bottom: 1.25rem;
+			scroll-margin-top: 3rem;
+		}
 
-	:global(.content h3) {
-		font-size: 1.25rem;
-		font-weight: 600;
-		padding-top: 1.25rem;
-		padding-bottom: 1.25rem;
-		scroll-margin-top: 3rem;
-	}
+		html.dark .content h2 {
+			@apply dark:text-zinc-200;
+		}
 
-	:global(.content ul) {
-		list-style-type: disc;
-		margin-left: 2.5rem;
-		margin-bottom: 1.25rem;
-	}
+		.content h3 {
+			font-size: 1.25rem;
+			font-weight: 600;
+			padding-top: 1.25rem;
+			padding-bottom: 1.25rem;
+			scroll-margin-top: 3rem;
+		}
 
-	:global(.content a) {
-		@apply text-svelte;
-		text-decoration: underline;
-	}
+		html.dark .content h3 {
+			@apply dark:text-zinc-200;
+		}
 
-	:global(.content p) {
-		margin-bottom: 1.25rem;
-	}
+		.content ul {
+			list-style-type: disc;
+			margin-left: 2.5rem;
+			margin-bottom: 1.25rem;
+		}
 
-	:global(.content h2 > p) {
-		margin-bottom: 0;
-	}
+		.content a {
+			@apply text-svelte;
+			text-decoration: underline;
+		}
 
-	:global(.content figure) {
-		position: relative;
-		width: 100%;
-		color: #ffffff;
-		margin-bottom: 1.25rem;
-	}
+		html.dark .content a {
+			@apply dark:text-darksvelte;
+		}
 
-	:global(.content figure pre code) {
-		overflow: auto;
-		border-radius: 0.5rem;
-		padding: 20px 0;
-		counter-reset: line;
-	}
+		.content p {
+			margin-bottom: 1.25rem;
+		}
 
-	:global(.content figure pre code *) {
-		font-family: 'Cascadia Code', sans-serif;
-	}
+		html.dark .content p {
+			@apply text-zinc-100;
+			margin-bottom: 1.25rem;
+		}
 
-	:global(.content figure pre code span[data-highlighted-line]) {
-		background-color: rgba(200, 200, 255, 0.1);
-	}
+		.content h2 > p {
+			margin-bottom: 0;
+		}
 
-	:global(.content figure pre code > [data-line]) {
-		padding: 2px 20px;
-	}
+		.content figure {
+			position: relative;
+			width: 100%;
+			color: #ffffff;
+			margin-bottom: 1.25rem;
+		}
 
-	:global(.content figure pre code[data-line-numbers] > [data-line]::before) {
-		counter-increment: line;
-		content: counter(line);
-		display: inline-block;
-		width: 1rem;
-		margin-right: 2rem;
-		text-align: right;
-		color: gray;
-	}
+		.content figure pre code {
+			overflow: auto;
+			border-radius: 0.5rem;
+			padding: 20px 0;
+			counter-reset: line;
+		}
 
-	:global(.content figure pre code),
-	:global(.content figure pre code span) {
-		color: var(--shiki-light);
-		background-color: var(--shiki-light-bg);
-	}
+		.content figure pre code * {
+			font-family: 'Cascadia Code', sans-serif;
+		}
 
-	:global(html.dark .content figure pre code),
-	:global(html.dark .content figure pre code span) {
-		color: var(--shiki-dark);
-		background-color: var(--shiki-dark-bg);
-	}
+		.content figure pre code span[data-highlighted-line] {
+			background-color: rgba(200, 200, 255, 0.1);
+		}
 
-	:global(.content *:not(figure) code) {
-		@apply bg-svelte;
-		color: #fafafa;
-		padding: 2px 4px;
-		border-radius: 4px;
+		.content figure pre code > [data-line] {
+			padding: 2px 20px;
+		}
+
+		.content figure pre code[data-line-numbers] > [data-line]::before {
+			counter-increment: line;
+			content: counter(line);
+			display: inline-block;
+			width: 1rem;
+			margin-right: 2rem;
+			text-align: right;
+			color: gray;
+		}
+
+		.content figure pre code,
+		.content figure pre code span {
+			color: var(--shiki-light);
+			background-color: var(--shiki-light-bg);
+		}
+
+		html.dark .content figure pre code,
+		html.dark .content figure pre code span {
+			color: var(--shiki-dark);
+			background-color: var(--shiki-dark-bg);
+		}
+
+		.content *:not(figure) code {
+			@apply bg-svelte;
+			color: #fafafa;
+			padding: 2px 4px;
+			border-radius: 4px;
+		}
+
+		html.dark .content *:not(figure) code {
+			@apply bg-darksvelte;
+		}
 	}
 </style>

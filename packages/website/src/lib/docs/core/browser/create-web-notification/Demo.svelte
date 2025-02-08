@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '$lib/components/atoms/index.js';
 	import { createWebNotification } from '$sv-use/core';
 
 	const notification = createWebNotification({
@@ -7,12 +8,10 @@
 	});
 </script>
 
-<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-5 dark:text-zinc-200">
 	{#if notification.isSupported}
 		<span>Permission granted : {notification.isPermissionGranted}</span>
-		<button onclick={() => notification.show()} class="bg-svelte rounded-md px-3 py-1 text-white">
-			Show notification
-		</button>
+		<Button onclick={() => notification.show()}>Show notification</Button>
 	{:else}
 		<p>Your browser doesn't support the Web Notifications API...</p>
 	{/if}
