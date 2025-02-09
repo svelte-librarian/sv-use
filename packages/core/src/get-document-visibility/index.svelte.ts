@@ -38,10 +38,7 @@ export function getDocumentVisibility(
 		cleanup = handleEventListener(
 			document,
 			'visibilitychange',
-			() => {
-				console.log('change', document.visibilityState);
-				_current = document.visibilityState;
-			},
+			() => (_current = document.visibilityState),
 			{ autoCleanup }
 		);
 	}
