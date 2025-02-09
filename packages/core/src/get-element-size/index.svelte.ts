@@ -72,11 +72,8 @@ export function getElementSize(
 				height = rect.height;
 			} else {
 				if (boxSize) {
-					console.log(boxSize);
 					width = boxSize.reduce((acc, { inlineSize }) => acc + inlineSize, 0);
 					height = boxSize.reduce((acc, { blockSize }) => acc + blockSize, 0);
-
-					console.log(width);
 				} else {
 					width = entry.contentRect.width;
 					height = entry.contentRect.height;
