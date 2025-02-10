@@ -2,7 +2,12 @@ import { watch } from '../watch/index.svelte.js';
 import { isSupported } from '../__internal__/is.svelte.js';
 import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
 import { normalizeValue, notNullish, toArray } from '../__internal__/utils.svelte.js';
-import type { Arrayable, CleanupFunction, MaybeGetter } from '../__internal__/types.js';
+import type {
+	Arrayable,
+	CleanupFunction,
+	MaybeElement,
+	MaybeGetter
+} from '../__internal__/types.js';
 import { onDestroy } from 'svelte';
 
 interface ObserveMutationOptions extends MutationObserverInit, ConfigurableWindow {
@@ -38,7 +43,7 @@ type ObserveMutationReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/observe-mutation
  */
 export function observeMutation(
-	target: MaybeGetter<HTMLElement | undefined>,
+	target: MaybeGetter<MaybeElement>,
 	callback: MutationCallback,
 	options?: ObserveMutationOptions
 ): ObserveMutationReturn;
@@ -51,13 +56,13 @@ export function observeMutation(
  * @see https://svelte-librarian.github.io/sv-use/docs/core/observe-mutation
  */
 export function observeMutation(
-	targets: Array<MaybeGetter<HTMLElement | undefined>>,
+	targets: Array<MaybeGetter<MaybeElement>>,
 	callback: MutationCallback,
 	options?: ObserveMutationOptions
 ): ObserveMutationReturn;
 
 export function observeMutation(
-	targets: Arrayable<MaybeGetter<HTMLElement | undefined>>,
+	targets: Arrayable<MaybeGetter<MaybeElement>>,
 	callback: MutationCallback,
 	options: ObserveMutationOptions = {}
 ): ObserveMutationReturn {
@@ -67,7 +72,7 @@ export function observeMutation(
 
 	const _isSupported = isSupported(() => window !== undefined && 'MutationObserver' in window);
 	const _targets = $derived(
-		new Set(toArray(targets).map<HTMLElement | undefined>(normalizeValue).filter(notNullish))
+		new Set(toArray(targets).map<MaybeElement>(normalizeValue).filter(notNullish))
 	);
 
 	watch(

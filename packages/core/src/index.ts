@@ -25,6 +25,7 @@ export * from './get-mouse-pressed/index.svelte.js';
 export * from './get-network/index.svelte.js';
 export * from './get-permission/index.svelte.js';
 export * from './get-previous/index.svelte.js';
+export * from './get-text-direction/index.svelte.js';
 export * from './get-text-selection/index.svelte.js';
 export * from './handle-event-listener/index.svelte.js';
 export * from './handle-wake-lock/index.svelte.js';
