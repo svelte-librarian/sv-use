@@ -22,7 +22,8 @@ type CreateVibrationReturn = {
 
 /**
  * Reactive vibrate.
- * @param options Additional options to customize the behavior
+ * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/create-vibration
  */
 export function createVibration(options: CreateVibrationOptions = {}): CreateVibrationReturn {
 	const { pattern = [], navigator = defaultNavigator } = options;
