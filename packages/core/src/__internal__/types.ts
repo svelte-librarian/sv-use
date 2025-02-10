@@ -15,3 +15,5 @@ export interface AutoCleanup {
 	 */
 	autoCleanup?: boolean;
 }
+
+export type MaybeElement = HTMLElement | SVGElement | undefined | null;
