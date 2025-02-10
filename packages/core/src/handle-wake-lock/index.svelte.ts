@@ -38,6 +38,7 @@ type HandleWakeLockReturn = {
 /**
  * Provides a way to prevent devices from dimming or locking the screen when an application needs to keep running.
  * @param options Additional options to customize the behavior.
+ * @see https://svelte-librarian.github.io/sv-use/docs/core/create-vibration
  */
 export function handleWakeLock(options: HandleWakeLockOptions = {}): HandleWakeLockReturn {
 	const { autoCleanup = true, navigator = defaultNavigator, document = defaultDocument } = options;
