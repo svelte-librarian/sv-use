@@ -1,6 +1,6 @@
 {
 	"name": "@sv-use/core",
-	"version": "1.14.0",
+	"version": "1.15.0",
 	"license": "MIT",
 	"description": "A collection of Svelte 5 utilities.",
 	"main": "./dist/index.js",
