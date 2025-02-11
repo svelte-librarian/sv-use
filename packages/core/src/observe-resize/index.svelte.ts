@@ -61,7 +61,7 @@ type ObserveResizeReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/observe-resize
  */
 export function observeResize(
-	target: MaybeGetter<HTMLElement | undefined>,
+	target: MaybeGetter<HTMLElement | null | undefined>,
 	callback: ResizeObserverCallback,
 	options?: ObserveResizeOptions
 ): ObserveResizeReturn;
@@ -74,13 +74,13 @@ export function observeResize(
  * @see https://svelte-librarian.github.io/sv-use/docs/core/observe-resize
  */
 export function observeResize(
-	targets: Array<MaybeGetter<HTMLElement | undefined>>,
+	targets: Array<MaybeGetter<HTMLElement | null | undefined>>,
 	callback: ResizeObserverCallback,
 	options?: ObserveResizeOptions
 ): ObserveResizeReturn;
 
 export function observeResize(
-	targets: Arrayable<MaybeGetter<HTMLElement | undefined>>,
+	targets: Arrayable<MaybeGetter<HTMLElement | null | undefined>>,
 	callback: ResizeObserverCallback,
 	options: ObserveResizeOptions = {}
 ): ObserveResizeReturn {
@@ -89,7 +89,7 @@ export function observeResize(
 	let _observer: ResizeObserver | undefined;
 
 	const _isSupported = isSupported(() => window !== undefined && 'ResizeObserver' in window);
-	const _targets = $derived(toArray(targets).map<HTMLElement | undefined>(normalizeValue));
+	const _targets = $derived(toArray(targets).map<HTMLElement | null | undefined>(normalizeValue));
 
 	$effect(() => {
 		cleanup();
