@@ -42,6 +42,7 @@ export * from './on-click-outside/index.svelte.js';
 export * from './on-hover/index.svelte.js';
 export * from './on-long-press/index.svelte.js';
 export * from './on-start-typing/index.svelte.js';
+export * from './on-swipe/index.svelte.js';
 export * from './session-state/index.svelte.js';
 export * from './track-history/index.svelte.js';
 export * from './watch/index.svelte.js';
