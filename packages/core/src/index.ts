@@ -3,6 +3,7 @@ export * from './auto-reset-state/index.svelte.js';
 export * from './create-drop-zone/index.svelte.js';
 export * from './create-eye-dropper/index.svelte.js';
 export * from './create-file-dialog/index.svelte.js';
+export * from './create-object-url/index.svelte.js';
 export * from './create-share/index.svelte.js';
 export * from './create-speech-recognition/index.svelte.js';
 export * from './create-vibration/index.svelte.js';
