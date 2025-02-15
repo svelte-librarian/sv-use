@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getPermission } from '@sv-use/core';
+	import { getPermission } from '$sv-use/core';
 
 	const permission = getPermission('camera');
 </script>

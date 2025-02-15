@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { onLongPress } from '@sv-use/core';
+	import { onLongPress } from '$sv-use/core';
 
 	let element500Ms = $state<HTMLButtonElement>();
 	let element1000Ms = $state<HTMLButtonElement>();

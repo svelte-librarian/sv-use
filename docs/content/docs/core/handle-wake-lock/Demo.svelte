@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { handleWakeLock } from '@sv-use/core';
+	import { handleWakeLock } from '$sv-use/core';
 
 	const wakeLock = handleWakeLock();
 

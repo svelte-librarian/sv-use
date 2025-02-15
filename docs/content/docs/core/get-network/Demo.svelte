@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getNetwork } from '@sv-use/core';
+	import { getNetwork } from '$sv-use/core';
 
 	const network = getNetwork();
 </script>

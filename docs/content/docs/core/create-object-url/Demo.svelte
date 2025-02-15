@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createObjectUrl } from '@sv-use/core';
+	import { createObjectUrl } from '$sv-use/core';
 
 	let file = $state<File | null>(null);
 	const url = createObjectUrl(() => file);

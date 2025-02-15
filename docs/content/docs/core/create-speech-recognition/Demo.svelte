@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { createSpeechRecognition, watch } from '@sv-use/core';
+	import { createSpeechRecognition, watch } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
 	function sample<T>(arr: T[], size: number) {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { TextArea } from '$lib/components/atoms/index.js';
-	import { getScrollbarWidth } from '@sv-use/core';
+	import { getScrollbarWidth } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
 	type ScrollbarThickness = 'auto' | 'thin' | 'none';

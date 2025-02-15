@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Input } from '$lib/components/atoms/index.js';
-	import { sessionState } from '@sv-use/core';
+	import { sessionState } from '$sv-use/core';
 
 	let inputValue = $state('');
 	const search = sessionState('search', '');

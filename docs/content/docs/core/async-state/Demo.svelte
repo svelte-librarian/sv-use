@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { asyncState } from '@sv-use/core';
+	import { asyncState } from '$sv-use/core';
 
 	type Recipe = {
 		id: number;

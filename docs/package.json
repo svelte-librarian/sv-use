@@ -14,9 +14,6 @@
 		"url": "https://github.com/sv-use/sv-use/issues"
 	},
 	"homepage": "https://github.com/sv-use/sv-use#readme",
-	"workspaces": [
-		"../packages/core"
-	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",

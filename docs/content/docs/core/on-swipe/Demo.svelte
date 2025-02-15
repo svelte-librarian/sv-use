@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onSwipe } from '@sv-use/core';
+	import { onSwipe } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 	import { Button } from '$lib/components/atoms/index.js';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { createEyeDropper } from '@sv-use/core';
+	import { createEyeDropper } from '$sv-use/core';
 
 	const eyeDropper = createEyeDropper();
 </script>

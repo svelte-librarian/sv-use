@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getMousePressed } from '@sv-use/core';
+	import { getMousePressed } from '$sv-use/core';
 
 	const mousePressed = getMousePressed();
 </script>

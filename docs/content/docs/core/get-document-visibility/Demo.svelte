@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { autoResetState, getDocumentVisibility, watch } from '@sv-use/core';
+	import { autoResetState, getDocumentVisibility, watch } from '$sv-use/core';
 
 	let message = autoResetState('💡 Minimize the page or switch tab then return', 3000);
 	const documentVisibility = getDocumentVisibility();

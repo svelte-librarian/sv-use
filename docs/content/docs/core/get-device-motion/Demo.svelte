@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getDeviceMotion } from '@sv-use/core';
+	import { getDeviceMotion } from '$sv-use/core';
 
 	const deviceMotion = getDeviceMotion();
 </script>

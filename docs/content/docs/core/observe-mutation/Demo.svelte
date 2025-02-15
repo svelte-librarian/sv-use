@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { theme } from '$lib/contexts/theme.svelte.js';
-	import { observeMutation } from '@sv-use/core';
+	import { observeMutation } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
 	const messages = $state<string[]>([]);

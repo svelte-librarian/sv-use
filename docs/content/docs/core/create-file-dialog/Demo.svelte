@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createFileDialog } from '@sv-use/core';
+	import { createFileDialog } from '$sv-use/core';
 	import { Button } from '$lib/components/atoms/index.js';
 
 	const dialog = createFileDialog({

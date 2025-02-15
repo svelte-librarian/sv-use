@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { observePerformance, type PerformanceEntryType } from '@sv-use/core';
+	import { observePerformance, type PerformanceEntryType } from '$sv-use/core';
 
 	let entries = $state<PerformanceEntry[]>([]);
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Input } from '$lib/components/atoms/index.js';
-	import { debounce } from '@sv-use/core';
+	import { debounce } from '$sv-use/core';
 
 	let search = $state('');
 	const debouncedSearch = debounce(() => search);

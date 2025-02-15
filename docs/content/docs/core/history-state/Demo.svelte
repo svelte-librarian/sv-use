@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Input } from '$lib/components/atoms/index.js';
-	import { historyState } from '@sv-use/core';
+	import { historyState } from '$sv-use/core';
 
 	let inputValue = $state('');
 	const search = historyState('');

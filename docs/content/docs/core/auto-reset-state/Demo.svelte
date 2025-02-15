@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { autoResetState } from '@sv-use/core';
+	import { autoResetState } from '$sv-use/core';
 
 	const message = autoResetState('This is the default message', 3000);
 

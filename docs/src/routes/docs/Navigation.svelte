@@ -2,7 +2,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import { handleEventListener } from '@sv-use/core';
+	import { handleEventListener } from '$sv-use/core';
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
 	import { toTitleCase } from '$utils/text-transform.js';
 	import { cn } from '$utils/cn.js';

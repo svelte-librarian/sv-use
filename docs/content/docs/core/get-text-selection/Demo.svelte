@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getTextSelection } from '@sv-use/core';
+	import { getTextSelection } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
 	let el = $state<HTMLDivElement>();

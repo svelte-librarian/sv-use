@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { TextArea } from '$lib/components/atoms/index.js';
-	import { getElementSize } from '@sv-use/core';
+	import { getElementSize } from '$sv-use/core';
 
 	let el = $state<HTMLTextAreaElement>();
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { trackHistory } from '@sv-use/core';
+	import { trackHistory } from '$sv-use/core';
 
 	let counter = $state(0);
 	const history = trackHistory(

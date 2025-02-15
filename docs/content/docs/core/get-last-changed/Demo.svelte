@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { getLastChanged } from '@sv-use/core';
+	import { getLastChanged } from '$sv-use/core';
 
 	let value = $state(0);
 	const lastChanged = getLastChanged(() => value);

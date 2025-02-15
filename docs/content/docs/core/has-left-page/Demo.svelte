@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { hasLeftPage } from '@sv-use/core';
+	import { hasLeftPage } from '$sv-use/core';
 
 	const hasLeft = hasLeftPage();
 </script>

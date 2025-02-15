@@ -1,5 +1,5 @@
 <script>
-	import { observeIntersection } from '@sv-use/core';
+	import { observeIntersection } from '$sv-use/core';
 
 	let root = $state();
 	let divNode = $state();

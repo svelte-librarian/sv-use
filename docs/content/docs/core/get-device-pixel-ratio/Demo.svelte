@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getDevicePixelRatio } from '@sv-use/core';
+	import { getDevicePixelRatio } from '$sv-use/core';
 
 	const devicePixelRatio = getDevicePixelRatio();
 </script>

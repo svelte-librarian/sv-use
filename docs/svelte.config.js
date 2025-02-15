@@ -8,7 +8,8 @@ export default {
 		adapter: adapter(),
 		alias: {
 			$types: './src/lib/types',
-			$utils: './src/lib/utils'
+			$utils: './src/lib/utils',
+			'$sv-use/core': '../packages/core/dist/index.js'
 		}
 	}
 };

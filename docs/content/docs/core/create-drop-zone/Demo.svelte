@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { createDropZone } from '@sv-use/core';
+	import { createDropZone } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 
 	let genericContainer = $state<HTMLElement>();

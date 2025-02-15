@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { handleEventListener } from '@sv-use/core';
+	import { handleEventListener } from '$sv-use/core';
 
 	let divNode = $state<HTMLDivElement>();
 

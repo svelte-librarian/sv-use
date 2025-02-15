@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { defaultState, isWindowFocused, watch } from '@sv-use/core';
+	import { defaultState, isWindowFocused, watch } from '$sv-use/core';
 
 	const message = defaultState('💡 Click somewhere outside the window to lose focus');
 	const isFocused = isWindowFocused();

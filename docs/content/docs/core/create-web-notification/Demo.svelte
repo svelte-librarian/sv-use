@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { createWebNotification } from '@sv-use/core';
+	import { createWebNotification } from '$sv-use/core';
 
 	const notification = createWebNotification({
 		title: 'Hello from SvelteUse! 🎉',

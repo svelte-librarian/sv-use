@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { scale } from 'svelte/transition';
-	import { onHover } from '@sv-use/core';
+	import { onHover } from '$sv-use/core';
 	import { cn } from '$utils/cn.js';
 	import { Button } from '$lib/components/atoms/index.js';
 

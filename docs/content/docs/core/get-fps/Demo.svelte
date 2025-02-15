@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getFps } from '@sv-use/core';
+	import { getFps } from '$sv-use/core';
 
 	const fps = getFps();
 </script>

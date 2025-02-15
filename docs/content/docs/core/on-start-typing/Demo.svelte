@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Input } from '$lib/components/atoms/index.js';
-	import { onStartTyping } from '@sv-use/core';
+	import { onStartTyping } from '$sv-use/core';
 
 	let input = $state<HTMLInputElement>();
 

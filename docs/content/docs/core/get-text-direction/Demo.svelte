@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getTextDirection } from '@sv-use/core';
+	import { getTextDirection } from '$sv-use/core';
 	import { Button } from '$lib/components/atoms/index.js';
 
 	let el = $state<HTMLDivElement>();

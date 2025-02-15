@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getGeolocation } from '@sv-use/core';
+	import { getGeolocation } from '$sv-use/core';
 
 	const geolocation = getGeolocation();
 </script>

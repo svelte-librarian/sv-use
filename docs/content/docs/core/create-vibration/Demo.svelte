@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Input } from '$lib/components/atoms/index.js';
-	import { createVibration } from '@sv-use/core';
+	import { createVibration } from '$sv-use/core';
 
 	let pattern = $state<VibratePattern>([300, 100, 300]);
 	const vibration = createVibration({ pattern: () => pattern });

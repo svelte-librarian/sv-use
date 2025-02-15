@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Input } from '$lib/components/atoms/index.js';
-	import { getActiveElement } from '@sv-use/core';
+	import { getActiveElement } from '$sv-use/core';
 
 	const activeElement = getActiveElement({ autoCleanup: true });
 	const key = $derived(activeElement.current?.dataset?.id);

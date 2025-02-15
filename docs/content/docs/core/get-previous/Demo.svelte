@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/atoms/index.js';
-	import { getPrevious } from '@sv-use/core';
+	import { getPrevious } from '$sv-use/core';
 
 	let counter = $state(0);
 	let previousCounter = getPrevious(() => counter);

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { debouncedState } from '@sv-use/core';
+	import { debouncedState } from '$sv-use/core';
 	import { Input } from '$lib/components/atoms/index.js';
 	import type { FormEventHandler } from 'svelte/elements';
 

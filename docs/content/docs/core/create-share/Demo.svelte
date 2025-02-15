@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { createShare } from '@sv-use/core';
+	import { createShare } from '$sv-use/core';
 	import { Button, Input } from '$lib/components/atoms/index.js';
 
 	let text = $state('A collection of Svelte 5 utilities.');

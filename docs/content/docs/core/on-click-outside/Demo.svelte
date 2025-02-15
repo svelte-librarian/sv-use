@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onClickOutside } from '@sv-use/core';
+	import { onClickOutside } from '$sv-use/core';
 
 	let divNode = $state<HTMLDivElement>();
 
