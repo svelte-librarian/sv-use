@@ -25,14 +25,14 @@ jobs:
                   npm ci
                   npx svelte-package
             - name: Build the website
-              working-directory: ./packages/website
+              working-directory: ./docs
               run: |
                   npm ci
                   npm run build
             - name: Upload static files as artifact
               uses: actions/upload-pages-artifact@v3
               with:
-                  path: ./packages/website/build
+                  path: ./docs/build
     deploy:
         environment:
             name: github-pages
