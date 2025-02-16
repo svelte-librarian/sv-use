@@ -7,7 +7,7 @@
 </script>
 
 <div class="relative flex w-full flex-col gap-2">
-	<div class="grid grid-cols-1 gap-2 md:grid-cols-3">
+	<div class="xsm:grid-cols-2 grid grid-cols-1 gap-2 md:grid-cols-3">
 		{#each { length: 6 } as _, i}
 			{@const id = i + 1}
 			<Input data-id={id} placeholder={id.toString()} />

@@ -10,7 +10,7 @@ export const load: PageLoad = async ({ data, params }) => {
 
 async function getDemoComponent(utility: string) {
 	try {
-		const component = await import(`$lib/docs/core/${utility}/Demo.svelte`);
+		const component = await import(`../../../../../content/docs/core/${utility}/Demo.svelte`);
 		return component.default as Component;
 	} catch {
 		return undefined;
