@@ -67,7 +67,7 @@
 		<span class="dark:text-zinc-200">•</span>
 		{#if data.Component}
 			<a
-				href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{$page
+				href="https://github.com/svelte-librarian/sv-use/tree/main/docs/src/lib/docs/core/{$page
 					.params.utility}/Demo.svelte"
 				target="_blank"
 				class="text-svelte dark:text-darksvelte underline"
@@ -77,7 +77,7 @@
 			<span class="dark:text-zinc-200">•</span>
 		{/if}
 		<a
-			href="https://github.com/svelte-librarian/sv-use/tree/main/packages/website/src/lib/docs/core/{$page
+			href="https://github.com/svelte-librarian/sv-use/tree/main/docs/src/lib/docs/core/{$page
 				.params.utility}/index.md"
 			target="_blank"
 			class="text-svelte dark:text-darksvelte underline"
