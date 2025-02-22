@@ -91,16 +91,44 @@ async function convertMarkdownContentToHTML(
 	};
 }
 
+type ConvertMarkdownFileToHTMLOptions = {
+	/**
+	 * If given, will inject type definitions at the end of the markdown content.
+	 * @note It will raise an error if the file does not exist.
+	 */
+	typeDefinitionsPath?: string;
+};
+
 export async function convertMarkdownFileToHTML<T extends Attributes>(
-	filePath: string
+	filePath: string,
+	options: ConvertMarkdownFileToHTMLOptions = {}
 ): Promise<MarkdownReturn<T>> {
+	const { typeDefinitionsPath } = options;
+
 	const content = await fs.readFile(filePath, 'utf-8');
 
 	try {
-		const { attributes, body } = extractDataFromMarkdown<T>(content);
-		const markdownContent = await convertMarkdownContentToHTML(body);
+		// eslint-disable-next-line prefer-const
+		let { attributes, body } = extractDataFromMarkdown<T>(content);
 
-		return { attributes, ...markdownContent };
+		if (typeDefinitionsPath) {
+			const typeDefinitions = await fs.readFile(typeDefinitionsPath, 'utf8');
+
+			body += `
+## Type Definitions
+
+<details open>
+<summary>Show Type Definitions</summary>
+
+\`\`\`typescript
+${typeDefinitions}\`\`\`
+
+</details>`;
+		}
+
+		const data = await convertMarkdownContentToHTML(body);
+
+		return { attributes, ...data };
 	} catch (error) {
 		throw new Error(`Error converting ${filePath} to HTML: ${(error as Error).message}`);
 	}

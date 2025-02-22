@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 
 export default defineConfig({
@@ -7,8 +7,5 @@ export default defineConfig({
 		fs: {
 			allow: ['../packages/core', './content']
 		}
-	},
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
 });

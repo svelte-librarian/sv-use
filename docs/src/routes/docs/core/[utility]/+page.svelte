@@ -3,11 +3,8 @@
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
 	import { theme } from '$lib/contexts/theme.svelte.js';
 	import { toTitleCase } from '$utils/text-transform.js';
-	import { getHighlighter } from '$utils/type-definitions.js';
 
 	let { data } = $props();
-
-	let themeStyle = $derived(theme.current === 'light' ? 'one-light' : 'one-dark-pro');
 
 	$effect(() => {
 		const headings = data.headings;
@@ -16,7 +13,6 @@
 			headings.unshift({ depth: 2, value: 'Demo', data: { id: 'demo' } });
 		}
 
-		headings.push({ depth: 2, value: 'Type definitions', data: { id: 'type-definitions' } });
 		headings.push({ depth: 2, value: 'Sources', data: { id: 'sources' } });
 
 		onThisPageHeadings.current = headings;
@@ -53,21 +49,6 @@
 	<div class="content contents">
 		{@html data.html}
 	</div>
-	<details id="type-definitions-container" class="relative flex w-full flex-col items-start gap-5">
-		<summary
-			id="type-definitions"
-			class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16 dark:text-zinc-200"
-		>
-			Type definitions
-		</summary>
-		{#await getHighlighter() then highlighter}
-			{@const styled = highlighter.codeToHtml(data.typeDefinitions, {
-				lang: 'typescript',
-				theme: themeStyle
-			})}
-			{@html styled}
-		{/await}
-	</details>
 	<h2
 		id="sources"
 		class="scroll-mt-12 py-5 text-2xl font-semibold lg:scroll-mt-16 dark:text-zinc-200"
@@ -168,25 +149,6 @@
 			margin-bottom: 1.25rem;
 		}
 
-		/* https://stackoverflow.com/a/79221450/20892950 */
-		#type-definitions-container[open]::details-content {
-			display: contents;
-		}
-
-		#type-definitions-container pre {
-			position: relative;
-			width: 100%;
-			padding: 20px;
-			overflow: auto;
-			border-radius: 0.5rem;
-			counter-reset: line;
-		}
-
-		#type-definitions-container pre code {
-			overflow: auto;
-			counter-reset: line;
-		}
-
 		.content figure pre code {
 			overflow: auto;
 			border-radius: 0.5rem;
@@ -194,23 +156,19 @@
 			counter-reset: line;
 		}
 
-		.content figure pre code *,
-		#type-definitions-container pre code * {
+		.content figure pre code * {
 			font-family: 'Cascadia Code', sans-serif;
 		}
 
-		.content figure pre code span[data-highlighted-line],
-		#type-definitions-container pre code span[data-highlighted-line] {
+		.content figure pre code span[data-highlighted-line] {
 			background-color: rgba(200, 200, 255, 0.1);
 		}
 
-		.content figure pre code > [data-line],
-		#type-definitions-container pre code > [data-line] {
+		.content figure pre code > [data-line] {
 			padding: 2px 20px;
 		}
 
-		.content figure pre code[data-line-numbers] > [data-line]::before,
-		#type-definitions-container pre code[data-line-numbers] > [data-line]::before {
+		.content figure pre code[data-line-numbers] > [data-line]::before {
 			counter-increment: line;
 			content: counter(line);
 			display: inline-block;
@@ -221,17 +179,13 @@
 		}
 
 		.content figure pre code,
-		#type-definitions-container pre code,
-		.content figure pre code span,
-		#type-definitions-container pre code span {
+		.content figure pre code span {
 			color: var(--shiki-light);
 			background-color: var(--shiki-light-bg);
 		}
 
 		html.dark .content figure pre code,
-		html.dark #type-definitions-container pre code,
-		html.dark .content figure pre code span,
-		html.dark #type-definitions-container pre code span {
+		html.dark .content figure pre code span {
 			color: var(--shiki-dark);
 			background-color: var(--shiki-dark-bg);
 		}
