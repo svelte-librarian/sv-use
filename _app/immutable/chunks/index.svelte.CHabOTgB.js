@@ -1,0 +1,1 @@
+import{R as s,T as a}from"./runtime.BtYRUgJo.js";import{s as m}from"./clone.BYqg91hD.js";import{p as i}from"./proxy.pxA-SMcc.js";function p(e,o=3e3){let t;const r=i({current:e});return s(()=>{m(r),t&&clearTimeout(t),a(()=>{t=setTimeout(()=>{r.current=e},o)})}),r}export{p as a};
