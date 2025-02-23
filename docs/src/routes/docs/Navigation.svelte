@@ -164,7 +164,7 @@
 
 <nav
 	class={cn(
-		'sticky left-0 top-[65px] hidden h-[calc(100dvh-65px)] flex-1 flex-col items-center justify-start gap-5 overflow-scroll p-8 lg:flex',
+		'sticky left-0 top-[65px] hidden h-[calc(100dvh-65px)] flex-1 flex-col items-center justify-start gap-5 overflow-y-scroll p-8 lg:flex',
 		'bg-zinc-100 dark:bg-zinc-800'
 	)}
 >
