@@ -1,0 +1,40 @@
+name: Deploy To GitHub Pages
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        concurrency:
+            group: ${{ github.workflow }}-${{ github.ref }}
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up Node 22.12
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22.12.0"
+
+            - name: Build the 'core' package
+              working-directory: ./packages/core
+              run: |
+                  npm ci
+                  npx svelte-package
+            - name: Build the website
+              working-directory: ./docs
+              run: |
+                  npm ci
+                  npm run build
+
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@v4
+              if: github.ref == 'refs/heads/main'
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./build
+                  keep_files: true
