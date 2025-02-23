@@ -1,0 +1,1 @@
+import{R as u}from"./runtime.BtYRUgJo.js";import{s as f}from"./clone.BYqg91hD.js";import{t as i,n as m}from"./utils.svelte.BDOzgmnI.js";function v(e,t,o={}){const{runOnMount:a=!0}=o;let r=a;u(()=>{const n=f(i(e).map(m));if(!r){r=!0;return}n.every(s=>s)&&t()})}export{v as w};
