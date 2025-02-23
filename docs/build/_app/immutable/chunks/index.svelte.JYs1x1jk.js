@@ -1,1 +1,0 @@
-import{R as i,T as c}from"./runtime.BtYRUgJo.js";import{s as f}from"./clone.BYqg91hD.js";import{n as m}from"./utils.svelte.BDOzgmnI.js";function h(r,n,o={}){const{runOnMounted:u=!0}=o;let a=u,t;i(()=>{const e=f(Array.isArray(r)?r.map(m):r());if(!a){a=!0,t=e;return}const s=c(()=>n(e,t));return t=e,s})}export{h as w};
