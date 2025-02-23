@@ -1,6 +1,6 @@
 {
 	"name": "@sv-use/core",
-	"version": "1.15.0",
+	"version": "1.15.1",
 	"license": "MIT",
 	"description": "A collection of Svelte 5 utilities.",
 	"main": "./dist/index.js",
@@ -22,10 +22,10 @@
 	"bugs": {
 		"url": "https://github.com/svelte-librarian/sv-use/issues"
 	},
-	"homepage": "https://github.com/svelte-librarian/sv-use#readme",
+	"homepage": "https://www.sv-use.org/",
 	"scripts": {
 		"build": "svelte-package",
-		"build:watch": "npm run build && nodemon -e js,ts -w src",
+		"build:watch": "npm run build -- --watch",
 		"package": "svelte-kit sync && npm run build && publint",
 		"prepublishOnly": "npm run package",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -64,7 +64,6 @@
 		"eslint-plugin-svelte": "^2.46.1",
 		"globals": "^15.14.0",
 		"jsdom": "^26.0.0",
-		"nodemon": "^3.1.9",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.2",
 		"publint": "^0.2.12",
