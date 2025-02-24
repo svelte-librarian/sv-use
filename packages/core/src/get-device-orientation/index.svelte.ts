@@ -1,18 +1,8 @@
-import { onDestroy } from 'svelte';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
 import { isSupported } from '../__internal__/is.svelte.js';
-import { noop } from '../__internal__/utils.svelte.js';
-import type { CleanupFunction } from '../__internal__/types.js';
+import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
 
-type GetDeviceOrientationOptions = {
-	/**
-	 * Whether to auto-cleanup the event listener or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
-};
+type GetDeviceOrientationOptions = ConfigurableWindow;
 
 type GetDeviceOrientationReturn = {
 	readonly isSupported: boolean;
@@ -24,11 +14,6 @@ type GetDeviceOrientationReturn = {
 	readonly beta: number;
 	/** The motion of the device around the y axis, express in degrees with values ranging from -90 (inclusive) to 90 (exclusive). */
 	readonly gamma: number;
-	/**
-	 * Cleans up the event listener.
-	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
-	 */
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -38,22 +23,18 @@ type GetDeviceOrientationReturn = {
 export function getDeviceOrientation(
 	options: GetDeviceOrientationOptions = {}
 ): GetDeviceOrientationReturn {
-	const { autoCleanup = true } = options;
+	const { window = defaultWindow } = options;
 
-	let cleanup: CleanupFunction = noop;
-
-	const _isSupported = isSupported(() => window && 'DeviceOrientationEvent' in window);
+	const _isSupported = isSupported(
+		() => window !== undefined && 'DeviceOrientationEvent' in window
+	);
 	let _isAbsolute = $state<boolean>(false);
 	let _alpha = $state<number>(0);
 	let _beta = $state<number>(0);
 	let _gamma = $state<number>(0);
 
 	if (_isSupported.current) {
-		cleanup = handleEventListener('deviceorientation', onDeviceOrientation, { autoCleanup });
-	}
-
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
+		handleEventListener(window!, 'deviceorientation', onDeviceOrientation, { passive: true });
 	}
 
 	function onDeviceOrientation(event: DeviceOrientationEvent) {
@@ -78,7 +59,6 @@ export function getDeviceOrientation(
 		},
 		get gamma() {
 			return _gamma;
-		},
-		cleanup
+		}
 	};
 }

@@ -1,31 +1,16 @@
-import { onDestroy } from 'svelte';
-import { BROWSER } from 'esm-env';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import type { CleanupFunction } from '../__internal__/types.js';
+import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
 
-type GetActiveElementOptions = {
-	/**
-	 * Whether to automatically cleanup the event listener or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
+interface GetActiveElementOptions extends ConfigurableWindow {
 	/**
 	 * Whether to search for the active element inside shadow DOM or not.
 	 * @default true
 	 */
 	searchInShadow?: boolean;
-};
+}
 
 type GetActiveElementReturn = {
-	/** The current active element or `null`. */
 	readonly current: HTMLElement | null;
-	/**
-	 * The function to cleanup the event listener.
-	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
-	 */
-	cleanup: () => void;
 };
 
 /**
@@ -33,22 +18,13 @@ type GetActiveElementReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/get-active-element
  */
 export function getActiveElement(options: GetActiveElementOptions = {}): GetActiveElementReturn {
-	const { autoCleanup = true, searchInShadow = true } = options;
+	const { searchInShadow = true, window = defaultWindow } = options;
 
-	const cleanups: CleanupFunction[] = [];
 	let _current = $state<HTMLElement | null>(null);
 
-	if (BROWSER) {
-		cleanups.push(
-			handleEventListener('blur', onBlur, { autoCleanup, capture: true }),
-			handleEventListener('focus', onFocus, { autoCleanup, capture: true })
-		);
-	}
-
-	if (autoCleanup) {
-		onDestroy(() => {
-			cleanup();
-		});
+	if (window) {
+		handleEventListener(window, 'blur', onBlur, { capture: true });
+		handleEventListener(window, 'focus', onFocus, { capture: true });
 	}
 
 	function getDeepActiveElement() {
@@ -73,14 +49,9 @@ export function getActiveElement(options: GetActiveElementOptions = {}): GetActi
 		onFocus();
 	}
 
-	function cleanup() {
-		cleanups.forEach((fn) => fn());
-	}
-
 	return {
 		get current() {
 			return _current;
-		},
-		cleanup
+		}
 	};
 }

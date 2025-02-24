@@ -1,7 +1,6 @@
-import { onDestroy } from 'svelte';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
 import { noop, normalizeValue } from '../__internal__/utils.svelte.js';
-import type { CleanupFunction, MaybeGetter } from '../__internal__/types.js';
+import type { MaybeGetter } from '../__internal__/types.js';
 
 type Position = {
 	x: number;
@@ -9,13 +8,6 @@ type Position = {
 };
 
 type OnLongPressOptions = {
-	/**
-	 * Whether to auto-cleanup the event listeners or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
 	/**
 	 * Time in milliseconds before the `handler` gets called.
 	 * @default 500
@@ -69,20 +61,23 @@ type OnLongPressModifiers = {
 	stopPropagation?: boolean;
 };
 
+type OnLongPressReturn = {
+	readonly current: boolean;
+};
+
 /**
  * Runs a callback when a long press occurs on a given element.
  * @param target The element on which to attach the long press.
- * @param handler The callback to execute.
+ * @param callback The callback to execute.
  * @param options Additional options to customize the behavior.
- * @returns A cleanup function.
  * @see https://svelte-librarian.github.io/sv-use/docs/core/on-long-press
  */
 export function onLongPress(
 	target: MaybeGetter<HTMLElement | null | undefined>,
-	handler: (event: PointerEvent) => void,
+	callback: (event: PointerEvent) => void,
 	options: OnLongPressOptions = {}
-): CleanupFunction {
-	const { autoCleanup = true, delay = 500, distanceThreshold = 10, onMouseUp = noop } = options;
+): OnLongPressReturn {
+	const { delay = 500, distanceThreshold = 10, onMouseUp = noop } = options;
 	const modifiers: OnLongPressModifiers = {
 		capture: false,
 		once: false,
@@ -92,32 +87,21 @@ export function onLongPress(
 		...(options.modifiers ?? {})
 	};
 
-	let cleanups: CleanupFunction[] = [];
-	const listenerOptions: Parameters<typeof handleEventListener>['3'] = {
+	const listenerOptions: AddEventListenerOptions = {
 		capture: modifiers.capture,
-		once: modifiers.once,
-		autoCleanup
+		once: modifiers.once
 	};
 	let timeout: ReturnType<typeof setTimeout> | undefined;
 	let startPosition: Position | undefined;
 	let startTimestamp: number | undefined;
-	let isLongPress = false;
+
+	let current = $state(false);
 
 	const _target = $derived(normalizeValue(target));
 
-	$effect(() => {
-		if (_target) {
-			(cleanups = [] as CleanupFunction[]).push(
-				handleEventListener(_target!, 'pointerdown', onDown, listenerOptions),
-				handleEventListener(_target!, 'pointermove', onMove, listenerOptions),
-				handleEventListener(_target!, ['pointerup', 'pointerleave'], onRelease, listenerOptions)
-			);
-		}
-	});
-
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
-	}
+	handleEventListener(target, 'pointerdown', onDown, listenerOptions);
+	handleEventListener(target, 'pointermove', onMove, listenerOptions);
+	handleEventListener(target, ['pointerup', 'pointerleave'], onRelease, listenerOptions);
 
 	function onDown(event: PointerEvent) {
 		if (modifiers.self && event.target !== _target) return;
@@ -134,8 +118,8 @@ export function onLongPress(
 		startTimestamp = event.timeStamp;
 
 		timeout = setTimeout(() => {
-			isLongPress = true;
-			handler(event);
+			current = true;
+			callback(event);
 		}, delay);
 	}
 
@@ -159,7 +143,7 @@ export function onLongPress(
 		const [_startTimestamp, _startPosition, _hasLongPressed] = [
 			startTimestamp,
 			startPosition,
-			isLongPress
+			current
 		];
 		reset();
 
@@ -184,13 +168,12 @@ export function onLongPress(
 
 		startPosition = undefined;
 		startTimestamp = undefined;
-		isLongPress = false;
+		current = false;
 	}
 
-	function cleanup() {
-		cleanups.forEach((fn) => fn());
-		reset();
-	}
-
-	return cleanup;
+	return {
+		get current() {
+			return current;
+		}
+	};
 }

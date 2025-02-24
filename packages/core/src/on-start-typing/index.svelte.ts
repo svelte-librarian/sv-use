@@ -1,17 +1,7 @@
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import { noop } from '../__internal__/utils.svelte.js';
 import { defaultDocument, type ConfigurableDocument } from '../__internal__/configurable.js';
-import type { CleanupFunction } from '../__internal__/types.js';
 
-interface OnStartTypingOptions extends ConfigurableDocument {
-	/**
-	 * Whether to auto-cleanup the event listener or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
-}
+type OnStartTypingOptions = ConfigurableDocument;
 
 /**
  * Fires when users start typing on non-editable elements.
@@ -22,14 +12,10 @@ interface OnStartTypingOptions extends ConfigurableDocument {
 export function onStartTyping(
 	callback: (event: KeyboardEvent) => void,
 	options: OnStartTypingOptions = {}
-): CleanupFunction {
-	const { autoCleanup = true, document = defaultDocument } = options;
+): void {
+	const { document = defaultDocument } = options;
 
-	let cleanup: CleanupFunction = noop;
-
-	if (document) {
-		cleanup = handleEventListener(document, 'keydown', onKeydown, { autoCleanup, passive: true });
-	}
+	handleEventListener(document, 'keydown', onKeydown, { passive: true });
 
 	function onKeydown(event: KeyboardEvent) {
 		if (!isFocusedElementEditable() && isTypedCharValid(event)) {
@@ -69,6 +55,4 @@ export function onStartTyping(
 		// All other keys.
 		return false;
 	}
-
-	return cleanup;
 }

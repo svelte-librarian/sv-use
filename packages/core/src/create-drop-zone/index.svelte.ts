@@ -1,7 +1,6 @@
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
 import { noop, normalizeValue, toArray } from '../__internal__/utils.svelte.js';
-import type { CleanupFunction, MaybeGetter } from '../__internal__/types.js';
-import { untrack } from 'svelte';
+import type { MaybeGetter } from '../__internal__/types.js';
 
 type CreateDropZoneOptions = {
 	/**
@@ -32,7 +31,6 @@ type CreateDropZoneOptions = {
 type CreateDropZoneReturn = {
 	readonly isOver: boolean;
 	files: File[] | null;
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -55,37 +53,16 @@ export function createDropZone(
 		onOver = noop
 	} = options;
 
-	let cleanups: CleanupFunction[] = [];
 	let counter = 0;
 	let isValid = true;
 
-	const _target = $derived(normalizeValue(target));
 	let isOver = $state(false);
 	let files = $state<File[] | null>(null);
 
-	$effect(() => {
-		if (_target) {
-			untrack(() => {
-				cleanups.push(
-					handleEventListener<DragEvent>(_target, 'dragenter', (event) =>
-						handleDragEvent(event, 'enter')
-					),
-					handleEventListener<DragEvent>(_target, 'dragover', (event) =>
-						handleDragEvent(event, 'over')
-					),
-					handleEventListener<DragEvent>(_target, 'dragleave', (event) =>
-						handleDragEvent(event, 'leave')
-					),
-					handleEventListener<DragEvent>(_target, 'drop', (event) => handleDragEvent(event, 'drop'))
-				);
-			});
-		}
-
-		return () => {
-			cleanup();
-			cleanups = [];
-		};
-	});
+	handleEventListener(target, 'dragenter', (event) => handleDragEvent(event, 'enter'));
+	handleEventListener(target, 'dragover', (event) => handleDragEvent(event, 'over'));
+	handleEventListener(target, 'dragleave', (event) => handleDragEvent(event, 'leave'));
+	handleEventListener(target, 'drop', (event) => handleDragEvent(event, 'drop'));
 
 	function getFiles(event: DragEvent) {
 		const list = Array.from(event.dataTransfer?.files ?? []);
@@ -179,10 +156,6 @@ export function createDropZone(
 		}
 	}
 
-	function cleanup() {
-		cleanups.map((fn) => fn());
-	}
-
 	return {
 		get files() {
 			return files;
@@ -192,7 +165,6 @@ export function createDropZone(
 		},
 		get isOver() {
 			return isOver;
-		},
-		cleanup
+		}
 	};
 }

@@ -1,5 +1,5 @@
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import { noop, normalizeValue } from '../__internal__/utils.svelte.js';
+import { noop } from '../__internal__/utils.svelte.js';
 import type { MaybeGetter } from '../__internal__/types.js';
 
 type OnHoverOptions = {
@@ -51,6 +51,7 @@ export function onHover(
 	callbackOrOptions?: ((event: MouseEvent) => void) | OnHoverOptions,
 	optionsOrNever?: OnHoverOptions
 ): OnHoverReturn {
+	let timeout: ReturnType<typeof setTimeout>;
 	let callback: (event: MouseEvent) => void = noop;
 	let options: OnHoverOptions = { delay: undefined, onLeave: noop, dirty: false };
 
@@ -67,39 +68,32 @@ export function onHover(
 		};
 	}
 
-	let timeout: ReturnType<typeof setTimeout>;
+	let current = $state(false);
 
-	let isHovering = $state(false);
-	const _element = $derived(normalizeValue(element));
+	handleEventListener(element, options.dirty ? 'mouseover' : 'mouseenter', (event) => {
+		clearTimeout(timeout);
 
-	$effect(() => {
-		if (_element) {
-			handleEventListener(_element, options.dirty ? 'mouseover' : 'mouseenter', (event) => {
-				clearTimeout(timeout);
-
-				if (options.delay) {
-					timeout = setTimeout(() => {
-						isHovering = true;
-						callback(event);
-					}, options.delay);
-				} else {
-					isHovering = true;
-					callback(event);
-				}
-			});
-
-			handleEventListener(_element, options.dirty ? 'mouseout' : 'mouseleave', (event) => {
-				clearTimeout(timeout);
-
-				isHovering = false;
-				options.onLeave?.(event);
-			});
+		if (options.delay) {
+			timeout = setTimeout(() => {
+				current = true;
+				callback(event);
+			}, options.delay);
+		} else {
+			current = true;
+			callback(event);
 		}
+	});
+
+	handleEventListener(element, options.dirty ? 'mouseout' : 'mouseleave', (event) => {
+		clearTimeout(timeout);
+
+		current = false;
+		options.onLeave?.(event);
 	});
 
 	return {
 		get current() {
-			return isHovering;
+			return current;
 		}
 	};
 }

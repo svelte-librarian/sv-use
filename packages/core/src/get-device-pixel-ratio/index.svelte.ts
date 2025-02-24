@@ -1,29 +1,13 @@
-import { onDestroy } from 'svelte';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import { noop } from '../__internal__/utils.svelte.js';
 import { isSupported } from '../__internal__/is.svelte.js';
-import type { CleanupFunction } from '../__internal__/types.js';
+import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
 
-type GetDevicePixelRatioOptions = {
-	/**
-	 * Whether to auto-cleanup the event listener or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
-};
+type GetDevicePixelRatioOptions = ConfigurableWindow;
 
 type GetDevicePixelRatioReturn = {
 	/** Whether the {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio | devicePixelRatio property} is supported or not. */
 	readonly isSupported: boolean;
-	/** The current device pixel ratio. */
 	readonly current: number;
-	/**
-	 * Cleans up the event listener.
-	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
-	 */
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -33,27 +17,20 @@ type GetDevicePixelRatioReturn = {
 export function getDevicePixelRatio(
 	options: GetDevicePixelRatioOptions = {}
 ): GetDevicePixelRatioReturn {
-	const { autoCleanup = true } = options;
+	const { window = defaultWindow } = options;
 
-	let cleanup: CleanupFunction = noop;
-
-	const _isSupported = isSupported(() => window && 'devicePixelRatio' in window);
+	const _isSupported = isSupported(() => window !== undefined && 'devicePixelRatio' in window);
 	let _current = $state(1);
 
 	if (_isSupported.current) {
 		updatePixelRatio();
 	}
 
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
-	}
-
 	function updatePixelRatio() {
-		_current = window.devicePixelRatio;
-		cleanup();
+		_current = window!.devicePixelRatio;
 
-		const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-		cleanup = handleEventListener(media, 'change', updatePixelRatio, { autoCleanup, once: true });
+		const media = window!.matchMedia(`(resolution: ${window!.devicePixelRatio}dppx)`);
+		handleEventListener(media, 'change', updatePixelRatio, { once: true });
 	}
 
 	return {
@@ -62,7 +39,6 @@ export function getDevicePixelRatio(
 		},
 		get current() {
 			return _current;
-		},
-		cleanup
+		}
 	};
 }

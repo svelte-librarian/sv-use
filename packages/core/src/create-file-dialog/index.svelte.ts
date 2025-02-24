@@ -1,15 +1,7 @@
-import { onDestroy } from 'svelte';
 import { BROWSER } from 'esm-env';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import type { CleanupFunction } from '../__internal__/types.js';
 
 type CreateFileDialogOptions = {
-	/**
-	 * Whether to automatically clean up the event listeners or not.
-	 * @note If set to `true`, you must call `createFileDialog` in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
 	/** @default '*' */
 	accept?: string;
 	/** @default false */
@@ -36,8 +28,6 @@ type CreateFileDialogReturn = {
 	open: () => void;
 	/** Resets the file dialog. */
 	reset: () => void;
-	/** Cleans up the input node and the event listeners. */
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -46,18 +36,10 @@ type CreateFileDialogReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/create-file-dialog
  */
 export function createFileDialog(options: CreateFileDialogOptions = {}): CreateFileDialogReturn {
-	const {
-		autoCleanup = true,
-		accept = '*',
-		multiple = false,
-		onChange = () => {},
-		onCancel = () => {}
-	} = options;
+	const { accept = '*', multiple = false, onChange = () => {}, onCancel = () => {} } = options;
 
 	let _files = $state<File[]>([]);
 	let _input = $state<HTMLInputElement>();
-
-	const cleanups: CleanupFunction[] = [];
 
 	if (BROWSER) {
 		_input = document.createElement('input');
@@ -65,20 +47,13 @@ export function createFileDialog(options: CreateFileDialogOptions = {}): CreateF
 		_input.accept = accept;
 		_input.multiple = multiple;
 
-		cleanups.push(
-			handleEventListener(_input, 'change', (event) => {
-				_files = Array.from((event.currentTarget as EventTarget & HTMLInputElement).files ?? []);
-				onChange(_files);
-			}),
-			handleEventListener(_input, 'cancel', () => {
-				onCancel();
-			})
-		);
-	}
+		handleEventListener(_input, 'change', (event) => {
+			_files = Array.from((event.currentTarget as EventTarget & HTMLInputElement).files ?? []);
+			onChange(_files);
+		});
 
-	if (autoCleanup) {
-		onDestroy(() => {
-			cleanup();
+		handleEventListener(_input, 'cancel', () => {
+			onCancel();
 		});
 	}
 
@@ -96,17 +71,11 @@ export function createFileDialog(options: CreateFileDialogOptions = {}): CreateF
 		}
 	}
 
-	function cleanup() {
-		cleanups.forEach((fn) => fn());
-		_input?.remove();
-	}
-
 	return {
 		get files() {
 			return _files;
 		},
 		open,
-		reset,
-		cleanup
+		reset
 	};
 }
