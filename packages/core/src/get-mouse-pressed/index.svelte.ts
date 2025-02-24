@@ -1,6 +1,5 @@
-import { onDestroy } from 'svelte';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import { defaultWindow } from '../__internal__/configurable.js';
+import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
 import type { CleanupFunction } from '../__internal__/types.js';
 
 type GetMousePressedPressAndReleaseEvent<
@@ -14,14 +13,8 @@ type GetMousePressedPressAndReleaseEvent<
 		? MouseEvent | DragEvent
 		: MouseEvent;
 
-type GetMousePressedOptions<EnableTouch extends boolean, EnableDrag extends boolean> = {
-	/**
-	 * Whether to auto-cleanup the event listeners or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
+interface GetMousePressedOptions<EnableTouch extends boolean, EnableDrag extends boolean>
+	extends ConfigurableWindow {
 	/**
 	 * Only trigger if the click happened inside `target`.
 	 * @default window
@@ -47,7 +40,7 @@ type GetMousePressedOptions<EnableTouch extends boolean, EnableDrag extends bool
 	 * @default () => {}
 	 */
 	onReleased?: (event: GetMousePressedPressAndReleaseEvent<EnableTouch, EnableDrag>) => void;
-};
+}
 
 type GetMousePressedType = 'mouse' | 'touch' | null;
 
@@ -71,8 +64,8 @@ export function getMousePressed<
 	EnableDrag extends boolean = true
 >(options: GetMousePressedOptions<EnableTouch, EnableDrag> = {}): GetMousePressedReturn {
 	const {
-		autoCleanup = true,
 		target = defaultWindow,
+		window = defaultWindow,
 		enableTouch = true,
 		enableDrag = true,
 		onPressed = () => {},
@@ -84,56 +77,20 @@ export function getMousePressed<
 	let _isPressed = $state(false);
 	let _type = $state<GetMousePressedType>(null);
 
-	if (target) {
-		cleanups.push(
-			handleEventListener<MouseEvent>(target, 'mousedown', _onPressed('mouse'), {
-				passive: true
-			}),
+	handleEventListener(target, 'mousedown', _onPressed('mouse'), { passive: true });
+	handleEventListener(window, 'mouseleave', _onReleased, { passive: true });
+	handleEventListener(window, 'mouseup', _onReleased, { passive: true });
 
-			handleEventListener<MouseEvent>(window, 'mouseleave', _onReleased, {
-				autoCleanup,
-				passive: true
-			}),
-			handleEventListener<MouseEvent>(window, 'mouseup', _onReleased, {
-				autoCleanup,
-				passive: true
-			})
-		);
-
-		if (enableDrag) {
-			cleanups.push(
-				handleEventListener<DragEvent>(target, 'dragstart', _onPressed('mouse'), {
-					passive: true
-				}),
-
-				handleEventListener<DragEvent>(window, 'drop', _onReleased, { autoCleanup, passive: true }),
-				handleEventListener<DragEvent>(window, 'dragend', _onReleased, {
-					autoCleanup,
-					passive: true
-				})
-			);
-		}
-
-		if (enableTouch) {
-			cleanups.push(
-				handleEventListener<TouchEvent>(target, 'touchstart', _onPressed('touch'), {
-					passive: true
-				}),
-
-				handleEventListener<TouchEvent>(window, 'touchend', _onReleased, {
-					autoCleanup,
-					passive: true
-				}),
-				handleEventListener<TouchEvent>(window, 'touchcancel', _onReleased, {
-					autoCleanup,
-					passive: true
-				})
-			);
-		}
+	if (enableDrag) {
+		handleEventListener(target, 'dragstart', _onPressed('mouse'), { passive: true });
+		handleEventListener(window, 'drop', _onReleased, { passive: true });
+		handleEventListener(window, 'dragend', _onReleased, { passive: true });
 	}
 
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
+	if (enableTouch) {
+		handleEventListener(target, 'touchstart', _onPressed('touch'), { passive: true });
+		handleEventListener(window, 'touchend', _onReleased, { passive: true });
+		handleEventListener(window, 'touchcancel', _onReleased, { passive: true });
 	}
 
 	function _onPressed(type: GetMousePressedType) {

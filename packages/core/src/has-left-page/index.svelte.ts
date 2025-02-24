@@ -1,25 +1,15 @@
-import { onDestroy } from 'svelte';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
-import type { CleanupFunction } from '../__internal__/types.js';
+import {
+	defaultDocument,
+	defaultWindow,
+	type ConfigurableDocument,
+	type ConfigurableWindow
+} from '../__internal__/configurable.js';
 
-interface HasLeftPageOptions extends ConfigurableWindow {
-	/**
-	 * Whether to automatically clean up the event listeners or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
-}
+interface HasLeftPageOptions extends ConfigurableWindow, ConfigurableDocument {}
 
 type HasLeftPageReturn = {
 	readonly current: boolean;
-	/**
-	 * Cleans up the event listeners.
-	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
-	 */
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -28,9 +18,8 @@ type HasLeftPageReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/has-left-page
  */
 export function hasLeftPage(options: HasLeftPageOptions = {}): HasLeftPageReturn {
-	const { autoCleanup = true, window = defaultWindow } = options;
+	const { window = defaultWindow, document = defaultDocument } = options;
 
-	const cleanups: CleanupFunction[] = [];
 	let _current = $state(false);
 
 	const handler = (event: MouseEvent) => {
@@ -43,31 +32,12 @@ export function hasLeftPage(options: HasLeftPageOptions = {}): HasLeftPageReturn
 		_current = !from;
 	};
 
-	if (window) {
-		cleanups.push(
-			handleEventListener(window, 'mouseout', handler, {
-				autoCleanup,
-				passive: true
-			}),
-			handleEventListener(document, ['mouseleave', 'mouseenter'], handler, {
-				autoCleanup,
-				passive: true
-			})
-		);
-	}
-
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
-	}
-
-	function cleanup() {
-		cleanups.forEach((cleanup) => cleanup());
-	}
+	handleEventListener(window, 'mouseout', handler, { passive: true });
+	handleEventListener(document, ['mouseleave', 'mouseenter'], handler, { passive: true });
 
 	return {
 		get current() {
 			return _current;
-		},
-		cleanup
+		}
 	};
 }

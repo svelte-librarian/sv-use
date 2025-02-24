@@ -3,12 +3,11 @@ import { handleEventListener } from '../handle-event-listener/index.svelte.js';
 import { observeResize } from '../observe-resize/index.svelte.js';
 import { observeMutation } from '../observe-mutation/index.svelte.js';
 import { normalizeValue } from '../__internal__/utils.svelte.js';
-import type { CleanupFunction, MaybeGetter } from '../__internal__/types.js';
+import type { MaybeGetter } from '../__internal__/types.js';
 
 type GetScrollbarWidthReturn = {
 	readonly x: number;
 	readonly y: number;
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -19,37 +18,23 @@ type GetScrollbarWidthReturn = {
 export function getScrollbarWidth(
 	element: MaybeGetter<HTMLElement | null | undefined>
 ): GetScrollbarWidthReturn {
-	let cleanups: CleanupFunction[] = [];
-
 	let x = $state<number>(0);
 	let y = $state<number>(0);
-	const _target = $derived(normalizeValue(element));
+
+	handleEventListener(element, 'resize', calculate);
+
+	observeResize(element, calculate, { autoCleanup: false });
+	observeMutation(element, calculate, { autoCleanup: false, attributes: true });
 
 	$effect(() => untrack(() => calculate()));
 
-	$effect(() => {
-		if (_target) {
-			cleanups.push(handleEventListener('resize', calculate));
-		}
-
-		return cleanup;
-	});
-
-	cleanups.push(
-		observeResize(() => _target, calculate, { autoCleanup: false }).cleanup,
-		observeMutation(() => _target, calculate, { autoCleanup: false, attributes: true }).cleanup
-	);
-
 	function calculate() {
-		if (!_target) return;
+		const _element = normalizeValue(element);
 
-		x = _target.offsetWidth - _target.clientWidth;
-		y = _target.offsetHeight - _target.clientHeight;
-	}
+		if (!_element) return;
 
-	function cleanup() {
-		cleanups.forEach((fn) => fn());
-		cleanups = [];
+		x = _element.offsetWidth - _element.clientWidth;
+		y = _element.offsetHeight - _element.clientHeight;
 	}
 
 	return {
@@ -58,7 +43,6 @@ export function getScrollbarWidth(
 		},
 		get y() {
 			return y;
-		},
-		cleanup
+		}
 	};
 }

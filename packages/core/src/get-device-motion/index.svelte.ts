@@ -1,18 +1,8 @@
-import { onDestroy } from 'svelte';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
 import { isSupported } from '../__internal__/is.svelte.js';
-import { noop } from '../__internal__/utils.svelte.js';
-import type { CleanupFunction } from '../__internal__/types.js';
+import { defaultWindow, type ConfigurableWindow } from '$lib/__internal__/configurable.js';
 
-type GetDeviceMotionOptions = {
-	/**
-	 * Whether to auto-cleanup the event listener or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
-};
+type GetDeviceMotionOptions = ConfigurableWindow;
 
 type GetDeviceMotionReturn = {
 	/** Whether the device supports the {@link https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent | `DeviceMotionEvent`} feature or not. */
@@ -35,21 +25,15 @@ type GetDeviceMotionReturn = {
 	readonly rotationRate: DeviceMotionEventRotationRate;
 	/** The interval, in milliseconds, at which data is obtained from the underlying hardware. */
 	readonly interval: number;
-	/**
-	 * Cleans up the event listener.
-	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
-	 */
-	cleanup: CleanupFunction;
 };
 
 /**
  * Provides information about the device's motion, including acceleration and rotation rate.
+ * @param options Additional options to customize the behavior.
  * @see https://svelte-librarian.github.io/sv-use/docs/core/get-device-motion
  */
 export function getDeviceMotion(options: GetDeviceMotionOptions = {}): GetDeviceMotionReturn {
-	const { autoCleanup = true } = options;
-
-	let cleanup: CleanupFunction = noop;
+	const { window = defaultWindow } = options;
 
 	const _isSupported = isSupported(() => window !== undefined && 'DeviceMotionEvent' in window);
 	let _acceleration = $state<NonNullable<DeviceMotionEvent['acceleration']>>({
@@ -71,12 +55,8 @@ export function getDeviceMotion(options: GetDeviceMotionOptions = {}): GetDevice
 	});
 	let _interval = $state<number>(0);
 
-	if (_isSupported.current) {
-		cleanup = handleEventListener('devicemotion', onDeviceMotion, { autoCleanup });
-	}
-
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
+	if (_isSupported.current && window) {
+		handleEventListener(window, 'devicemotion', onDeviceMotion, { passive: true });
 	}
 
 	function onDeviceMotion(event: DeviceMotionEvent) {
@@ -110,7 +90,6 @@ export function getDeviceMotion(options: GetDeviceMotionOptions = {}): GetDevice
 		},
 		get interval() {
 			return _interval;
-		},
-		cleanup
+		}
 	};
 }

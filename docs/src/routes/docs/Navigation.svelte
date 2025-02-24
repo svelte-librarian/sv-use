@@ -2,7 +2,6 @@
 	import { fade, fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import { handleEventListener } from '$sv-use/core';
 	import { onThisPageHeadings } from '$lib/contexts/navigation.svelte.js';
 	import { toTitleCase } from '$utils/text-transform.js';
 	import { cn } from '$utils/cn.js';
@@ -19,7 +18,11 @@
 	let showSidebar = $state(false);
 	let showOnThisPage = $state(false);
 
-	handleEventListener('click', (event: MouseEvent) => {
+	$effect(() => {
+		document.body.style.overflow = showSidebar ? 'hidden' : 'auto';
+	});
+
+	function onclick(event: MouseEvent) {
 		const target = event.target as HTMLElement;
 
 		if (
@@ -34,12 +37,10 @@
 		} else {
 			showOnThisPage = false;
 		}
-	});
-
-	$effect(() => {
-		document.body.style.overflow = showSidebar ? 'hidden' : 'auto';
-	});
+	}
 </script>
+
+<svelte:window {onclick} />
 
 <div class="sticky left-0 top-0 z-10 flex w-full items-center justify-between lg:hidden">
 	<nav

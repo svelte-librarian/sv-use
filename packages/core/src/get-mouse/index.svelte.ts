@@ -1,17 +1,8 @@
-import { onDestroy } from 'svelte';
-import { BROWSER } from 'esm-env';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
 import { noop } from '../__internal__/utils.svelte.js';
-import type { CleanupFunction } from '../__internal__/types.js';
+import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
 
-type GetMouseOptions = {
-	/**
-	 * Whether to auto-cleanup the event listener or not.
-	 *
-	 * If set to `true`, it must run in the component initialization lifecycle.
-	 * @default true
-	 */
-	autoCleanup?: boolean;
+interface GetMouseOptions extends ConfigurableWindow {
 	/**
 	 * The initial position of the mouse.
 	 * @default { x: 0; y: 0 }
@@ -22,18 +13,13 @@ type GetMouseOptions = {
 	 * @default () => {}
 	 */
 	onMove?: (event: MouseEvent) => void;
-};
+}
 
 type GetMouseReturn = {
 	/** The horizontal position of the mouse. */
 	readonly x: number;
 	/** The vertical position of the mouse. */
 	readonly y: number;
-	/**
-	 * Cleans up the event listener.
-	 * @note Is called automatically if `options.autoCleanup` is set to `true`.
-	 */
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -42,20 +28,12 @@ type GetMouseReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/get-mouse
  */
 export function getMouse(options: GetMouseOptions = {}): GetMouseReturn {
-	const { autoCleanup = true, initial = { x: 0, y: 0 }, onMove = noop } = options;
-
-	let cleanup: CleanupFunction = noop;
+	const { initial = { x: 0, y: 0 }, onMove = noop, window = defaultWindow } = options;
 
 	let _x = $state<number>(initial.x);
 	let _y = $state<number>(initial.y);
 
-	if (BROWSER) {
-		cleanup = handleEventListener('mousemove', onMouseMove, { autoCleanup });
-	}
-
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
-	}
+	handleEventListener(window, 'mousemove', onMouseMove);
 
 	function onMouseMove(event: MouseEvent) {
 		_x = event.pageX;
@@ -70,7 +48,6 @@ export function getMouse(options: GetMouseOptions = {}): GetMouseReturn {
 		},
 		get y() {
 			return _y;
-		},
-		cleanup
+		}
 	};
 }

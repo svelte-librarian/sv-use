@@ -1,11 +1,9 @@
-import { onDestroy } from 'svelte';
 import { BROWSER } from 'esm-env';
 import { getPermission } from '../get-permission/index.svelte.js';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import type { CleanupFunction } from '../__internal__/types.js';
-import { noop } from '../__internal__/utils.svelte.js';
+import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
 
-type GetClipboardOptions<AllowRead extends boolean> = {
+interface GetClipboardOptions<AllowRead extends boolean> extends ConfigurableWindow {
 	/**
 	 * Whether to automatically clean up the event listeners or not.
 	 * @note If set to `true`, you must call `getClipboardText` in the component initialization lifecycle.
@@ -27,7 +25,7 @@ type GetClipboardOptions<AllowRead extends boolean> = {
 	 * @default false
 	 */
 	legacyCopy?: boolean;
-};
+}
 
 type GetClipboardReturn = {
 	readonly isSupported: boolean;
@@ -36,8 +34,6 @@ type GetClipboardReturn = {
 	readonly text: string;
 	/** Copies text to the clipboard. */
 	copyText: (value: string) => void;
-	/** Cleans up the event listeners. */
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -49,28 +45,22 @@ export function getClipboardText<AllowRead extends boolean = false>(
 	options: GetClipboardOptions<AllowRead> = {}
 ): GetClipboardReturn {
 	const {
-		autoCleanup = true,
 		allowRead = false,
 		copyDuration = 2000,
-		legacyCopy = false
+		legacyCopy = false,
+		window = defaultWindow
 	} = options;
 
 	const _isClipboardAPISupported = $derived.by(() => navigator && 'clipboard' in navigator);
 	const _isSupported = $derived.by(() => _isClipboardAPISupported || legacyCopy);
 	const _readPermission = getPermission('clipboard-read', { exposeControls: true });
 	const _writePermission = getPermission('clipboard-write');
+
 	let _isCopied = $state<boolean>(false);
 	let _text = $state<string>('');
-	let cleanup: CleanupFunction = noop;
 
 	if (BROWSER && _isSupported && allowRead) {
-		cleanup = handleEventListener(['copy', 'cut'], readText);
-	}
-
-	if (autoCleanup) {
-		onDestroy(() => {
-			cleanup();
-		});
+		handleEventListener(window!, ['copy', 'cut'], readText);
 	}
 
 	function copyText(value: string) {
@@ -123,7 +113,6 @@ export function getClipboardText<AllowRead extends boolean = false>(
 		get text() {
 			return _text;
 		},
-		copyText,
-		cleanup
+		copyText
 	};
 }

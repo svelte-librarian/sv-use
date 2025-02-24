@@ -2,8 +2,7 @@ import type { Getter } from './types.js';
 
 export const noop = () => {};
 
-export function toArray<T>(v: T): T extends Array<unknown> ? T : T[] {
-	// @ts-expect-error Bypass type error
+export function toArray<T>(v: T | T[]): T[] {
 	return Array.isArray(v) ? v : [v];
 }
 
