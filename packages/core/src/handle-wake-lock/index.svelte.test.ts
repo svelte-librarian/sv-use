@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { tick } from 'svelte';
+import { flushSync, tick } from 'svelte';
 import { handleWakeLock } from './index.svelte.js';
 import { asyncEffectRoot } from '../__internal__/utils.svelte.js';
 
@@ -30,7 +30,7 @@ class MockDocument extends EventTarget {
 describe('Wake Lock API is not supported', () => {
 	it("doesn't change isActive if it isn't supported", async () => {
 		const cleanup = asyncEffectRoot(async () => {
-			const wakeLock = handleWakeLock({ autoCleanup: false, navigator: {} as Navigator });
+			const wakeLock = handleWakeLock({ navigator: {} as Navigator });
 
 			expect(wakeLock.isActive).toBeFalsy();
 
@@ -41,8 +41,6 @@ describe('Wake Lock API is not supported', () => {
 			await wakeLock.release();
 
 			expect(wakeLock.isActive).toBeFalsy();
-
-			wakeLock.cleanup();
 		});
 
 		await cleanup();
@@ -54,7 +52,7 @@ describe('Wake Lock API is supported', () => {
 		const cleanup = asyncEffectRoot(async () => {
 			defineWakeLockAPI();
 
-			const wakeLock = handleWakeLock({ autoCleanup: false });
+			const wakeLock = handleWakeLock();
 
 			expect(wakeLock.isActive).toBeFalsy();
 
@@ -65,8 +63,6 @@ describe('Wake Lock API is supported', () => {
 			await wakeLock.release();
 
 			expect(wakeLock.isActive).toBeFalsy();
-
-			wakeLock.cleanup();
 		});
 
 		await cleanup();
@@ -77,7 +73,7 @@ describe('Wake Lock API is supported', () => {
 			vi.useFakeTimers();
 			defineWakeLockAPI();
 
-			const wakeLock = handleWakeLock({ autoCleanup: false });
+			const wakeLock = handleWakeLock();
 
 			expect(wakeLock.isActive).toBeFalsy();
 
@@ -89,8 +85,6 @@ describe('Wake Lock API is supported', () => {
 			document.dispatchEvent(new window.Event('visibilitychange'));
 
 			expect(wakeLock.isActive).toBeTruthy();
-
-			wakeLock.cleanup();
 		});
 
 		await cleanup();
@@ -101,7 +95,7 @@ describe('Wake Lock API is supported', () => {
 			defineWakeLockAPI();
 			const mockDocument = new MockDocument();
 
-			const wakeLock = handleWakeLock({ autoCleanup: false, document: mockDocument as Document });
+			const wakeLock = handleWakeLock({ document: mockDocument as Document });
 
 			await wakeLock.request('screen');
 
@@ -110,12 +104,12 @@ describe('Wake Lock API is supported', () => {
 			mockDocument.visibilityState = 'visible';
 			mockDocument.dispatchEvent(new Event('visibilitychange'));
 
+			flushSync();
+
 			await tick();
 			await tick();
 
 			expect(wakeLock.isActive).toBeTruthy();
-
-			wakeLock.cleanup();
 		});
 
 		await cleanup();
@@ -126,7 +120,7 @@ describe('Wake Lock API is supported', () => {
 			defineWakeLockAPI();
 			const mockDocument = new MockDocument();
 
-			const wakeLock = handleWakeLock({ autoCleanup: false, document: mockDocument as Document });
+			const wakeLock = handleWakeLock({ document: mockDocument as Document });
 
 			await wakeLock.request('screen');
 
@@ -140,8 +134,6 @@ describe('Wake Lock API is supported', () => {
 			mockDocument.dispatchEvent(new Event('visibilitychange'));
 
 			expect(wakeLock.isActive).toBeFalsy();
-
-			wakeLock.cleanup();
 		});
 
 		await cleanup();
@@ -153,7 +145,7 @@ describe('Wake Lock API is supported', () => {
 			const mockDocument = new MockDocument();
 			mockDocument.visibilityState = 'visible';
 
-			const wakeLock = handleWakeLock({ autoCleanup: false, document: mockDocument as Document });
+			const wakeLock = handleWakeLock({ document: mockDocument as Document });
 
 			await wakeLock.request('screen');
 
@@ -170,8 +162,6 @@ describe('Wake Lock API is supported', () => {
 			await wakeLock.request('screen');
 
 			expect(wakeLock.isActive).toBeTruthy();
-
-			wakeLock.cleanup();
 		});
 
 		await cleanup();

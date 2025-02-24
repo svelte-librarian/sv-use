@@ -1,15 +1,12 @@
-import { onDestroy } from 'svelte';
 import { getDocumentVisibility } from '../get-document-visibility/index.svelte.js';
 import { whenever } from '../whenever/index.svelte.js';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import { noop } from '../__internal__/utils.svelte.js';
 import {
 	defaultDocument,
 	defaultNavigator,
 	type ConfigurableDocument,
 	type ConfigurableNavigator
 } from '../__internal__/configurable.js';
-import type { AutoCleanup, CleanupFunction } from '../__internal__/types.js';
 
 type WakeLockType = 'screen';
 
@@ -23,7 +20,7 @@ type NavigatorWithWakeLock = Navigator & {
 	wakeLock: { request: (type: WakeLockType) => Promise<WakeLockSentinel> };
 };
 
-interface HandleWakeLockOptions extends ConfigurableNavigator, ConfigurableDocument, AutoCleanup {}
+interface HandleWakeLockOptions extends ConfigurableNavigator, ConfigurableDocument {}
 
 type HandleWakeLockReturn = {
 	readonly isSupported: boolean | undefined;
@@ -32,7 +29,6 @@ type HandleWakeLockReturn = {
 	request: (type: WakeLockType) => Promise<void>;
 	forceRequest: (type: WakeLockType) => Promise<void>;
 	release: () => Promise<void>;
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -41,25 +37,17 @@ type HandleWakeLockReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/create-vibration
  */
 export function handleWakeLock(options: HandleWakeLockOptions = {}): HandleWakeLockReturn {
-	const { autoCleanup = true, navigator = defaultNavigator, document = defaultDocument } = options;
-
-	let eventListenerCleanup: CleanupFunction = noop;
+	const { navigator = defaultNavigator, document = defaultDocument } = options;
 
 	let requestedType = $state<WakeLockType | false>(false);
 	let sentinel = $state<WakeLockSentinel | null>(null);
-	const documentVisibility = getDocumentVisibility({ autoCleanup, document });
+
+	const documentVisibility = getDocumentVisibility({ document });
 	const isSupported = $derived.by(() => !!navigator && 'wakeLock' in navigator);
 	const isActive = $derived.by(() => !!sentinel && documentVisibility.current === 'visible');
 
 	if (isSupported) {
-		eventListenerCleanup = handleEventListener(
-			sentinel!,
-			'release',
-			() => {
-				requestedType = sentinel?.type ?? false;
-			},
-			{ autoCleanup, passive: true }
-		);
+		handleEventListener(sentinel!, 'release', onRelease, { passive: true });
 
 		whenever(
 			() => documentVisibility.current === 'visible' && !!requestedType,
@@ -70,8 +58,8 @@ export function handleWakeLock(options: HandleWakeLockOptions = {}): HandleWakeL
 		);
 	}
 
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
+	function onRelease() {
+		requestedType = sentinel?.type ?? false;
 	}
 
 	async function forceRequest(type: WakeLockType): Promise<void> {
@@ -96,11 +84,6 @@ export function handleWakeLock(options: HandleWakeLockOptions = {}): HandleWakeL
 		});
 	}
 
-	function cleanup() {
-		documentVisibility.cleanup();
-		eventListenerCleanup();
-	}
-
 	return {
 		get isSupported() {
 			return isSupported;
@@ -111,7 +94,6 @@ export function handleWakeLock(options: HandleWakeLockOptions = {}): HandleWakeL
 		sentinel,
 		request,
 		forceRequest,
-		release,
-		cleanup
+		release
 	};
 }

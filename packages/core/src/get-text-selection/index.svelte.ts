@@ -1,17 +1,18 @@
-import { onDestroy } from 'svelte';
 import { handleEventListener } from '../handle-event-listener/index.svelte.js';
-import { noop } from '../__internal__/utils.svelte.js';
-import { defaultWindow, type ConfigurableWindow } from '../__internal__/configurable.js';
-import type { AutoCleanup, CleanupFunction } from '../__internal__/types.js';
+import {
+	defaultDocument,
+	defaultWindow,
+	type ConfigurableDocument,
+	type ConfigurableWindow
+} from '../__internal__/configurable.js';
 
-interface GetTextSelectionOptions extends ConfigurableWindow, AutoCleanup {}
+interface GetTextSelectionOptions extends ConfigurableWindow, ConfigurableDocument {}
 
 type GetTextSelectionReturn = {
 	readonly text: string;
 	readonly rects: DOMRect[];
 	readonly ranges: Range[];
 	current: Selection | null;
-	cleanup: CleanupFunction;
 };
 
 /**
@@ -20,24 +21,15 @@ type GetTextSelectionReturn = {
  * @see https://svelte-librarian.github.io/sv-use/docs/core/browser/get-text-selection
  */
 export function getTextSelection(options: GetTextSelectionOptions = {}): GetTextSelectionReturn {
-	const { autoCleanup = true, window = defaultWindow } = options;
-
-	let cleanup: CleanupFunction = noop;
+	const { window = defaultWindow, document = defaultDocument } = options;
 
 	let current = $state<Selection | null>(null);
+
 	const text = $derived.by(() => current?.toString() ?? '');
 	const ranges = $derived.by(() => (current ? getRangesFromSelection(current) : []));
 	const rects = $derived.by(() => ranges.map((range) => range.getBoundingClientRect()));
 
-	if (window) {
-		cleanup = handleEventListener(window.document, 'selectionchange', onSelectionChange, {
-			passive: true
-		});
-	}
-
-	if (autoCleanup) {
-		onDestroy(() => cleanup());
-	}
+	handleEventListener(document, 'selectionchange', onSelectionChange, { passive: true });
 
 	function getRangesFromSelection(selection: Selection) {
 		const rangeCount = selection.rangeCount ?? 0;
@@ -67,7 +59,6 @@ export function getTextSelection(options: GetTextSelectionOptions = {}): GetText
 		},
 		get ranges() {
 			return ranges;
-		},
-		cleanup
+		}
 	};
 }
